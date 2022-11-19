@@ -4,10 +4,10 @@ const config = {
     type: Phaser.AUTO,
     width: 1280,
     height: 720,
-    backgroundColor: 0x000000, 
-    scene: [],
+    backgroundColor: 0x000000, //colore nero
+    scene: [MyScene],
     pixelArt: true,
-    parent: "game_area" 
+    parent: "game_area" //div contenitore
 };
 
 
@@ -18,3 +18,5 @@ game.gameState = {
     score: 0,
     lives: 3
 }
+
+game.scene.start ("ipotetica Scena1");  //se voglio far partire il gioco da una scena specifica
