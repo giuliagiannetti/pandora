@@ -85,14 +85,16 @@ export default class Player extends Phaser.GameObjects.Sprite {
     }
 
     manageMovements() {
-        // E' stato premuto il tasto freccia sinistra e il giocatore è a destra del limite sinistro del quadro?
+        //tasto freccia sinistra premuto + giocatore a destra del limite sinistro del quadro
         if (this.cursorKeys.left.isDown && this.x >= 0) {
             this.body.setVelocityX(-200); // Velocità per spostamento verso sinistra
-        // E' stato premuto il tasto freccia destra e il giocatore è a sinistra del limite sinistro del quadro?
+
+        // tasto freccia destra premuto + giocatore a sinistra del limite sinistro del quadro
         } else if (this.cursorKeys.right.isDown && this.x <= this.maxWidth - this.displayWidth){
             this.body.setVelocityX(200);  // Velocità per spostamento verso destra
+
         } else {
-            // In questa condizione non è stato premuto alcun tasto e possiamo fermare il giocatore rispetto alla X
+            // nessun tasto premuto --> giocatore fermo rispetto a x
             this.body.setVelocityX(0); 
         }
 
