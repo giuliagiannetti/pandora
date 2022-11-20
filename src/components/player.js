@@ -68,7 +68,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
     manageAnimations() {
         // Gestiamo separatamente le animazioni
 
-        const curr_anim = this.anims.currentAnim.key;   // Otteniamo il nome dell'animazione corrente, playe jump/move/stop
+        const curr_anim = this.anims.currentAnim.key;   //nome dell'animazione corrente, player jump/move/stop
 
         if (this.body.velocity.y != 0) {
             if (curr_anim != "playerJump") {
