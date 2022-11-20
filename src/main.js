@@ -1,13 +1,22 @@
-//import scene from "percorso"; da compilare una volta create le scene
+import {WelcomeScene} from "./scenes/scene0_welcome.js"
 
 const config = {
     type: Phaser.AUTO,
     width: 1280,
     height: 720,
     backgroundColor: 0x000000, //colore nero
-    scene: [MyScene],
-    pixelArt: true,
-    parent: "game_area" //div contenitore
+    scene: [ WelcomeScene ],
+    pixelArt: false,
+    parent: "game_area", //div contenitore
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: {
+                y: 200,  // forza di gravità
+            },
+            debug: true
+        }
+    }
 };
 
 
@@ -19,4 +28,4 @@ game.gameState = {
     lives: 3
 }
 
-game.scene.start ("ipotetica Scena1");  //se voglio far partire il gioco da una scena specifica
+game.scene.start ("scene0_welcome");  //se voglio far partire il gioco da una scena specifica
