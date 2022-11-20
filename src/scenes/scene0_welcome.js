@@ -1,4 +1,4 @@
-export class WelcomeScene extends Phaser.Scene {
+export default class WelcomeScene extends Phaser.Scene {
 
    background;
 

@@ -21,17 +21,20 @@ export default class Scene1 extends Phaser.Scene {
 
     preload() {
         console.log("scene1 - Executing preload()");
+
+        this.load.image("polis", "assets/images/background/polis.png")
+
         // Carichiamo gli asset grafici
-        this.load.image("INSERIRE PIATTAFORMA1", "assets/images/environment_elements/INSERIRE PIATTAFORMA1.Png");
-        this.load.image("INSERIRE PIATTAFORMA2", "assets/images/environment_elements/INSERIRE PIATTAFORMA2.Png");
-        this.load.image("INSERIRE NEMICO", "assets/images/characters/INSERIRE NEMICO.png");
+        this.load.image("platform1", "assets/images/environment_elements/platform1.png");
+        this.load.image("platform2", "assets/images/environment_elements/platform1.png");
+        // this.load.image("INSERIRE NEMICO", "assets/images/characters/INSERIRE NEMICO.png");
     }
 
     create() {
         // Qui le istruzioni su cosa creare e dove nel mondo di gioco
         console.log("scene1 - Executing create()");
         // Sfondo
-        this.background = this.add.tileSprite(0, 0, 1280, 720, "INSERIRE SFONDO_base");
+        this.background = this.add.tileSprite(0, 0, 1280, 720, "polis");
         this.background.setOrigin(0, 0);
         this.background.setScrollFactor(0, 0);
 
@@ -63,8 +66,8 @@ export default class Scene1 extends Phaser.Scene {
     createStaticPlatforms() {
         // Aggiungi le piattaforme come un gruppo di oggetti statici
         this.platforms = this.physics.add.staticGroup()
-        this.platforms.create(100, 400, 'INSERIRE PIATTAFORMA1');
-        this.platforms.create(800, 400, 'INSERIRE PIATTAFORMA1');
+        this.platforms.create(500, 500, 'platform1').setScale(0.5).refreshBody();
+        this.platforms.create(1500, 550, 'platform1').setScale(0.5).refreshBody();
          
         // Rendi le piattaforme "solide". Se il giocatore è su una piattaforma
         // allora il suo stato è "non sta saltando" (questo per riprodurre l'animazione
@@ -77,9 +80,9 @@ export default class Scene1 extends Phaser.Scene {
     createMovingPlatforms() {
         // Aggiungi le piattaforme come un gruppo di oggetti dinamici
         this.movingPlatforms = this.physics.add.group();
-        this.movingPlatforms.create(4800, Phaser.Math.Between(this.game.config.height - 100, this.game.config.height - 400), 'INSERIRE PIATTAFORMA2');
-        this.movingPlatforms.create(6600, Phaser.Math.Between(this.game.config.height - 100, this.game.config.height - 400), 'INSERIRE PIATTAFORMA2');
-        this.movingPlatforms.create(7200, Phaser.Math.Between(this.game.config.height - 100, this.game.config.height - 400), 'INSERIRE PIATTAFORMA2');
+        this.movingPlatforms.create(2500, Phaser.Math.Between(this.game.config.height - 100, this.game.config.height - 400), 'platform2').setScale(0.5).refreshBody();
+        this.movingPlatforms.create(4500, Phaser.Math.Between(this.game.config.height - 100, this.game.config.height - 400), 'platform2').setScale(0.5).refreshBody();
+        this.movingPlatforms.create(7000, Phaser.Math.Between(this.game.config.height - 100, this.game.config.height - 400), 'platform2').setScale(0.5).refreshBody();
         // ...sottrai le piattaforme all'effetto della gravità!
         this.movingPlatforms.children.iterate( function (platform) {
                 platform.setImmovable(true);
