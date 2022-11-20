@@ -12,13 +12,24 @@ export class WelcomeScene extends Phaser.Scene {
       console.log ("scene0_welcome - Executing preload ()"); 
 
       //assets
+      
       //sfondo
       this.load.image ("background_base", "assets/images/background/copertina.jpeg");
       
-      //giocatore
 
+      // Carichiamo l'immagine del giocatore in formato spritesheet (ci servirà nelle prossime scene)
+      const player_spritesheet_config = {
+         frameWidth:  280,
+         frameHeight: 335,
+      };
+      this.load.spritesheet("playerrun", "assets/images/characters/omino.png", player_spritesheet_config);
 
       //nemico
+      const monster_spritesheet_config = {
+         frameWidth:  72,
+         frameHeight: 72,
+      };
+      this.load.spritesheet("enemy", "assets/images/characters/", monster_spritesheet_config);
 
 
       //componenti grafiche (button)
@@ -27,7 +38,6 @@ export class WelcomeScene extends Phaser.Scene {
       //comando momentaneo
       this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
- 
     };
 
 
