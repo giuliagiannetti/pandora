@@ -116,9 +116,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     }
 
-    die() {
-        // modificarlo in modo tale che quando personaggio muore ritorna al checkpoint
+    /* die() {
         this.x = this.initialPosition;
-    }
+    }*/
 
 }
