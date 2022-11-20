@@ -1,11 +1,12 @@
-import {WelcomeScene} from "./scenes/scene0_welcome.js"
+import WelcomeScene from "./scenes/scene0_welcome.js";
+import Scene1 from "./scenes/scene1.js"
 
 const config = {
     type: Phaser.AUTO,
     width: 1280,
     height: 720,
     backgroundColor: 0x000000, //colore nero
-    scene: [ WelcomeScene ],
+    scene: [ WelcomeScene, Scene1 ],
     pixelArt: false,
     parent: "game_area", //div contenitore
     physics: {
