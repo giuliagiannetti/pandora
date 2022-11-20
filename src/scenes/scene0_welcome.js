@@ -14,7 +14,6 @@ export class WelcomeScene extends Phaser.Scene {
       //assets
       //sfondo
       this.load.image ("background_base", "assets/images/background/copertina.jpeg");
-   
       
       //giocatore
 
