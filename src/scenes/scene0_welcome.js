@@ -1,13 +1,13 @@
 export class MyScene extends Phaser.Scene {
 
     constructor () {
-        super ("0welcome")};
+        super ("scene0_welcome")};
 
    init (){
-    console.log ("0welcome - Executing init ()") };
+    console.log ("scene0_welcome - Executing init ()") };
 
     preload (){
-    console.log ("0welcome - Executing preload ()")  
+    console.log ("scene0_welcome - Executing preload ()")  
 
       //assets
       //sfondo
@@ -29,7 +29,7 @@ export class MyScene extends Phaser.Scene {
 
 
     create () {
-    console.log(" 0welcome - Executing create()");
+    console.log(" scene0_welcome - Executing create()");
 
      //posizione degli elementi 
      this.background = this.add.image(0, 0, "background_base");
