@@ -42,7 +42,7 @@ export class WelcomeScene extends Phaser.Scene {
 
 
     create () {
-      console.log(" scene0_welcome - Executing create()");
+      console.log("scene0_welcome - Executing create()");
 
       //posizione degli elementi 
       this.background = this.add.image(this.game.config.width/2, this.game.config.height/2, "background_base");
