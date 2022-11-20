@@ -5,10 +5,10 @@ const config = {
     type: Phaser.AUTO,
     width: 1280,
     height: 720,
-    backgroundColor: 0x000000, //colore nero
+    backgroundColor: 0x000000, 
     scene: [ WelcomeScene, Scene1 ],
     pixelArt: false,
-    parent: "game_area", //div contenitore
+    parent: "game_area", 
     physics: {
         default: 'arcade',
         arcade: {
