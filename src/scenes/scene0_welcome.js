@@ -23,7 +23,10 @@ export class WelcomeScene extends Phaser.Scene {
 
 
       //componenti grafiche (button)
+
    
+      //comando momentaneo
+      this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
  
     };
@@ -50,6 +53,9 @@ export class WelcomeScene extends Phaser.Scene {
   
 
    update(){
+      if (this.keySpace.isDown) {
+         this.scene.start("scene1");
+     }
    }
 
 }
