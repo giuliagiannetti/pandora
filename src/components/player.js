@@ -27,13 +27,15 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.initAnimations();
     }
 
+
+    //frame impostati su 0 non avendo ancora lo spritesheet
     initAnimations() {
         //animazione della corsa del personaggio tramite spritesheet
         this.anims.create({
             key: "playerMove",
             frames: this.anims.generateFrameNumbers("playerrun", {
                 start: 0, 
-                end: 9,
+                end: 0,
             }),
             frameRate: 15, //aggiornimao l'immagine ogni 15 frame per rendere l'animazione non troppo rapida
             repeat: -1 //ripetiamo all'infinito la stessa animazione
@@ -43,8 +45,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.anims.create({
             key: "playerStop",
             frames: this.anims.generateFrameNumbers("playerrun", {
-                start: 4, //frame con personagio fermo
-                end: 4, 
+                start: 0, //frame con personagio fermo
+                end: 0, 
             }),
             frameRate: 15,
             repeat: -1 
@@ -54,8 +56,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.anims.create({
             key: "playerJump",
             frames: this.anims.generateFrameNumbers("playerrun", {
-                start: 10, //selezionare frame per salto
-                end: 17, 
+                start: 0, //selezionare frame per salto
+                end: 0, 
             }),
             frameRate: 15, 
             repeat: -1
