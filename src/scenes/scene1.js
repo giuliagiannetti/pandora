@@ -27,32 +27,28 @@ export default class Scene1 extends Phaser.Scene {
     }
 
     create() {
-        // Qui le istruzioni su cosa creare e dove nel mondo di gioco
         console.log("scene1 - Executing create()");
-        // Sfondo
-        this.background = this.add.tileSprite(0, 0, 1280, 720, "polis");
+
+        this.background = this.add.tileSprite(0, 0, 1280, 720, "polis"); //sfondo in secondo piano che si ripete, non 3D
         this.background.setOrigin(0, 0);
         this.background.setScrollFactor(0, 0);
 
-        // Crea un piano sul quale fermare gli oggetti soggetti alla fisica (gravità)
+
         this.floor = this.add.rectangle(0, this.game.config.height,
             this.worldWidth, this.game.config.height - this.floorHeight,
-            0xFFFFFF, 0);
+            0x000000, 0);
         this.floor.setOrigin(0, 1);
-        // Aggiungi il piano alla fisica (e rendiamolo statico mettendo a 'true' il secondo parametro)
         this.physics.add.existing(this.floor, true);
 
         // Player
         const thePlayer = new Player(this, 100, this.floorHeight, 10000);
-        // Aggiungi il player alla fisica
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
 
         // Imposta la camera per seguire i movimenti del giocatore lungo l'asse x
         this.cameras.main.startFollow(this.player);
-        this.cameras.main.setFollowOffset(0, this.game.config.height / 2); // Abbassiamo la telecamera
-
-        // Qui va inserito il nemico
+        this.cameras.main.setFollowOffset(0,this.game.config.height/2);
+        // Nemico
 
         // Inserisci delle piattaforme
         this.createStaticPlatforms();
@@ -77,13 +73,10 @@ export default class Scene1 extends Phaser.Scene {
         // Aggiungi le piattaforme come un gruppo di oggetti dinamici
         this.movingPlatforms = this.physics.add.group();
         this.movingPlatforms.create(2400, Phaser.Math.Between(this.game.config.height - 200, this.game.config.height - 500), 'platform2').setScale(0.5).refreshBody();
-        this.movingPlatforms.create(4500, Phaser.Math.Between(this.game.config.height - 200, this.game.config.height - 500), 'platform2').setScale(0.5).refreshBody();
-        this.movingPlatforms.create(7000, Phaser.Math.Between(this.game.config.height - 200, this.game.config.height - 500), 'platform2').setScale(0.5).refreshBody();
-        // ...sottrai le piattaforme all'effetto della gravità!
         this.movingPlatforms.children.iterate( function (platform) {
                 platform.setImmovable(true);
                 platform.body.allowGravity = false;
-                platform.body.setVelocityX(Phaser.Math.Between(-100, 100));
+                platform.body.setVelocityX(Phaser.Math.Between(-100, 100)); //usare vecchio codice per impostare un movimento preciso tra due zone e la posizione
         });
 
         this.physics.add.collider(this.movingPlatforms, this.player, ()=> {
@@ -97,9 +90,7 @@ export default class Scene1 extends Phaser.Scene {
     }
 
 
-
     update() {
-        // Azioni che vengono eseguite a ogni frame del gioco
         this.player.manageMovements();
         this.animateBackground();
         this.randomPlatformsMovementChange();
@@ -112,9 +103,6 @@ export default class Scene1 extends Phaser.Scene {
 
     randomPlatformsMovementChange() {
         this.movingPlatforms.children.iterate( function (platform) {
-            // Genera un cambio di velocità casuale (destra o sinistra) con una probabilità
-            // 1 su 100 (ricordiamo che la update() viene invocata diverse volte al secondo).
-            // Cosa accadrebbe se variassiamo velocità ad ogni frame, quindi N volte al secondo?
             if (Phaser.Math.Between(0, 100) == 50) {
                 const updatedSpeed = Phaser.Math.Between(-100, 100);
                 platform.body.setVelocityX(updatedSpeed);
