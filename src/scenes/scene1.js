@@ -82,7 +82,7 @@ export default class Scene1 extends Phaser.Scene {
         this.movingPlatforms = this.physics.add.group();
         this.movingPlatforms.create(2400, Phaser.Math.Between(this.game.config.height - 200, this.game.config.height - 500), 'platform2').setScale(0.5).refreshBody();
         this.movingPlatforms.create(4500, Phaser.Math.Between(this.game.config.height - 200, this.game.config.height - 500), 'platform2').setScale(0.5).refreshBody();
-        this.movingPlatforms.create(6000, Phaser.Math.Between(this.game.config.height - 200, this.game.config.height - 500), 'platform2').setScale(0.5).refreshBody();
+        this.movingPlatforms.create(7000, Phaser.Math.Between(this.game.config.height - 200, this.game.config.height - 500), 'platform2').setScale(0.5).refreshBody();
         // ...sottrai le piattaforme all'effetto della gravità!
         this.movingPlatforms.children.iterate( function (platform) {
                 platform.setImmovable(true);
