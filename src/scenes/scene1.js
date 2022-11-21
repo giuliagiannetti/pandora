@@ -82,7 +82,7 @@ export default class Scene1 extends Phaser.Scene {
         this.movingPlatforms = this.physics.add.group();
         this.movingPlatforms.create(2400, Phaser.Math.Between(this.game.config.height - 200, this.game.config.height - 500), 'platform2').setScale(0.5).refreshBody();
         this.movingPlatforms.create(4500, Phaser.Math.Between(this.game.config.height - 200, this.game.config.height - 500), 'platform2').setScale(0.5).refreshBody();
-        this.movingPlatforms.create(7000, Phaser.Math.Between(this.game.config.height - 200, this.game.config.height - 500), 'platform2').setScale(0.5).refreshBody();
+        this.movingPlatforms.create(6000, Phaser.Math.Between(this.game.config.height - 200, this.game.config.height - 500), 'platform2').setScale(0.5).refreshBody();
         // ...sottrai le piattaforme all'effetto della gravità!
         this.movingPlatforms.children.iterate( function (platform) {
                 platform.setImmovable(true);
@@ -90,13 +90,13 @@ export default class Scene1 extends Phaser.Scene {
                 platform.body.setVelocityX(Phaser.Math.Between(-100, 100));
         });
 
-        // Rendi le piattaforme "solide". Se il giocatore è su una piattaforma
-        // allora il suo stato è "non sta saltando" (questo per riprodurre l'animazione
-        // del giocatore fermo).
         this.physics.add.collider(this.movingPlatforms, this.player, ()=> {
             this.player.isJumping = false;
         });
 
+        //createJumpingPlatforms
+        // this.physics.add.collider(this.movingPlatforms, this.player, ()=> {
+        // this.player.isJumping = true;});
 
     }
 
