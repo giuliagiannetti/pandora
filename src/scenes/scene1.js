@@ -72,7 +72,7 @@ export default class Scene1 extends Phaser.Scene {
     createMovingPlatforms() {
         // Aggiungi le piattaforme come un gruppo di oggetti dinamici
         this.movingPlatforms = this.physics.add.group();
-        this.movingPlatforms.create(2400, Phaser.Math.Between(this.game.config.height - 200, this.game.config.height - 500), 'platform2').setScale(0.5).refreshBody();
+        this.movingPlatforms.create(2300, Phaser.Math.Between(this.game.config.height - 100, this.game.config.height - 500), 'platform2').setScale(0.5).refreshBody();
         this.movingPlatforms.children.iterate( function (platform) {
                 platform.setImmovable(true);
                 platform.body.allowGravity = false;
