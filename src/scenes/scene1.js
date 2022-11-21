@@ -2,19 +2,16 @@ import Player from "../components/player.js"
 
 export default class Scene1 extends Phaser.Scene {
 
-    background;       // oggetto relativo all'elemento "sfondo"
-    player;           // oggetto relativo all'elemento "giocatore"
-    floorHeight;      // Altezza del terreno (asse y) rispetto al riquadro di gioco
+    background;       
+    player;           
+    floorHeight; 
 
     constructor() {
-        // Il costruttore della classe base Phaser.Scene prende come argomento il nome della scena
         super("scene1");
     }
 
     init() {
         console.log("scene1 - Executing init()");
-        // Definiamo l'altezza del terreno pari all'altezza del riquadro
-        // di gioco, per posizionare il giocatore sul fondo della schermata.
         this.floorHeight = this.game.config.height - 30;
         this.worldWidth = 10000;
     }
@@ -22,12 +19,11 @@ export default class Scene1 extends Phaser.Scene {
     preload() {
         console.log("scene1 - Executing preload()");
 
-        this.load.image("polis", "assets/images/background/polis.png")
+        this.load.image("polis", "assets/images/background/polis.png") //sfondo: uno in primo piano, con platform, costruzioni principali
 
-        // Carichiamo gli asset grafici
-        this.load.image("platform1", "assets/images/environment_elements/platform1.png");
-        this.load.image("platform2", "assets/images/environment_elements/platform1.png");
-        // this.load.image("INSERIRE NEMICO", "assets/images/characters/INSERIRE NEMICO.png");
+        this.load.image("platform1", "assets/images/environment_elements/platform1.png"); //platform statico
+        this.load.image("platform2", "assets/images/environment_elements/platform1.png"); //platform in movimento
+
     }
 
     create() {
