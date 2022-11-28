@@ -1,6 +1,7 @@
 export default class WelcomeScene extends Phaser.Scene {
 
    background;
+   lights;
 
    constructor () {
         super ("scene0_welcome")};
@@ -48,6 +49,8 @@ export default class WelcomeScene extends Phaser.Scene {
       this.background = this.add.image(this.game.config.width/2, this.game.config.height/2, "background_base");
       this.background.setOrigin(0.5,0.5);
 
+      this.background.setPipeline('Light2D').setAlpha(0.5);
+
       //immagine del bottone
       /* this.playbutton = this.add.image(this.game.config.width/2, this.game.config.height/2, "playButton");
       this.playbutton.setOrigin(0.5, 0.5);
@@ -57,6 +60,37 @@ export default class WelcomeScene extends Phaser.Scene {
       this.playbutton.on("pointerdown", ()=>{ 
       this.scene.start("scene1");
        }) ;*/
+
+      var light = this.lights.addLight(300, 300, 300).setScrollFactor(0.0).setIntensity(2);
+
+      this.lights.enable();
+      this.lights.setAmbientColor(0x555555);
+
+      this.input.on('pointermove', function (pointer) {
+  
+          light.x = pointer.x;
+          light.y = pointer.y;
+  
+      });
+
+      var colors = [
+         0xffffff, 0xff0000, 0x00ff00, 0x00ffff, 0xff00ff, 0xffff00
+     ];
+ 
+     var currentColor = 0;
+ 
+     this.input.on('pointerdown', function () {
+ 
+         currentColor++;
+ 
+         if (currentColor === colors.length)
+         {
+             currentColor = 0;
+         }
+ 
+         spotlight.setColor(colors[currentColor]);
+ 
+     });
 
       };
   
