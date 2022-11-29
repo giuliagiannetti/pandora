@@ -98,7 +98,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
             this.body.setVelocityX(0); 
         }
 
-        if (this.keySpace.isDown && this.y >= 0) {
+        if (this.keySpace.isDown && (this.body.onFloor() || this.body.touching.down)) {
             if (!this.isJumping) {
                 this.isJumping = true;
                 this.body.setVelocityY(-300);  // Salto (con fisica)
