@@ -14,7 +14,7 @@ const config = {
         default: 'arcade',
         arcade: {
             gravity: {
-                 y: 500,  // forza di gravità
+                 y: 400,  // forza di gravità
                  },
             debug: true
         }

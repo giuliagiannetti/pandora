@@ -45,6 +45,8 @@ export default class WelcomeScene extends Phaser.Scene {
     create () {
       console.log("scene0_welcome - Executing create()");
 
+   
+
       //posizione degli elementi 
       this.background = this.add.image(this.game.config.width/2, this.game.config.height/2, "background_base");
       this.background.setOrigin(0.5,0.5);
@@ -73,24 +75,7 @@ export default class WelcomeScene extends Phaser.Scene {
   
       });
 
-      var colors = [
-         0xffffff, 0xff0000, 0x00ff00, 0x00ffff, 0xff00ff, 0xffff00
-     ];
- 
-     var currentColor = 0;
- 
-     this.input.on('pointerdown', function () {
- 
-         currentColor++;
- 
-         if (currentColor === colors.length)
-         {
-             currentColor = 0;
-         }
- 
-         spotlight.setColor(colors[currentColor]);
- 
-     });
+      
 
       };
   

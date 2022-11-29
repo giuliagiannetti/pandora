@@ -21,7 +21,6 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.maxWidth = maxWidth;
 
         this.cursorKeys = scene.input.keyboard.createCursorKeys();
-
         this.keySpace = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
         this.initAnimations();
@@ -99,7 +98,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
             this.body.setVelocityX(0); 
         }
 
-        if (this.keySpace.isDown && this.y >= this.displayHeight) {
+        if (this.keySpace.isDown && this.y >= 0) {
             if (!this.isJumping) {
                 this.isJumping = true;
                 this.body.setVelocityY(-300);  // Salto (con fisica)
