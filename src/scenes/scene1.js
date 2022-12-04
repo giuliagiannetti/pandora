@@ -40,7 +40,7 @@ export default class Scene1 extends Phaser.Scene {
 
         this.floor = this.add.rectangle(0, this.game.config.height,
             this.worldWidth, this.game.config.height - this.floorHeight,
-            0x000000, 100);
+            0x000000, 200);
         this.floor.setOrigin(0, 1);
         this.physics.add.existing(this.floor, true);
 
