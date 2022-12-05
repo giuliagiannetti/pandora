@@ -23,6 +23,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.cursorKeys = scene.input.keyboard.createCursorKeys();
         this.keySpace = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
+
         this.initAnimations();
     }
 

@@ -15,7 +15,7 @@ export default class Scene1 extends Phaser.Scene {
     init() {
         console.log("scene1 - Executing init()");
         this.floorHeight = this.game.config.height - 100;
-        this.worldWidth = 8000;
+        this.worldWidth = 8426;
     }
 
     preload() {
@@ -30,7 +30,8 @@ export default class Scene1 extends Phaser.Scene {
 
     create() {
         console.log("scene1 - Executing create()");
-
+                
+       
         this.key0 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ZERO);
 
         this.background = this.add.image(0, 0, "polis");
@@ -39,19 +40,25 @@ export default class Scene1 extends Phaser.Scene {
 
 
         this.floor = this.add.rectangle(0, this.game.config.height,
-            this.worldWidth, this.game.config.height - this.floorHeight,
+            this.worldWidth + 100, this.game.config.height - this.floorHeight,
             0x000000, 100);
         this.floor.setOrigin(0, 1);
         this.physics.add.existing(this.floor, true);
 
         // Player
-        const thePlayer = new Player(this, 100, this.floorHeight, 10000);
+        const thePlayer = new Player(this, 100, this.floorHeight, this.worldWidth);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
 
+
+
         // Imposta la camera per seguire i movimenti del giocatore lungo l'asse x
+        
+     
         this.cameras.main.startFollow(this.player);
         this.cameras.main.setFollowOffset(0, 300);
+
+        
 
         // Nemico
 
@@ -67,8 +74,8 @@ export default class Scene1 extends Phaser.Scene {
         // Aggiungi le piattaforme come un gruppo di oggetti statici
         this.platforms = this.physics.add.staticGroup()
         //this.platforms.create(800, 600, 'platform1').setScale(0.25).refreshBody();
-        this.platforms.create(1050, 510, 'platform1').setScale(0.5).refreshBody();
-        this.platforms.create(1500, 400, 'platform1').setScale(0.5).refreshBody();
+        this.platforms.create(1050, 510, 'platform1').setScale(0.4).refreshBody();
+        this.platforms.create(1500, 400, 'platform1').setScale(0.4).refreshBody();
         this.platforms.create(2000, 300, 'platform1').setScale(0.75).refreshBody();
 
         this.physics.add.collider(this.platforms, this.player, () => {
