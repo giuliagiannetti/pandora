@@ -25,6 +25,7 @@ export default class Scene1 extends Phaser.Scene {
 
         this.load.image("platform1", "assets/images/environment_elements/platform1.png"); //platform statico
         this.load.image("pavement", "assets/images/environment_elements/pavement.png"); //pavimento
+        this.load.image("rimbalzante", "assets/images/environment_elements/rimbalzo.png");//piattaforma rimbalzante
         this.load.image("movingPlatform", "assets/images/environment_elements/movingPlatform.png"); //platform in movimento
 
     }
@@ -66,6 +67,7 @@ export default class Scene1 extends Phaser.Scene {
         // Inserisci delle piattaforme statiche
         this.createStaticPlatforms();
         this.createMovingPlatforms();
+        this.createJumpingPlatforms();
 
     }
 
@@ -75,11 +77,11 @@ export default class Scene1 extends Phaser.Scene {
         // Aggiungi le piattaforme come un gruppo di oggetti statici
         this.platforms = this.physics.add.staticGroup()
         //this.platforms.create(800, 600, 'platform1').setScale(0.25).refreshBody();
-        this.platforms.create(1080, 490, 'platform1').setScale(0.5).refreshBody();
-        this.platforms.create(1430, 320, 'platform1').setScale(0.5).refreshBody();
-        this.platforms.create(2100, 200, 'pavement').setScale(0.3).refreshBody();//architrave
+        this.platforms.create(1080, 520, 'platform1').setScale(0.5).refreshBody();
+        this.platforms.create(1430, 375, 'platform1').setScale(0.5).refreshBody();
+        this.platforms.create(2100, 220, 'pavement').setScale(0.3).refreshBody();//architrave
         this.platforms.create(3400, 210, 'platform1').setScale(0.5).refreshBody();
-        this.platforms.create(4400, 490, 'platform1').setScale(0.5).refreshBody();
+        //this.platforms.create(4400, 490, 'platform1').setScale(0.5).refreshBody();
 
         //casa1
         this.platforms.create(5490, 335, 'pavement').setScale(0.5).refreshBody();//pavimento
@@ -128,9 +130,21 @@ export default class Scene1 extends Phaser.Scene {
 
 
 
-    //createJumpingPlatforms
-    // this.physics.add.collider(this.movingPlatforms, this.player, ()=> {
-    // this.player.isJumping = true;});
+
+
+    createJumpingPlatforms(){             
+
+          this.jumpingPlatforms = this.physics.add.staticGroup()
+
+          this.jumpingPlatforms.create(4500, 470, 'rimbalzante').setScale(0.2).refreshBody();  
+          
+          this.physics.add.collider(this.jumpingPlatforms, this.player, () => {
+            this.player.body.setVelocityY(-500);
+        });
+          
+        }
+
+
 
 
 
