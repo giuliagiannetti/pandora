@@ -136,10 +136,10 @@ export default class Scene1 extends Phaser.Scene {
 
           this.jumpingPlatforms = this.physics.add.staticGroup()
 
-          this.jumpingPlatforms.create(4500, 470, 'rimbalzante').setScale(0.2).refreshBody();  
+          this.jumpingPlatforms.create(800, 500, 'rimbalzante').setScale(0.2).refreshBody();  
           
-          this.physics.add.collider(this.jumpingPlatforms, this.player, () => {
-            this.player.body.setVelocityY(-500);
+          this.physics.add.collider(this.jumpingPlatforms, this.player, () => { if (this.player.body.touching.down) {
+            this.player.body.setVelocityY(-500)};
         });
           
         }
