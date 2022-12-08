@@ -12,6 +12,7 @@ export default class movingPlatform extends Phaser.GameObjects.Sprite {
         scene.add.existing(this);
         this.initialX = x;
         this.floorHeight = y;
+        this.setScale(0.4);
         scene.physics.add.existing(this);
         this.body.setImmovable(true);
    
@@ -20,11 +21,11 @@ export default class movingPlatform extends Phaser.GameObjects.Sprite {
 
     animateMovingPlatform() {
         if (this.x >= this.initialX) {
-            this.body.setVelocityX(-150);
+            this.body.setVelocityX(-80);
 
         }
-        if (this.x <= (this.initialX - 200)) {
-            this.body.setVelocityX(150);
+        if (this.x <= (this.initialX - 300)) {
+            this.body.setVelocityX(80);
         }
     }
 

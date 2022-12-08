@@ -24,6 +24,7 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image("polis", "assets/images/background/tutorial.jpg") //sfondo: uno in primo piano, con platform, costruzioni principali
 
         this.load.image("platform1", "assets/images/environment_elements/platform1.png"); //platform statico
+        this.load.image("pavement", "assets/images/environment_elements/pavement.png"); //pavimento
         this.load.image("movingPlatform", "assets/images/environment_elements/movingPlatform.png"); //platform in movimento
 
     }
@@ -74,9 +75,31 @@ export default class Scene1 extends Phaser.Scene {
         // Aggiungi le piattaforme come un gruppo di oggetti statici
         this.platforms = this.physics.add.staticGroup()
         //this.platforms.create(800, 600, 'platform1').setScale(0.25).refreshBody();
-        this.platforms.create(1050, 510, 'platform1').setScale(0.4).refreshBody();
-        this.platforms.create(1500, 400, 'platform1').setScale(0.4).refreshBody();
-        this.platforms.create(2000, 300, 'platform1').setScale(0.75).refreshBody();
+        this.platforms.create(1080, 490, 'platform1').setScale(0.5).refreshBody();
+        this.platforms.create(1430, 320, 'platform1').setScale(0.5).refreshBody();
+        this.platforms.create(2100, 200, 'pavement').setScale(0.3).refreshBody();//architrave
+        this.platforms.create(3400, 210, 'platform1').setScale(0.5).refreshBody();
+        this.platforms.create(4400, 490, 'platform1').setScale(0.5).refreshBody();
+
+        //casa1
+        this.platforms.create(5490, 335, 'pavement').setScale(0.5).refreshBody();//pavimento
+        this.platforms.create(5060, 164, 'platform1').setScale(0.4).refreshBody();//scalino
+        this.platforms.create(5130, 102, 'platform1').setScale(0.4).refreshBody();//scalino
+        this.platforms.create(5200, 40, 'platform1').setScale(0.4).refreshBody();//scalino
+        this.platforms.create(5270, -22, 'platform1').setScale(0.4).refreshBody();//scalino
+        this.platforms.create(5100, -360, 'platform1').setScale(0.5).refreshBody();//piattaforma chiave
+        this.platforms.create(5600, -70, 'platform1').setScale(0.4).refreshBody();
+        this.platforms.create(6000, -180, 'platform1').setScale(0.4).refreshBody();
+        
+        //casa2
+        this.platforms.create(6700, -20, 'pavement').setScale(0.2).refreshBody();//pavimento
+        this.platforms.create(7580, -20, 'pavement').setScale(0.2).refreshBody();//pavimento
+        this.platforms.create(7859, 34, 'platform1').setScale(0.4).refreshBody();//scalino
+        this.platforms.create(7939, 96, 'platform1').setScale(0.4).refreshBody();//scalino
+        this.platforms.create(8019, 158, 'platform1').setScale(0.4).refreshBody();//scalino
+        this.platforms.create(8099, 220, 'platform1').setScale(0.4).refreshBody();//scalino
+        this.platforms.create(8317, 220, 'platform1').setScale(0.4).refreshBody();
+
 
         this.physics.add.collider(this.platforms, this.player, () => {
             this.player.isJumping = false;
@@ -87,9 +110,9 @@ export default class Scene1 extends Phaser.Scene {
         // Inserisci delle piattaforme in movimento
         this.movingPlatforms = [];
         //inserite le vostre piattaforme qua
-        this.movingPlatforms.push(new movingPlatform(this, 2700, 400));
-        this.movingPlatforms.push(new movingPlatform(this, 3500, 400));
-
+        this.movingPlatforms.push(new movingPlatform(this, 3100, 200));
+        this.movingPlatforms.push(new movingPlatform(this, 5800, -370));
+        
         this.movingPlatformGroup = this.physics.add.group(this.movingPlatforms);
         this.movingPlatformGroup.children.iterate(function (platform) {
             platform.body.allowGravity = false;
