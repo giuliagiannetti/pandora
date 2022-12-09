@@ -74,7 +74,8 @@ export default class Scene1 extends Phaser.Scene {
     createStaticPlatforms() {
         // Aggiungi le piattaforme come un gruppo di oggetti statici
         this.platforms = this.physics.add.staticGroup()
-        //this.platforms.create(800, 600, 'platform1').setScale(0.25).refreshBody();
+
+        this.platforms.create(1089, -200, 'pavement').setScale(0.8).refreshBody();//pavimento
         this.platforms.create(1100, 530, 'platform1').setScale(0.5).refreshBody();
         this.platforms.create(2300, 270, 'platform1').setScale(0.5).refreshBody();
         this.platforms.create(2700, 130, 'platform1').setScale(0.5).refreshBody();
@@ -90,8 +91,6 @@ export default class Scene1 extends Phaser.Scene {
         //inserite le vostre piattaforme qua
         this.movingPlatforms.push(new movingPlatform(this, 1800, 380));
     
-       
-        
         this.movingPlatformGroup = this.physics.add.group(this.movingPlatforms);
         this.movingPlatformGroup.children.iterate(function (platform) {
             platform.body.allowGravity = false;
