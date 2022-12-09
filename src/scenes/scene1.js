@@ -82,25 +82,26 @@ export default class Scene1 extends Phaser.Scene {
         this.platforms.create(2100, 220, 'pavement').setScale(0.3).refreshBody();//architrave
         this.platforms.create(3400, 210, 'platform1').setScale(0.5).refreshBody();
         //this.platforms.create(4400, 490, 'platform1').setScale(0.5).refreshBody();
+        this.platforms.create(4000, 500, 'platform1').setScale(0.3).refreshBody();
 
-        //casa1
-        this.platforms.create(5490, 335, 'pavement').setScale(0.5).refreshBody();//pavimento
-        this.platforms.create(5060, 164, 'platform1').setScale(0.4).refreshBody();//scalino
-        this.platforms.create(5130, 102, 'platform1').setScale(0.4).refreshBody();//scalino
-        this.platforms.create(5200, 40, 'platform1').setScale(0.4).refreshBody();//scalino
-        this.platforms.create(5270, -22, 'platform1').setScale(0.4).refreshBody();//scalino
-        this.platforms.create(5100, -360, 'platform1').setScale(0.5).refreshBody();//piattaforma chiave
-        this.platforms.create(5600, -70, 'platform1').setScale(0.4).refreshBody();
-        this.platforms.create(6000, -180, 'platform1').setScale(0.4).refreshBody();
-        
-        //casa2
-        this.platforms.create(6700, -20, 'pavement').setScale(0.2).refreshBody();//pavimento
-        this.platforms.create(7580, -20, 'pavement').setScale(0.2).refreshBody();//pavimento
-        this.platforms.create(7859, 34, 'platform1').setScale(0.4).refreshBody();//scalino
-        this.platforms.create(7939, 96, 'platform1').setScale(0.4).refreshBody();//scalino
-        this.platforms.create(8019, 158, 'platform1').setScale(0.4).refreshBody();//scalino
-        this.platforms.create(8099, 220, 'platform1').setScale(0.4).refreshBody();//scalino
-        this.platforms.create(8317, 220, 'platform1').setScale(0.4).refreshBody();
+      //casa1
+      this.platforms.create(5490, 260, 'pavement').setScale(0.5).refreshBody();//pavimento
+      this.platforms.create(5060, 184, 'platform1').setScale(0.4).refreshBody();//scalino
+      this.platforms.create(5130, 122, 'platform1').setScale(0.4).refreshBody();//scalino
+      this.platforms.create(5200, 60, 'platform1').setScale(0.4).refreshBody();//scalino
+      this.platforms.create(5270, -2, 'platform1').setScale(0.4).refreshBody();//scalino
+      this.platforms.create(5100, -360, 'platform1').setScale(0.5).refreshBody();//piattaforma chiave
+      this.platforms.create(5600, -30, 'platform1').setScale(0.4).refreshBody();
+      this.platforms.create(6000, -150, 'platform1').setScale(0.4).refreshBody();
+      
+      //casa2
+      this.platforms.create(6700, -20, 'pavement').setScale(0.2).refreshBody();//pavimento
+      this.platforms.create(7580, -20, 'pavement').setScale(0.2).refreshBody();//pavimento
+      this.platforms.create(7859, 34, 'platform1').setScale(0.4).refreshBody();//scalino
+      this.platforms.create(7939, 96, 'platform1').setScale(0.4).refreshBody();//scalino
+      this.platforms.create(8019, 158, 'platform1').setScale(0.4).refreshBody();//scalino
+      this.platforms.create(8099, 220, 'platform1').setScale(0.4).refreshBody();//scalino
+      this.platforms.create(8317, 220, 'platform1').setScale(0.4).refreshBody();
 
 
         this.physics.add.collider(this.platforms, this.player, () => {
@@ -113,7 +114,7 @@ export default class Scene1 extends Phaser.Scene {
         this.movingPlatforms = [];
         //inserite le vostre piattaforme qua
         this.movingPlatforms.push(new movingPlatform(this, 3100, 200));
-        this.movingPlatforms.push(new movingPlatform(this, 5800, -370));
+        this.movingPlatforms.push(new movingPlatform(this, 5800, -290));
         
         this.movingPlatformGroup = this.physics.add.group(this.movingPlatforms);
         this.movingPlatformGroup.children.iterate(function (platform) {
@@ -130,13 +131,11 @@ export default class Scene1 extends Phaser.Scene {
 
 
 
-
-
     createJumpingPlatforms(){             
 
           this.jumpingPlatforms = this.physics.add.staticGroup()
 
-          this.jumpingPlatforms.create(4500, 510, 'rimbalzante').setScale(0.2).refreshBody();  
+          this.jumpingPlatforms.create(4500, 415, 'rimbalzante').setScale(0.2).refreshBody();  
           
           this.physics.add.collider(this.jumpingPlatforms, this.player, () => { if (this.player.body.touching.down) {
             this.player.body.setVelocityY(-500)};
