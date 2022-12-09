@@ -102,19 +102,19 @@ export default class Player extends Phaser.GameObjects.Sprite {
         if (this.keySpace.isDown && (this.body.onFloor() || this.body.touching.down)) {
             if (!this.isJumping) {
                 this.isJumping = true;
-                this.body.setVelocityY(-340); 
+                this.body.setVelocityY(-380); 
             }
         }
 
         if (this.keySpace.isDown && this.cursorKeys.left.isDown && (this.body.onFloor() || this.body.touching.down)) {
             if (!this.isJumping) {
-                this.body.setVelocityY(-340);
+                this.body.setVelocityY(-380);
             }}
 
 
         if (this.keySpace.isDown && this.cursorKeys.right.isDown && (this.body.onFloor() || this.body.touching.down)) {
             if (!this.isJumping) {
-                this.body.setVelocityY(-340);
+                this.body.setVelocityY(-380);
             }
         }
 
