@@ -21,7 +21,7 @@ export default class Scene1 extends Phaser.Scene {
     preload() {
         console.log("scene3 - Executing preload()");
 
-        this.load.image("polis", "assets/images/background/sfondo_3.png") //sfondo: uno in primo piano, con platform, costruzioni principali
+        this.load.image("polis2", "assets/images/background/sfondo_3.png") //sfondo: uno in primo piano, con platform, costruzioni principali
 
         this.load.image("platform1", "assets/images/environment_elements/platform1.png"); //platform statico
         this.load.image("pavement", "assets/images/environment_elements/pavement.png"); //pavimento
@@ -35,7 +35,7 @@ export default class Scene1 extends Phaser.Scene {
        
         this.key0 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ZERO);
 
-        this.background = this.add.image(0, 0, "polis");
+        this.background = this.add.image(0, 0, "polis2");
         this.background.setOrigin(0, 0.55);
       
 

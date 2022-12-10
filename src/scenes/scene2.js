@@ -21,7 +21,7 @@ export default class Scene2 extends Phaser.Scene {
     preload() {
         console.log("scene2 - Executing preload()");
 
-        this.load.image("polis", "assets/images/background/sfondo_2.png") //sfondo: uno in primo piano, con platform, costruzioni principali
+        this.load.image("polis1", "assets/images/background/sfondo_2.png"); //sfondo: uno in primo piano, con platform, costruzioni principali
 
         this.load.image("platform1", "assets/images/environment_elements/platform1.png"); //platform statico
         this.load.image("pavement", "assets/images/environment_elements/pavement.png"); //pavimento
@@ -36,7 +36,7 @@ export default class Scene2 extends Phaser.Scene {
        
         this.key0 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ZERO);
 
-        this.background = this.add.image(0, 0, "polis");
+        this.background = this.add.image(0, 0, "polis1");
         this.background.setOrigin(0, 0.55);
        
 
@@ -77,10 +77,10 @@ export default class Scene2 extends Phaser.Scene {
         this.platforms = this.physics.add.staticGroup()
       
         this.platforms.create(137, 200, 'platform1').setScale(0.5).refreshBody();
-        this.platforms.create(1000, 480, 'platform1').setScale(0.4).refreshBody();
-        this.platforms.create(850, 40, 'platform1').setScale(0.5).refreshBody();
-        this.platforms.create(1150, 50, 'platform1').setScale(0.4).refreshBody();
-        this.platforms.create(1600, -130, 'platform1').setScale(0.5).refreshBody();
+        this.platforms.create(1100, 480, 'platform1').setScale(0.4).refreshBody();
+        this.platforms.create(850, 80, 'platform1').setScale(0.5).refreshBody();
+        this.platforms.create(1300, 40, 'platform1').setScale(0.4).refreshBody();
+        this.platforms.create(1600, -80, 'platform1').setScale(0.5).refreshBody();
         this.platforms.create(1500, 210, 'platform1').setScale(0.5).refreshBody();
         this.platforms.create(2750, -350, 'platform1').setScale(0.5).refreshBody();
         this.platforms.create(3800, 60, 'platform1').setScale(0.5).refreshBody();
@@ -123,7 +123,7 @@ export default class Scene2 extends Phaser.Scene {
 
         this.jumpingPlatforms = this.physics.add.staticGroup()
 
-        this.jumpingPlatforms.create(500, 330, 'rimbalzante').setScale(0.2).refreshBody();  
+        this.jumpingPlatforms.create(500, 310, 'rimbalzante').setScale(0.2).refreshBody();  
         this.jumpingPlatforms.create(3300, 230, 'rimbalzante').setScale(0.2).refreshBody();
         
         this.physics.add.collider(this.jumpingPlatforms, this.player, () => { if (this.player.body.touching.down) {
@@ -141,6 +141,8 @@ export default class Scene2 extends Phaser.Scene {
         this.movingPlatformGroup.children.iterate(function (platform) {
             platform.animateMovingPlatform();
         });
+
+        this.checkSceneEnd();
     }
 
 
@@ -158,7 +160,9 @@ export default class Scene2 extends Phaser.Scene {
 
 
     checkSceneEnd() {
-        if (this.key0.isDown) {
+        if (
+            //(this.player.x >= this.game.config.width - this.player.displayWidth) && 
+            this.key0.isDown) {
             this.scene.start("scene3");
         }
     }

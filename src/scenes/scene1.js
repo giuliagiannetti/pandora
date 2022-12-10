@@ -68,7 +68,7 @@ export default class Scene1 extends Phaser.Scene {
         this.createStaticPlatforms();
         this.createMovingPlatforms();
         this.createJumpingPlatforms();
-
+        this.checkSceneEnd();
     }
 
 
@@ -155,6 +155,8 @@ export default class Scene1 extends Phaser.Scene {
         this.movingPlatformGroup.children.iterate(function (platform) {
             platform.animateMovingPlatform();
         });
+
+        this.checkSceneEnd();
     }
 
 
@@ -172,7 +174,9 @@ export default class Scene1 extends Phaser.Scene {
 
 
     checkSceneEnd() {
-        if (this.key0.isDown) {
+        if (
+            //(this.player.x >= this.game.config.width - this.player.displayWidth) && 
+            this.key0.isDown) {
             this.scene.start("scene2");
         }
     }
