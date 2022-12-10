@@ -28,6 +28,8 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image("rimbalzante", "assets/images/environment_elements/rimbalzo.png");//piattaforma rimbalzante
         this.load.image("movingPlatform", "assets/images/environment_elements/movingPlatform.png"); //platform in movimento
 
+        this.load.image("chiave", "assets/images/environment_elements/chiave.png"); //chiave
+
     }
 
     create() {
@@ -69,6 +71,11 @@ export default class Scene1 extends Phaser.Scene {
         this.createMovingPlatforms();
         this.createJumpingPlatforms();
         this.checkSceneEnd();
+
+
+        //chiavi
+        this.chiave = this.add.image(5100, -390, "chiave").setScale(0.08);
+        
     }
 
 
