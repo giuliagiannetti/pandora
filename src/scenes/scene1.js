@@ -78,7 +78,7 @@ export default class Scene1 extends Phaser.Scene {
         this.platforms = this.physics.add.staticGroup()
         //this.platforms.create(800, 600, 'platform1').setScale(0.25).refreshBody();
         this.platforms.create(1080, 520, 'platform1').setScale(0.5).refreshBody();
-        this.platforms.create(1430, 375, 'platform1').setScale(0.5).refreshBody();
+        this.platforms.create(1500, 375, 'platform1').setScale(0.5).refreshBody();
         this.platforms.create(2100, 220, 'pavement').setScale(0.3).refreshBody();//architrave
         this.platforms.create(3400, 210, 'platform1').setScale(0.5).refreshBody();
         //this.platforms.create(4400, 490, 'platform1').setScale(0.5).refreshBody();
@@ -175,7 +175,7 @@ export default class Scene1 extends Phaser.Scene {
 
     checkSceneEnd() {
         if (
-            //(this.player.x >= this.game.config.width - this.player.displayWidth) && 
+            (this.player.x >= this.game.config.width - this.player.displayWidth) && 
             this.key0.isDown) {
             this.scene.start("scene2");
         }

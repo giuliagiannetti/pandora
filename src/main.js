@@ -15,7 +15,7 @@ const config = {
         default: 'arcade',
         arcade: {
             gravity: {
-                 y: 370,  // forza di gravità
+                 y: 370,  
                  },
             debug: true
         }
@@ -31,4 +31,4 @@ game.gameState = {
     lives: 3
 }
 
-game.scene.start ("scene0_welcome");  //se voglio far partire il gioco da una scena specifica
+game.scene.start ("scene0_welcome");  

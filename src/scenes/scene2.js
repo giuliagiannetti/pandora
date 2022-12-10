@@ -161,7 +161,7 @@ export default class Scene2 extends Phaser.Scene {
 
     checkSceneEnd() {
         if (
-            //(this.player.x >= this.game.config.width - this.player.displayWidth) && 
+            (this.player.x >= this.game.config.width - this.player.displayWidth) && 
             this.key0.isDown) {
             this.scene.start("scene3");
         }
