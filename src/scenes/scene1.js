@@ -38,6 +38,7 @@ export default class Scene1 extends Phaser.Scene {
        
         this.key0 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ZERO);
 
+
         this.background = this.add.image(0, 0, "polis");
         this.background.setOrigin(0, 0.55);
         this.background.setScale(2);
@@ -49,33 +50,29 @@ export default class Scene1 extends Phaser.Scene {
         this.floor.setOrigin(0, 1);
         this.physics.add.existing(this.floor, true);
 
+
         // Player
         const thePlayer = new Player(this, 100, this.floorHeight, this.worldWidth);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
 
 
-
-        // Imposta la camera per seguire i movimenti del giocatore lungo l'asse x
-        
-     
         this.cameras.main.startFollow(this.player);
         this.cameras.main.setFollowOffset(0, 300);
 
         
-
         // Nemico
 
-        // Inserisci delle piattaforme statiche
+
+        // Chiavi
+        this.chiave = this.add.image(5100, -450, "chiave").setScale(0.08);
+        this.physics.add.overlap(this.player, this.chiave, this.collectChiavi);
+
+
         this.createStaticPlatforms();
         this.createMovingPlatforms();
         this.createJumpingPlatforms();
-        this.checkSceneEnd();
 
-
-        //chiavi
-        this.chiave = this.add.image(5100, -390, "chiave").setScale(0.08);
-        
     }
 
 
@@ -91,24 +88,24 @@ export default class Scene1 extends Phaser.Scene {
         //this.platforms.create(4400, 490, 'platform1').setScale(0.5).refreshBody();
         this.platforms.create(4000, 500, 'platform1').setScale(0.3).refreshBody();
 
-      //casa1
-      this.platforms.create(5490, 260, 'pavement').setScale(0.5).refreshBody();//pavimento
-      this.platforms.create(5060, 184, 'platform1').setScale(0.4).refreshBody();//scalino
-      this.platforms.create(5130, 122, 'platform1').setScale(0.4).refreshBody();//scalino
-      this.platforms.create(5200, 60, 'platform1').setScale(0.4).refreshBody();//scalino
-      this.platforms.create(5270, -2, 'platform1').setScale(0.4).refreshBody();//scalino
-      this.platforms.create(5100, -360, 'platform1').setScale(0.5).refreshBody();//piattaforma chiave
-      this.platforms.create(5600, -30, 'platform1').setScale(0.4).refreshBody();
-      this.platforms.create(6000, -150, 'platform1').setScale(0.4).refreshBody();
+       //casa1
+        this.platforms.create(5490, 260, 'pavement').setScale(0.5).refreshBody();//pavimento
+        this.platforms.create(5060, 184, 'platform1').setScale(0.4).refreshBody();//scalino
+        this.platforms.create(5130, 122, 'platform1').setScale(0.4).refreshBody();//scalino
+        this.platforms.create(5200, 60, 'platform1').setScale(0.4).refreshBody();//scalino
+        this.platforms.create(5270, -2, 'platform1').setScale(0.4).refreshBody();//scalino
+        this.platforms.create(5100, -360, 'platform1').setScale(0.5).refreshBody();//piattaforma chiave
+        this.platforms.create(5600, -30, 'platform1').setScale(0.4).refreshBody();
+        this.platforms.create(6000, -150, 'platform1').setScale(0.4).refreshBody();
       
-      //casa2
-      this.platforms.create(6700, -20, 'pavement').setScale(0.2).refreshBody();//pavimento
-      this.platforms.create(7580, -20, 'pavement').setScale(0.2).refreshBody();//pavimento
-      this.platforms.create(7859, 34, 'platform1').setScale(0.4).refreshBody();//scalino
-      this.platforms.create(7939, 96, 'platform1').setScale(0.4).refreshBody();//scalino
-      this.platforms.create(8019, 158, 'platform1').setScale(0.4).refreshBody();//scalino
-      this.platforms.create(8099, 220, 'platform1').setScale(0.4).refreshBody();//scalino
-      this.platforms.create(8317, 220, 'platform1').setScale(0.4).refreshBody();
+       //casa2
+        this.platforms.create(6700, -20, 'pavement').setScale(0.2).refreshBody();//pavimento
+        this.platforms.create(7580, -20, 'pavement').setScale(0.2).refreshBody();//pavimento
+        this.platforms.create(7859, 34, 'platform1').setScale(0.4).refreshBody();//scalino
+        this.platforms.create(7939, 96, 'platform1').setScale(0.4).refreshBody();//scalino
+        this.platforms.create(8019, 158, 'platform1').setScale(0.4).refreshBody();//scalino
+        this.platforms.create(8099, 220, 'platform1').setScale(0.4).refreshBody();//scalino
+        this.platforms.create(8317, 220, 'platform1').setScale(0.4).refreshBody();
 
 
         this.physics.add.collider(this.platforms, this.player, () => {
@@ -147,11 +144,10 @@ export default class Scene1 extends Phaser.Scene {
           this.physics.add.collider(this.jumpingPlatforms, this.player, () => { if (this.player.body.touching.down) {
             this.player.body.setVelocityY(-500)};
         });
+
+        
           
         }
-
-
-
 
 
 
@@ -164,6 +160,8 @@ export default class Scene1 extends Phaser.Scene {
         });
 
         this.checkSceneEnd();
+
+        this.collectChiavi(this.player, this.chiave);
     }
 
 
@@ -178,6 +176,15 @@ export default class Scene1 extends Phaser.Scene {
         }
     }
 
+
+     
+    collectChiavi() {
+        let x_diff = Math.abs(this.player.x-this.chiave.x);
+        let y_diff = Math.abs(this.player.y-this.chiave.y);
+        if(x_diff < 75 && y_diff < 100) {
+            this.chiave.destroy();
+        }
+    }
 
 
     checkSceneEnd() {
