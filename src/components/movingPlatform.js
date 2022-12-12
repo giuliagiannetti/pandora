@@ -21,11 +21,11 @@ export default class movingPlatform extends Phaser.GameObjects.Sprite {
 
     animateMovingPlatform() {
         if (this.x >= this.initialX) {
-            this.body.setVelocityX(-80);
+            this.body.setVelocityX(-140);
 
         }
         if (this.x <= (this.initialX - 300)) {
-            this.body.setVelocityX(80);
+            this.body.setVelocityX(140);
         }
     }
 

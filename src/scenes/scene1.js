@@ -70,6 +70,15 @@ export default class Scene1 extends Phaser.Scene {
         this.physics.add.overlap(this.player, this.chiave, this.collectChiavi);
 
 
+        const styleConfig = { color: '#FFFFFF', fontSize: 30};
+        const scoreMessage2 = "Score: " + this.game.gameState.score;
+        const textPosX2 = 30;
+        const textPosY2 = 30;
+        this.scoreBox = this.add.text(textPosX2, textPosY2, scoreMessage2, styleConfig);
+        this.scoreBox.setOrigin(0,0);
+        this.scoreBox.setScrollFactor(0,0);
+
+
         this.createStaticPlatforms();
         this.createMovingPlatforms();
         this.createJumpingPlatforms();
@@ -85,7 +94,7 @@ export default class Scene1 extends Phaser.Scene {
         this.platforms.create(1080, 520, 'platform1').setScale(0.5).refreshBody();
         this.platforms.create(1500, 375, 'platform1').setScale(0.5).refreshBody();
         this.platforms.create(2100, 220, 'pavement').setScale(0.3).refreshBody();//architrave
-        this.platforms.create(3400, 510, 'verticale').setScale(0.5).refreshBody();
+        this.platforms.create(3400, 490, 'verticale').setScale(0.5).refreshBody();
         this.platforms.create(3400, 210, 'platform1').setScale(0.5).refreshBody();
         this.platforms.create(4000, 500, 'platform1').setScale(0.3).refreshBody();
 
@@ -184,6 +193,8 @@ export default class Scene1 extends Phaser.Scene {
         let y_diff = Math.abs(this.player.y-this.chiave.y);
         if(x_diff < 75 && y_diff < 100) {
             this.chiave.destroy();
+            this.game.gameState.score = 1;
+            this.scoreBox.setText("Score: " + this.game.gameState.score);
         }
     }
 

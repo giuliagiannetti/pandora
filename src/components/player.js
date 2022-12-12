@@ -86,44 +86,40 @@ export default class Player extends Phaser.GameObjects.Sprite {
     }
 
     manageMovements() {
-        //tasto freccia sinistra premuto + giocatore a destra del limite sinistro del quadro
         if (this.cursorKeys.left.isDown && this.x >= 0) {
-            this.body.setVelocityX(-200); // Velocità per spostamento verso sinistra
+            this.body.setVelocityX(-200);
 
-        // tasto freccia destra premuto + giocatore a sinistra del limite sinistro del quadro
         } else if (this.cursorKeys.right.isDown && this.x <= this.maxWidth - this.displayWidth){
-            this.body.setVelocityX(200);  // Velocità per spostamento verso destra
+            this.body.setVelocityX(200);
 
         } else {
-            // nessun tasto premuto --> giocatore fermo rispetto a x
             this.body.setVelocityX(0); 
         }
 
         if (this.keySpace.isDown && (this.body.onFloor() || this.body.touching.down)) {
             if (!this.isJumping) {
                 this.isJumping = true;
-                this.body.setVelocityY(-340); 
+                this.body.setVelocityY(-400); 
             }
         }
 
         if (this.keySpace.isDown && this.cursorKeys.left.isDown && (this.body.onFloor() || this.body.touching.down)) {
             if (!this.isJumping) {
-                this.body.setVelocityY(-340);
+                this.body.setVelocityY(-400);
             }}
 
 
         if (this.keySpace.isDown && this.cursorKeys.right.isDown && (this.body.onFloor() || this.body.touching.down)) {
             if (!this.isJumping) {
-                this.body.setVelocityY(-340);
+                this.body.setVelocityY(-400);
             }
         }
 
-        // no keyspace premuto e personaggio con i piedi per terra: no salto oppure è stato già attuato
+        
         if (this.keySpace.isUp && this.y >= this.floorHeight) {
             this.isJumping = false;
         }
 
-        // Gestiamo le animazioni separatamente
         this.manageAnimations();
 
     }
