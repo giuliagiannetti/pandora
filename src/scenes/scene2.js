@@ -82,7 +82,7 @@ export default class Scene2 extends Phaser.Scene {
         this.platforms.create(1300, 40, 'platform1').setScale(0.4).refreshBody();
         this.platforms.create(1600, -80, 'platform1').setScale(0.5).refreshBody();
         this.platforms.create(1500, 210, 'platform1').setScale(0.5).refreshBody();
-        this.platforms.create(2750, -350, 'platform1').setScale(0.5).refreshBody();
+        this.platforms.create(2750, -390, 'platform1').setScale(0.5).refreshBody();
         this.platforms.create(3800, 60, 'platform1').setScale(0.5).refreshBody();
         this.platforms.create(3900, 582, 'platform1').setScale(0.4).refreshBody();//scalino
         this.platforms.create(4020, 520, 'platform1').setScale(0.4).refreshBody();//scalino
@@ -100,7 +100,7 @@ export default class Scene2 extends Phaser.Scene {
         // Inserisci delle piattaforme in movimento
         this.movingPlatforms = [];
         //inserite le vostre piattaforme qua
-        this.movingPlatforms.push(new movingPlatform(this, 2400, -230));
+        this.movingPlatforms.push(new movingPlatform(this, 2400, -250));
         
  
         
