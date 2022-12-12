@@ -28,17 +28,19 @@ export default class Scene2 extends Phaser.Scene {
         this.load.image("rimbalzante", "assets/images/environment_elements/rimbalzo.png");//piattaforma rimbalzante
         this.load.image("movingPlatform", "assets/images/environment_elements/movingPlatform.png"); //platform in movimento
 
+        this.load.image("sandalo", "assets/images/environment_elements/sandalo.png"); //sandali di hermes
+
     }
 
     create() {
         console.log("scene2 - Executing create()");
-                
-       
+
+
         this.key0 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ZERO);
 
         this.background = this.add.image(0, 0, "polis1");
         this.background.setOrigin(0, 0.55);
-       
+
 
 
         this.floor = this.add.rectangle(0, this.game.config.height,
@@ -52,14 +54,16 @@ export default class Scene2 extends Phaser.Scene {
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
 
+        //sandali di Hermes
+        this.sandalo = this.add.image(850, -5, "sandalo").setScale(0.08);
+        this.physics.add.overlap(this.player, this.sandalo, this.collectSandalo);
 
         // Imposta la camera per seguire i movimenti del giocatore lungo l'asse x
-        
-     
+
+
         this.cameras.main.startFollow(this.player);
         this.cameras.main.setFollowOffset(0, 300);
 
-        
 
         // Nemico
 
@@ -71,11 +75,11 @@ export default class Scene2 extends Phaser.Scene {
     }
 
 
-    
+
     createStaticPlatforms() {
         // Aggiungi le piattaforme come un gruppo di oggetti statici
         this.platforms = this.physics.add.staticGroup()
-      
+
         this.platforms.create(137, 200, 'platform1').setScale(0.5).refreshBody();
         this.platforms.create(1100, 480, 'platform1').setScale(0.4).refreshBody();
         this.platforms.create(850, 80, 'platform1').setScale(0.5).refreshBody();
@@ -101,9 +105,9 @@ export default class Scene2 extends Phaser.Scene {
         this.movingPlatforms = [];
         //inserite le vostre piattaforme qua
         this.movingPlatforms.push(new movingPlatform(this, 2400, -250));
-        
- 
-        
+
+
+
         this.movingPlatformGroup = this.physics.add.group(this.movingPlatforms);
         this.movingPlatformGroup.children.iterate(function (platform) {
             platform.body.allowGravity = false;
@@ -119,18 +123,20 @@ export default class Scene2 extends Phaser.Scene {
 
 
 
-    createJumpingPlatforms(){             
+    createJumpingPlatforms() {
 
         this.jumpingPlatforms = this.physics.add.staticGroup()
 
-        this.jumpingPlatforms.create(500, 310, 'rimbalzante').setScale(0.2).refreshBody();  
+        this.jumpingPlatforms.create(500, 310, 'rimbalzante').setScale(0.2).refreshBody();
         this.jumpingPlatforms.create(3300, 230, 'rimbalzante').setScale(0.2).refreshBody();
-        
-        this.physics.add.collider(this.jumpingPlatforms, this.player, () => { if (this.player.body.touching.down) {
-          this.player.body.setVelocityY(-500)};
-      });
-        
-      }
+
+        this.physics.add.collider(this.jumpingPlatforms, this.player, () => {
+            if (this.player.body.touching.down) {
+                this.player.body.setVelocityY(-500)
+            };
+        });
+
+    }
 
 
 
@@ -141,6 +147,8 @@ export default class Scene2 extends Phaser.Scene {
         this.movingPlatformGroup.children.iterate(function (platform) {
             platform.animateMovingPlatform();
         });
+
+        this.collectSandalo(this.player, this.sandalo);
 
         this.checkSceneEnd();
     }
@@ -157,13 +165,20 @@ export default class Scene2 extends Phaser.Scene {
         }
     }
 
-
+    collectSandalo() {
+        let x_diff = Math.abs(this.player.x - this.sandalo.x);
+        let y_diff = Math.abs(this.player.y - this.sandalo.y);
+        if (x_diff < 75 && y_diff < 100) {
+            this.sandalo.destroy();
+          this.player.jumpSpeed = -600;
+        }
+    }
 
     checkSceneEnd() {
-        if (
-            (this.player.x >= this.game.config.width - this.player.displayWidth) && 
+        if ((this.player.x >= this.game.config.width - this.player.displayWidth) &&
             this.key0.isDown) {
             this.scene.start("scene3");
+        
         }
     }
 }
