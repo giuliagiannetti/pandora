@@ -53,7 +53,7 @@ export default class Scene1 extends Phaser.Scene {
 
 
         // Player
-        const thePlayer = new Player(this, 100, this.floorHeight, this.worldWidth);
+        const thePlayer = new Player(this, 100, this.floorHeight, this.worldWidth, -400);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
 
@@ -107,6 +107,11 @@ export default class Scene1 extends Phaser.Scene {
         this.platforms.create(5100, -360, 'platform1').setScale(0.5).refreshBody();//piattaforma chiave
         this.platforms.create(5600, -30, 'platform1').setScale(0.4).refreshBody();
         this.platforms.create(6000, -150, 'platform1').setScale(0.4).refreshBody();
+        this.platforms.create(6100, -230, 'verticale').setScale(0.5).refreshBody();//parete
+        this.platforms.create(5600, -680, 'pavement').setScale(0.4).refreshBody(); //tetto
+        this.platforms.create(4750, -525, 'platform1').setScale(0.4).refreshBody();
+        this.platforms.create(5250, -720, 'verticale').setScale(0.5).refreshBody();
+        
       
        //casa2
         this.platforms.create(6700, -20, 'pavement').setScale(0.2).refreshBody();//pavimento
@@ -116,6 +121,7 @@ export default class Scene1 extends Phaser.Scene {
         this.platforms.create(8019, 158, 'platform1').setScale(0.4).refreshBody();//scalino
         this.platforms.create(8099, 220, 'platform1').setScale(0.4).refreshBody();//scalino
         this.platforms.create(8317, 220, 'platform1').setScale(0.4).refreshBody();
+      
 
 
         this.physics.add.collider(this.platforms, this.player, () => {
@@ -154,10 +160,8 @@ export default class Scene1 extends Phaser.Scene {
           this.physics.add.collider(this.jumpingPlatforms, this.player, () => { if (this.player.body.touching.down) {
             this.player.body.setVelocityY(-500)};
         });
-
-        
           
-        }
+    }
 
 
 
