@@ -25,6 +25,7 @@ export default class Scene1 extends Phaser.Scene {
 
         this.load.image("platform1", "assets/images/environment_elements/platform1.png"); //platform statico
         this.load.image("pavement", "assets/images/environment_elements/pavement.png"); //pavimento
+        this.load.image("verticale", "assets/images/environment_elements/verticale.png"); //colonna verticale
         this.load.image("rimbalzante", "assets/images/environment_elements/rimbalzo.png");//piattaforma rimbalzante
         this.load.image("movingPlatform", "assets/images/environment_elements/movingPlatform.png"); //platform in movimento
 
@@ -84,8 +85,8 @@ export default class Scene1 extends Phaser.Scene {
         this.platforms.create(1080, 520, 'platform1').setScale(0.5).refreshBody();
         this.platforms.create(1500, 375, 'platform1').setScale(0.5).refreshBody();
         this.platforms.create(2100, 220, 'pavement').setScale(0.3).refreshBody();//architrave
+        this.platforms.create(3400, 510, 'verticale').setScale(0.5).refreshBody();
         this.platforms.create(3400, 210, 'platform1').setScale(0.5).refreshBody();
-        //this.platforms.create(4400, 490, 'platform1').setScale(0.5).refreshBody();
         this.platforms.create(4000, 500, 'platform1').setScale(0.3).refreshBody();
 
        //casa1
@@ -188,8 +189,7 @@ export default class Scene1 extends Phaser.Scene {
 
 
     checkSceneEnd() {
-        if (
-            (this.player.x >= this.game.config.width - this.player.displayWidth) && 
+        if ((this.player.x >= this.game.config.width - this.player.displayWidth) && 
             this.key0.isDown) {
             this.scene.start("scene2");
         }
