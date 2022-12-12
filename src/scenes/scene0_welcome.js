@@ -15,7 +15,7 @@ export default class WelcomeScene extends Phaser.Scene {
       //assets
       
       //sfondo
-      this.load.image ("background_base", "assets/images/background/copertina.jpeg");
+      this.load.image ("background_base", "assets/images/background/scherminiz_render_bozza1.jpg");
       
 
       // Carichiamo l'immagine del giocatore in formato spritesheet (ci servirà nelle prossime scene)
@@ -34,6 +34,10 @@ export default class WelcomeScene extends Phaser.Scene {
 
 
       //componenti grafiche (button)
+      this.load.image ("bottoneGioca", "assets/images/buttons/BottoneGioca.png");
+      this.load.image ("bottoneStoria", "assets/images/buttons/BottoneStoria.png");
+      this.load.image ("bottoneCrediti", "assets/images/buttons/BottoneCrediti.png");
+      
 
    
       //comando momentaneo
@@ -54,16 +58,25 @@ export default class WelcomeScene extends Phaser.Scene {
       this.background.setPipeline('Light2D').setAlpha(0.5);
 
       //immagine del bottone
-      /* this.playbutton = this.add.image(this.game.config.width/2, this.game.config.height/2, "playButton");
+      this.playbutton = this.add.image(145, 242, "bottoneGioca");
+      this.bottone_storia = this.add.image(500, 342, "bottoneStoria");
+      this.bottone_crediti = this.add.image(500, 442, "bottoneCrediti");
+
       this.playbutton.setOrigin(0.5, 0.5);
       this.playbutton.setInteractive();
+
+      this.bottone_storia.setOrigin(0.5, 0.5);
+      this.bottone_storia.setInteractive();
+
+      this.bottone_crediti.setOrigin(0.5, 0.5);
+      this.bottone_crediti.setInteractive();
 
       //bottone cliccabile 
       this.playbutton.on("pointerdown", ()=>{ 
       this.scene.start("scene1");
-       }) ;*/
+       }) ;
 
-      var light = this.lights.addLight(300, 300, 300).setScrollFactor(0.0).setIntensity(2);
+      var light = this.lights.addLight(300, 300, 700).setScrollFactor(0.0).setIntensity(2);
 
       this.lights.enable();
       this.lights.setAmbientColor(0x555555);
