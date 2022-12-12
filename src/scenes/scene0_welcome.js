@@ -94,9 +94,7 @@ export default class WelcomeScene extends Phaser.Scene {
   
 
    update(){
-      if (this.keySpace.isDown) {
-         this.scene.start("scene1");
-     }
+    
    }
 
 }

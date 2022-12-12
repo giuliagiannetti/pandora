@@ -67,9 +67,9 @@ export default class Scene1 extends Phaser.Scene {
         this.createStaticPlatforms();
         this.createMovingPlatforms();
 
-        this.playerLight = this.lights.addLight(0, 0, 200).setIntensity(2);
+        this.playerLight = this.lights.addLight(0, 0, 600).setIntensity(2).setColor(0xFFFFE0);
         this.lights.enable();
-        this.lights.setAmbientColor(0x555555);
+        this.lights.setAmbientColor(0x11111);
     }
 
 
