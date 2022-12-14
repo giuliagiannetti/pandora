@@ -150,7 +150,6 @@ export default class Scene1 extends Phaser.Scene {
     }
 
 
-
     createJumpingPlatforms(){             
 
           this.jumpingPlatforms = this.physics.add.staticGroup()
