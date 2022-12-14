@@ -1,4 +1,3 @@
-
 export default class movingPlatform extends Phaser.GameObjects.Sprite {
 
     floorHeight;

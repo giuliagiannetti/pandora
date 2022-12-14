@@ -82,7 +82,7 @@ export default class Scene1 extends Phaser.Scene {
         this.createStaticPlatforms();
         this.createMovingPlatforms();
         this.createJumpingPlatforms();
-
+        this.createPorta();
     }
 
 
@@ -110,7 +110,8 @@ export default class Scene1 extends Phaser.Scene {
         this.platforms.create(6100, -230, 'verticale').setScale(0.5).refreshBody();//parete
         this.platforms.create(5600, -680, 'pavement').setScale(0.4).refreshBody(); //tetto
         this.platforms.create(4750, -525, 'platform1').setScale(0.4).refreshBody();
-        this.platforms.create(5250, -720, 'verticale').setScale(0.5).refreshBody();
+
+        
         
       
        //casa2
@@ -162,6 +163,13 @@ export default class Scene1 extends Phaser.Scene {
           
     }
 
+    createPorta(){
+        this.porta = this.physics.add.staticGroup()
+        
+        this.porta.create(5250, -720, 'verticale').setScale(0.5).refreshBody();
+
+        this.physics.add.collider(this.porta, this.player);
+    }
 
 
     update() {
@@ -198,6 +206,7 @@ export default class Scene1 extends Phaser.Scene {
             this.chiave.destroy();
             this.game.gameState.score = 1;
             this.scoreBox.setText("Score: " + this.game.gameState.score);
+            this.porta.body.y == -600;
         }
     }
 
