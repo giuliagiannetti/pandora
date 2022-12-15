@@ -58,9 +58,9 @@ export default class WelcomeScene extends Phaser.Scene {
       this.background.setPipeline('Light2D').setAlpha(0.5);
 
       //immagine del bottone
-      this.playbutton = this.add.image(145, 242, "bottoneGioca");
-      this.bottone_storia = this.add.image(500, 342, "bottoneStoria");
-      this.bottone_crediti = this.add.image(500, 442, "bottoneCrediti");
+      this.playbutton = this.add.image(300, 242, "bottoneGioca");
+      this.bottone_storia = this.add.image(300, 392, "bottoneStoria");
+      this.bottone_crediti = this.add.image(300, 542, "bottoneCrediti");
 
       this.playbutton.setOrigin(0.5, 0.5);
       this.playbutton.setInteractive();
@@ -76,7 +76,7 @@ export default class WelcomeScene extends Phaser.Scene {
       this.scene.start("scene1");
        }) ;
 
-      var light = this.lights.addLight(300, 300, 700).setScrollFactor(0.0).setIntensity(2);
+      var light = this.lights.addLight(300, 300, 1000).setScrollFactor(0.0).setIntensity(2);
 
       this.lights.enable();
       this.lights.setAmbientColor(0x555555);
