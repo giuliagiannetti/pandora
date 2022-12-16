@@ -32,7 +32,7 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image("movingPlatform", "assets/images/environment_elements/movingPlatform.png"); //platform in movimento
 
         this.load.image("chiave", "assets/images/environment_elements/chiave.png"); //chiave
-        this.load.image("chiaveicona", "assets/images/environment_elements/chiaveicona.png"); //chiave
+        this.load.image("chiaveicona", "assets/images/environment_elements/chiaveicona.png"); //chiave icona
 
     }
 
@@ -214,22 +214,12 @@ export default class Scene1 extends Phaser.Scene {
     collectChiavi() {
         let x_diff = Math.abs(this.player.x-this.chiave.x);
         let y_diff = Math.abs(this.player.y-this.chiave.y);
-        let portaFerma = this.portaGroup;
         //let portaFermaY = this.portaGroup.y;
         let icon = this.chiaveIcon1;
         if(x_diff < 75 && y_diff < 100) {
             this.chiave.destroy();
-            //this.game.gameState.score = 1;
-            //this.scoreBox.setText("Score: " + this.game.gameState.score);
-           this.portaGroup.children.iterate(function (porta) { porta.movePorta();});
-           // icon.setAlpha(1);
-            /*if (portaFerma.y >= portaFermaY){
-                portaFerma.setVelocityY(140);
-            }
-            if (portaFerma.y <= (portaFermaY + 280)) {
-                portaFerma.setVelocityY(0);
-            }*/
-            //portaFerma.setY(-500);
+            this.portaGroup.children.iterate(function (porta) { porta.movePorta();});
+            icon.setAlpha(1);
         }
     }
 

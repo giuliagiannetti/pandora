@@ -15,10 +15,10 @@ export default class Player extends Phaser.GameObjects.Sprite {
         scene.add.existing(this);
         this.initialPosition = x;
         this.floorHeight = y;
-        this.setOrigin(0, 1); //pivot in basso a sinistra
-        this.setScale(0.35);   
+        this.setOrigin(0, 1); 
+        this.setScale(0.4);   
 
-        this.isJumping = false; //di default il giocatore non sta saltando
+        this.isJumping = false; 
         this.stepLength  = 20;
         this.maxWidth = maxWidth;
         this.jumpSpeed = jumpSpeed;
