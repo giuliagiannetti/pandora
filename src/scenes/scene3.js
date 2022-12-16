@@ -37,14 +37,15 @@ export default class Scene1 extends Phaser.Scene {
 
         this.background = this.add.image(0, 0, "polis2");
         this.background.setOrigin(0, 0.55);
-      
-
+        this.background.setPipeline('Light2D').setAlpha(0.5);
 
         this.floor = this.add.rectangle(0, this.game.config.height,
             this.worldWidth + 100, this.game.config.height - this.floorHeight,
             0x000000, 100);
         this.floor.setOrigin(0, 1);
         this.physics.add.existing(this.floor, true);
+
+
 
         // Player
         const thePlayer = new Player(this, 100, this.floorHeight, this.worldWidth, -400);
@@ -54,19 +55,21 @@ export default class Scene1 extends Phaser.Scene {
 
 
         // Imposta la camera per seguire i movimenti del giocatore lungo l'asse x
-        
      
         this.cameras.main.startFollow(this.player);
         this.cameras.main.setFollowOffset(0, 300);
 
-        
-
+     
         // Nemico
+
 
         // Inserisci delle piattaforme statiche
         this.createStaticPlatforms();
         this.createMovingPlatforms();
 
+        this.playerLight = this.lights.addLight(0, 0, 600).setIntensity(2).setColor(0xFFFFE0);
+        this.lights.enable();
+        this.lights.setAmbientColor(0x11111);
     }
 
 
@@ -128,6 +131,9 @@ export default class Scene1 extends Phaser.Scene {
         this.movingPlatformGroup.children.iterate(function (platform) {
             platform.animateMovingPlatform();
         });
+
+        this.playerLight.x = this.player.body.x + 70;
+        this.playerLight.y = this.player.body.y + 70;
     }
 
 
@@ -143,10 +149,11 @@ export default class Scene1 extends Phaser.Scene {
     }
 
 
-
     checkSceneEnd() {
         if (this.key0.isDown) {
-            this.scene.start("scene4");
+            this.scene.start("good");
         }
     }
+
+
 }
