@@ -56,7 +56,7 @@ export default class Scene1 extends Phaser.Scene {
 
 
         // Player
-        const thePlayer = new Player(this, 5000, this.floorHeight, this.worldWidth, -400);
+        const thePlayer = new Player(this, 100, this.floorHeight, this.worldWidth, -400);
         
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
