@@ -19,12 +19,12 @@ export default class Porta extends Phaser.GameObjects.Sprite {
     }
 
     movePorta() {
-        if (this.y >= this.portaY) {
-            this.body.setVelocityY(-100);
+        if (this.y <= this.portaY) {
+            this.body.setVelocityY(300);
 
         }
-        if (this.y <= (this.portaY - 400)) {
-            this.body.setVelocityY(100);
+        if (this.y >= (this.portaY + 200)) {
+            this.body.setVelocityY(0);
         }
         
     }

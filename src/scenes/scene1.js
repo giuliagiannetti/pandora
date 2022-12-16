@@ -56,7 +56,7 @@ export default class Scene1 extends Phaser.Scene {
 
 
         // Player
-        const thePlayer = new Player(this, 100, this.floorHeight, this.worldWidth, -400);
+        const thePlayer = new Player(this, 5000, 80, this.worldWidth, -400);
         
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
@@ -70,7 +70,7 @@ export default class Scene1 extends Phaser.Scene {
 
 
         // Chiavi
-        this.chiave = this.add.image(5100, -450, "chiave").setScale(0.08);
+        this.chiave = this.add.image(5000, -450, "chiave").setScale(0.08);
         this.physics.add.overlap(this.player, this.chiave, this.collectChiavi);
 
 
@@ -104,7 +104,7 @@ export default class Scene1 extends Phaser.Scene {
         this.platforms.create(5130, 122, 'platform1').setScale(0.4).refreshBody();//scalino
         this.platforms.create(5200, 60, 'platform1').setScale(0.4).refreshBody();//scalino
         this.platforms.create(5270, -2, 'platform1').setScale(0.4).refreshBody();//scalino
-        this.chiavePlatform = this.platforms.create(5100, -360, 'platform1').setScale(0.5).refreshBody();//piattaforma chiave
+        this.chiavePlatform = this.platforms.create(5100, -350, 'platform1').setScale(0.7).refreshBody();//piattaforma chiave
         this.platforms.create(5600, -30, 'platform1').setScale(0.4).refreshBody();
         this.platforms.create(6000, -150, 'platform1').setScale(0.4).refreshBody();
         this.platforms.create(6100, -230, 'verticale').setScale(0.5).refreshBody();//parete
@@ -166,12 +166,16 @@ export default class Scene1 extends Phaser.Scene {
         
         this.porta = [];
 
-        this.porta.push(new Porta(this, 5200, -500));
+        this.porta.push(new Porta(this, 5230, -750));
         
         this.portaGroup = this.physics.add.group(this.porta);
         this.portaGroup.children.iterate(function (porta) {
             porta.body.allowGravity = false;
             porta.body.setImmovable(true);
+        });
+
+        this.physics.add.collider(this.portaGroup, this.player, () => {
+            this.player.isJumping = false;
         });
 
     }
@@ -187,7 +191,6 @@ export default class Scene1 extends Phaser.Scene {
             platform.animateMovingPlatform();
         });
 
-        this.portaGroup.children.iterate(function (porta) { porta.movePorta();});
 
         this.checkSceneEnd();
 
@@ -218,8 +221,8 @@ export default class Scene1 extends Phaser.Scene {
             this.chiave.destroy();
             //this.game.gameState.score = 1;
             //this.scoreBox.setText("Score: " + this.game.gameState.score);
-            portaFerma.setVelocityY(0);
-            icon.setAlpha(1);
+           this.portaGroup.children.iterate(function (porta) { porta.movePorta();});
+           // icon.setAlpha(1);
             /*if (portaFerma.y >= portaFermaY){
                 portaFerma.setVelocityY(140);
             }

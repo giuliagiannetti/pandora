@@ -16,7 +16,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.initialPosition = x;
         this.floorHeight = y;
         this.setOrigin(0, 1); //pivot in basso a sinistra
-        this.setScale(0.5);   
+        this.setScale(0.35);   
 
         this.isJumping = false; //di default il giocatore non sta saltando
         this.stepLength  = 20;
