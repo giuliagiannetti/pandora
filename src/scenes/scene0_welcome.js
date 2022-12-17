@@ -17,8 +17,7 @@ export default class WelcomeScene extends Phaser.Scene {
       //sfondo
       this.load.image ("background_base", "assets/images/background/scherminiz_render_bozza1.jpg");
       
-
-      // Carichiamo l'immagine del giocatore in formato spritesheet (ci servirà nelle prossime scene)
+      //giocatore
       const player_spritesheet_config = {
          frameWidth:  280,
          frameHeight: 335,
@@ -27,21 +26,16 @@ export default class WelcomeScene extends Phaser.Scene {
 
       //nemico
       const monster_spritesheet_config = {
-         frameWidth:  72,
-         frameHeight: 72,
+         frameWidth: 1165,
+         frameHeight: 563,
       };
-      this.load.spritesheet("enemy", "assets/images/characters/", monster_spritesheet_config);
+      this.load.spritesheet("enemyrun", "assets/images/characters/enemy.png", monster_spritesheet_config);
 
 
       //componenti grafiche (button)
       this.load.image ("bottoneGioca", "assets/images/buttons/BottoneGioca.png");
       this.load.image ("bottoneStoria", "assets/images/buttons/BottoneStoria.png");
       this.load.image ("bottoneCrediti", "assets/images/buttons/BottoneCrediti.png");
-      
-
-   
-      //comando momentaneo
-      this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
     };
 

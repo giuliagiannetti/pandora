@@ -6,7 +6,6 @@ export default class movingPlatform extends Phaser.GameObjects.Sprite {
  
 
     constructor(scene, x, y) {
-        // Il costruttore della classe base Phaser.Scene prende come argomento la scena
         super(scene, x, y, "movingPlatform");
         scene.add.existing(this);
         this.initialX = x;
@@ -14,8 +13,6 @@ export default class movingPlatform extends Phaser.GameObjects.Sprite {
         this.setScale(0.4);
         scene.physics.add.existing(this);
         this.body.setImmovable(true);
-   
-
     }
 
     animateMovingPlatform() {

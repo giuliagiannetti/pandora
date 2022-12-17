@@ -1,6 +1,7 @@
 import Player from "../components/player.js"
 import movingPlatform from "../components/movingPlatform.js"
 import Porta from "../components/porta.js";
+import Enemy from "../components/enemy.js";
 
 export default class Scene1 extends Phaser.Scene {
 
@@ -56,17 +57,22 @@ export default class Scene1 extends Phaser.Scene {
 
 
         // Player
-        const thePlayer = new Player(this, 5000, 80, this.worldWidth, -400);
+        const thePlayer = new Player(this, 6000, this.floorHeight, this.worldWidth, -400);
         
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
 
 
+        // Camera
         this.cameras.main.startFollow(this.player);
         this.cameras.main.setFollowOffset(0, 300);
 
         
         // Nemico
+        const theEnemy = new Enemy(this, 7300, this.floorHeight, this.worldWidth, 0);
+
+        this.enemy = this.physics.add.existing(theEnemy);
+        this.physics.add.collider(this.enemy, this.floor);
 
 
         // Chiavi
@@ -90,7 +96,7 @@ export default class Scene1 extends Phaser.Scene {
     createStaticPlatforms() {
         // Aggiungi le piattaforme come un gruppo di oggetti statici
         this.platforms = this.physics.add.staticGroup()
-        //this.platforms.create(800, 600, 'platform1').setScale(0.25).refreshBody();
+        
         this.platforms.create(1080, 520, 'platform1').setScale(0.5).refreshBody();
         this.platforms.create(1500, 375, 'platform1').setScale(0.5).refreshBody();
         this.platforms.create(2100, 220, 'pavement').setScale(0.3).refreshBody();//architrave
@@ -110,9 +116,6 @@ export default class Scene1 extends Phaser.Scene {
         this.platforms.create(6100, -230, 'verticale').setScale(0.5).refreshBody();//parete
         this.platforms.create(5600, -680, 'pavement').setScale(0.4).refreshBody(); //tetto
         this.platforms.create(4750, -525, 'platform1').setScale(0.4).refreshBody();
-
-        
-        
       
        //casa2
         this.platforms.create(6700, -20, 'pavement').setScale(0.2).refreshBody();//pavimento
@@ -122,8 +125,7 @@ export default class Scene1 extends Phaser.Scene {
         this.platforms.create(8019, 158, 'platform1').setScale(0.4).refreshBody();//scalino
         this.platforms.create(8099, 220, 'platform1').setScale(0.4).refreshBody();//scalino
         this.platforms.create(8317, 220, 'platform1').setScale(0.4).refreshBody();
-      
-
+        this.platforms.create(7200, 300, 'platform1').setScale(0.5).refreshBody();
 
         this.physics.add.collider(this.platforms, this.player, () => {
             this.player.isJumping = false;
@@ -184,17 +186,18 @@ export default class Scene1 extends Phaser.Scene {
     update() {
 
         this.player.manageMovements();
+        this.enemy.animateEnemy();
 
         this.animateBackground();
 
         this.movingPlatformGroup.children.iterate(function (platform) {
             platform.animateMovingPlatform();
         });
-
-
+        
         this.checkSceneEnd();
 
         this.collectChiavi(this.player, this.chiave);
+
     }
 
 
