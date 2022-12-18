@@ -23,41 +23,57 @@ export default class Scene1 extends Phaser.Scene {
     preload() {
         console.log("scene1 - Executing preload()");
 
-        this.load.image("polis", "assets/images/background/tutorial.jpg") //sfondo: uno in primo piano, con platform, costruzioni principali
+        this.load.image("polis", "assets/images/background/tutorial.jpg"); //sfondo: uno in primo piano, con platform, costruzioni principali
+        this.load.image("sfondo", "assets/images/background/rosso.jpg");
 
         this.load.image("platform1", "assets/images/environment_elements/platform1.png"); //platform statico
         this.load.image("pavement", "assets/images/environment_elements/pavement.png"); //pavimento
         this.load.image("verticale", "assets/images/environment_elements/verticale.png"); //colonna verticale
+        this.load.image("colonna", "assets/images/environment_elements/colonna.png");
         this.load.image("porta", "assets/images/environment_elements/verticale.png"); //porta
+        this.load.image("blocco", "assets/images/environment_elements/blocco.png")//blocco architrave
         this.load.image("rimbalzante", "assets/images/environment_elements/rimbalzo.png");//piattaforma rimbalzante
-        this.load.image("movingPlatform", "assets/images/environment_elements/movingPlatform.png"); //platform in movimento
+        this.load.image("movingPlatform", "assets/images/environment_elements/trave.png"); //platform in movimento
 
         this.load.image("chiave", "assets/images/environment_elements/chiave.png"); //chiave
         this.load.image("chiaveicona", "assets/images/environment_elements/chiaveicona.png"); //chiave icona
+        this.load.image("life", "assets/images/environment_elements/life.png")
 
     }
 
     create() {
         console.log("scene1 - Executing create()");
-                
-       
+
+
         this.key0 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ZERO);
 
 
-        this.background = this.add.image(0, 0, "polis");
+        /*this.background = this.add.image(0, 0, "polis");
         this.background.setOrigin(0, 0.55);
-        this.background.setScale(2);
+        this.background.setScale(2);*/
 
+        this.background = this.add.tileSprite(0, 0, 1280, 2200, "sfondo");
+        this.background.setOrigin(0, 0.61);
+        this.background.setScrollFactor(0,0.5);
+
+
+        this.colonne = [];
+
+        for (let i=0; i<3; i++) {
+            let colonna = this.add.image(1850+250*i, 433, "colonna");
+            colonna.setScale(0.3);
+            this.colonne.push(colonna);
+        }
 
         this.floor = this.add.rectangle(0, this.game.config.height,
             this.worldWidth + 100, this.game.config.height - this.floorHeight,
-            0x000000, 100);
+            0xFFFFFF, 0);
         this.floor.setOrigin(0, 1);
         this.physics.add.existing(this.floor, true);
 
 
         // Player
-        const thePlayer = new Player(this, 4500, 400, this.worldWidth, -400);
+        const thePlayer = new Player(this, 7000, this.floorHeight, this.worldWidth, -400);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
 
@@ -71,6 +87,9 @@ export default class Scene1 extends Phaser.Scene {
         const theEnemy = new Enemy(this, 7300, this.floorHeight);
         this.enemy = this.physics.add.existing(theEnemy);
         this.physics.add.collider(this.enemy, this.floor);
+        this.physics.add.collider(this.player, this.enemy, () => {
+            this.player.x = 3700;
+            this.player.y = this.floorHeight;});
 
         const followingEnemy = new Enemy(this, 5500, 200)
         this.playerEnemy = this.physics.add.existing(followingEnemy);
@@ -88,24 +107,79 @@ export default class Scene1 extends Phaser.Scene {
         this.createMovingPlatforms();
         this.createJumpingPlatforms();
         this.createPorta();
+        this.createColonnato();
 
-        this.chiaveIcon1 = this.add.image(30, 30, "chiaveicona").setScale(0.5).setAlpha(0);
+
+        this.skillShow = this.add.circle(30, 30, 70, 0x2f1710);
+        this.skillShow.setOrigin(0,0);
+        this.skillShow.setScrollFactor(0,0);
+
+
+        this.chiaveIcon1 = this.add.image(190, 120, "chiaveicona").setScale(0.5).setAlpha(0);
         this.chiaveIcon1.setOrigin(0,0);
         this.chiaveIcon1.setScrollFactor(0,0);
 
+        this.lifeSpan = this.add.rectangle(190, 30, 180, 70, 0x2f1710).setOrigin(0,0).setScrollFactor(0,0);
+        this.lives = [];
+        for (let i=0; i<3; i++) {
+            let life = this.add.image(200+55*i, 40, "life");
+            life.setScale(0.5);
+            life.setOrigin(0,0);
+            life.setScrollFactor(0,0);
+            this.lives.push(life);
+            
+        }
+  
+
+    }
+    
+
+    createColonnato(){
+        this.architrave = [];
+        let m = 54;
+        
+        for (let i=0; i<13; i++) {
+            let blocco = this.add.image(1770+m*i, 220, "blocco");
+            blocco.setScale(0.1);
+            this.architrave.push(blocco);
+        }
+        
+        for (let i=0; i<5; i++) {
+            let blocco = this.add.image(3300+m*i, 220, "blocco");
+            blocco.setScale(0.1);
+            this.architrave.push(blocco);
+        }
+
+        for (let i=0; i<5; i++) {
+            let blocco = this.add.image(970+m*i, 500, "blocco");
+            blocco.setScale(0.1);
+            this.architrave.push(blocco);
+        }
+
+        for (let i=0; i<5; i++) {
+            let blocco = this.add.image(1370+m*i, 370, "blocco");
+            blocco.setScale(0.1);
+            this.architrave.push(blocco);
+        }
+
+        this.colonnato = this.physics.add.group(this.architrave);
+        this.colonnato.children.iterate(function (platform) {
+            platform.body.allowGravity = false;
+            platform.body.setImmovable(true);
+        });
+
+        this.physics.add.collider(this.architrave, this.player, () => {
+            this.player.isJumping = false;
+        })
     }
 
 
-    
     createStaticPlatforms() {
         // Aggiungi le piattaforme come un gruppo di oggetti statici
         this.platforms = this.physics.add.staticGroup()
+
+        this.platforms.create(3410, 433, 'colonna').setScale(0.3).refreshBody();//colonna
         
-        this.platforms.create(1080, 520, 'platform1').setScale(0.5).refreshBody();
-        this.platforms.create(1500, 375, 'platform1').setScale(0.5).refreshBody();
-        this.platforms.create(2100, 220, 'pavement').setScale(0.3).refreshBody();//architrave
-        this.platforms.create(3400, 490, 'verticale').setScale(0.5).refreshBody();
-        this.platforms.create(3400, 210, 'platform1').setScale(0.5).refreshBody();
         this.platforms.create(4000, 500, 'platform1').setScale(0.3).refreshBody();
 
        //casa1
@@ -134,13 +208,15 @@ export default class Scene1 extends Phaser.Scene {
         this.physics.add.collider(this.platforms, this.player, () => {
             this.player.isJumping = false;
         });
+
+
     }
 
     createMovingPlatforms() {
-        // Inserisci delle piattaforme in movimento
+
         this.movingPlatforms = [];
-        //inserite le vostre piattaforme qua
-        this.movingPlatforms.push(new movingPlatform(this, 3100, 200));
+
+        this.movingPlatforms.push(new movingPlatform(this, 3000, 220));
         this.movingPlatforms.push(new movingPlatform(this, 5800, -290));
         
         this.movingPlatformGroup = this.physics.add.group(this.movingPlatforms);
@@ -214,6 +290,8 @@ export default class Scene1 extends Phaser.Scene {
         if (this.player.body.y + this.player.height / 2 < startLineCamera) {
             this.cameras.main.followOffset.y = Math.max(300 - shiftCameraMax, 300 - (startLineCamera - (this.player.body.y + this.player.height / 2)));
             console.log(this.cameras.main.followOffset.y);
+        } else if (this.player.body.y <= -720) {
+            this.background.tilePositionY = this.cameras.main.scrollY * 0;
         }
     }
 
@@ -242,6 +320,9 @@ export default class Scene1 extends Phaser.Scene {
             this.playerEnemy.animateEnemyHouse();
         }
     }
+
+    
+
 
 
     checkSceneEnd() {

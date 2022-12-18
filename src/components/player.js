@@ -131,8 +131,4 @@ export default class Player extends Phaser.GameObjects.Sprite {
 
     }
 
-    /* die() {
-        this.x = this.initialPosition;
-    }*/
-
 }

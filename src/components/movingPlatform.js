@@ -2,15 +2,13 @@ export default class movingPlatform extends Phaser.GameObjects.Sprite {
 
     floorHeight;
     initialX;
- 
- 
 
     constructor(scene, x, y) {
         super(scene, x, y, "movingPlatform");
         scene.add.existing(this);
         this.initialX = x;
         this.floorHeight = y;
-        this.setScale(0.4);
+        this.setScale(0.14);
         scene.physics.add.existing(this);
         this.body.setImmovable(true);
     }
