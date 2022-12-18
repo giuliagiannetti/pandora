@@ -44,16 +44,18 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
     }
 
     animateEnemyHouse(){
-        const positionRestart = this.body.x;
-        if (this.x <= positionRestart) {
-            this.body.setVelocityX(100);
-            this.flipX = false;
-
-        }
-        if (this.x >= (positionRestart - 200) ) {
+        if (this.x >= this.initialPosition) {
             this.body.setVelocityX(-100);
+            this.flipX = false;
+        }
+        if (this.x <= (this.initialPosition - 200) ) {
+            this.body.setVelocityX(100);
             this.flipX = true;
         }
+    }
+
+    velFollowPlayer(){
+        this.body.setVelocityX(-80);
     }
 
 }
