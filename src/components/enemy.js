@@ -12,8 +12,7 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
         this.initialPosition = x;
         this.floorHeight = y;
         this.setOrigin(0, 1); 
-        this.setScale(0.5);   
-
+        this.setScale(0.5);
         /*this.stepLength = 15;
         this.maxWidth = maxWidth;*/
 
@@ -34,12 +33,25 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
 
     animateEnemy() {
         if (this.x >= this.initialPosition) {
-            this.body.setVelocityX(-200);
+            this.body.setVelocityX(-180);
             this.flipX = false;
 
         }
-        if (this.x <= (this.initialPosition - 400)) {
-            this.body.setVelocityX(200);
+        if (this.x <= (this.initialPosition - 500)) {
+            this.body.setVelocityX(180);
+            this.flipX = true;
+        }
+    }
+
+    animateEnemyHouse(){
+        const positionRestart = this.body.x;
+        if (this.x <= positionRestart) {
+            this.body.setVelocityX(100);
+            this.flipX = false;
+
+        }
+        if (this.x >= (positionRestart - 200) ) {
+            this.body.setVelocityX(-100);
             this.flipX = true;
         }
     }

@@ -57,7 +57,7 @@ export default class Scene1 extends Phaser.Scene {
 
 
         // Player
-        const thePlayer = new Player(this, 6000, this.floorHeight, this.worldWidth, -400);
+        const thePlayer = new Player(this, 4900, this.floorHeight, this.worldWidth, -400);
         
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
@@ -69,10 +69,16 @@ export default class Scene1 extends Phaser.Scene {
 
         
         // Nemico
-        const theEnemy = new Enemy(this, 7300, this.floorHeight, this.worldWidth, 0);
+        const theEnemy = new Enemy(this, 7300, this.floorHeight);
 
         this.enemy = this.physics.add.existing(theEnemy);
         this.physics.add.collider(this.enemy, this.floor);
+
+        const followingEnemy = new Enemy(this, 5200, -100)
+        
+        this.playerEnemy = this.physics.add.existing(followingEnemy);
+        this.physics.add.collider(this.playerEnemy, this.floor);
+        this.playerEnemy.body.allowGravity = false;
 
 
         // Chiavi
@@ -198,6 +204,8 @@ export default class Scene1 extends Phaser.Scene {
 
         this.collectChiavi(this.player, this.chiave);
 
+        this.followPlayer();
+
     }
 
 
@@ -216,16 +224,26 @@ export default class Scene1 extends Phaser.Scene {
      
     collectChiavi() {
         let x_diff = Math.abs(this.player.x-this.chiave.x);
-        let y_diff = Math.abs(this.player.y-this.chiave.y);
+        let y_diff = Math.abs(this.player.y-this.chiave.y);4
+        let stopPlayerEnemy = this.playerEnemy;
         //let portaFermaY = this.portaGroup.y;
         let icon = this.chiaveIcon1;
-        if(x_diff < 75 && y_diff < 100) {
+        if(x_diff < 75 && y_diff < 100 && this.player.x) {
             this.chiave.destroy();
             this.portaGroup.children.iterate(function (porta) { porta.movePorta();});
             icon.setAlpha(1);
+            stopPlayerEnemy.animateEnemyHouse();
         }
     }
 
+    followPlayer(){
+        let followedPlayer = this.player;
+        let playerEnemy = this.playerEnemy;
+        if (followedPlayer.x >= 5060 && followedPlayer.x <= 6100 && followedPlayer.y > -680 && followedPlayer.y < 260) {
+           playerEnemy.x = followedPlayer.body.x + 200;
+           playerEnemy.y = followedPlayer.body.y + 200;
+        }
+    }
 
 
     checkSceneEnd() {
