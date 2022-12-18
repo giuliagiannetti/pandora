@@ -70,7 +70,7 @@ export default class WelcomeScene extends Phaser.Scene {
       this.scene.start("scene1");
        }) ;
 
-      var light = this.lights.addLight(300, 300, 1000).setScrollFactor(0.0).setIntensity(2);
+      var light = this.lights.addLight(300, 300, 1300).setScrollFactor(0.0).setIntensity(3);
 
       this.lights.enable();
       this.lights.setAmbientColor(0x555555);

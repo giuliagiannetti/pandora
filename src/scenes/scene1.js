@@ -34,10 +34,15 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image("blocco", "assets/images/environment_elements/blocco.png")//blocco architrave
         this.load.image("rimbalzante", "assets/images/environment_elements/rimbalzo.png");//piattaforma rimbalzante
         this.load.image("movingPlatform", "assets/images/environment_elements/trave.png"); //platform in movimento
-
         this.load.image("chiave", "assets/images/environment_elements/chiave.png"); //chiave
-        this.load.image("chiaveicona", "assets/images/environment_elements/chiaveicona.png"); //chiave icona
-        this.load.image("life", "assets/images/environment_elements/life.png")
+
+        this.load.image("chiaveicona", "assets/images/hud/chiaveicona.png"); //chiave icona
+        this.load.image("life", "assets/images/hud/life.png");
+        this.load.image("vaso", "assets/images/hud/vasopausa.png");
+        this.load.image("menuPausa", "assets/images/hud/menuPausa.jpg");
+        this.load.image("home","assets/images/hud/home.png");
+        this.load.image("play", "assets/images/hud/play.png");
+
 
     }
 
@@ -73,7 +78,7 @@ export default class Scene1 extends Phaser.Scene {
 
 
         // Player
-        const thePlayer = new Player(this, 7000, this.floorHeight, this.worldWidth, -400);
+        const thePlayer = new Player(this, 100, this.floorHeight, this.worldWidth, -400);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
 
@@ -89,7 +94,9 @@ export default class Scene1 extends Phaser.Scene {
         this.physics.add.collider(this.enemy, this.floor);
         this.physics.add.collider(this.player, this.enemy, () => {
             this.player.x = 3700;
-            this.player.y = this.floorHeight;});
+            this.player.y = this.floorHeight;
+
+        });
 
         const followingEnemy = new Enemy(this, 5500, 200)
         this.playerEnemy = this.physics.add.existing(followingEnemy);
@@ -109,7 +116,8 @@ export default class Scene1 extends Phaser.Scene {
         this.createPorta();
         this.createColonnato();
 
-
+        
+        //HUD
         this.skillShow = this.add.circle(30, 30, 70, 0x2f1710);
         this.skillShow.setOrigin(0,0);
         this.skillShow.setScrollFactor(0,0);
@@ -119,6 +127,7 @@ export default class Scene1 extends Phaser.Scene {
         this.chiaveIcon1.setOrigin(0,0);
         this.chiaveIcon1.setScrollFactor(0,0);
 
+
         this.lifeSpan = this.add.rectangle(190, 30, 180, 70, 0x2f1710).setOrigin(0,0).setScrollFactor(0,0);
         this.lives = [];
         for (let i=0; i<3; i++) {
@@ -127,10 +136,29 @@ export default class Scene1 extends Phaser.Scene {
             life.setOrigin(0,0);
             life.setScrollFactor(0,0);
             this.lives.push(life);
-            
         }
-  
 
+        this.pausePanel = this.add.image(this.game.config.width/2, 100, "menuPausa");
+        this.pausePanel.setOrigin(0.5,0).setScale(0.7);
+        this.pausePanel.setVisible(false); 
+        this.pausePanel.setScrollFactor(0,0);
+        
+        this.pauseButton = this.add.image(1240, 35, "vaso");
+        this.pauseButton.setOrigin(1,0).setScale(0.4);
+        this.pauseButton.setScrollFactor(0,0);
+        this.pauseButton.setInteractive();
+        
+        this.pauseHome = this.add.image(510, 300, "home");
+        this.pauseHome.setOrigin(0.5,0).setScale(0.2);
+        this.pauseHome.setVisible(false); 
+        this.pauseHome.setScrollFactor(0,0);
+        this.pauseHome.setInteractive();
+
+        this.pausePlay = this.add.image(770, 300, "play");
+        this.pausePlay.setOrigin(0.5,0).setScale(0.18);
+        this.pausePlay.setVisible(false); 
+        this.pausePlay.setScrollFactor(0,0);
+        this.pausePlay.setInteractive();
     }
     
 
@@ -279,8 +307,31 @@ export default class Scene1 extends Phaser.Scene {
 
         this.collectChiavi(this.player, this.chiave);
 
+        this.pauseMenuBottons();
+
     }
 
+    pauseMenuBottons(){
+        this.pausePlay.on("pointerdown", ()=>{
+            this.pauseButton.setVisible(true);
+            this.pausePanel.setVisible(false);
+            this.pauseHome.setVisible(false);
+            this.pausePlay.setVisible(false);
+            this.physics.resume();
+        });
+
+        this.pauseButton.on("pointerdown", ()=>{
+            this.pauseButton.setVisible(false);
+            this.pausePanel.setVisible(true);
+            this.pauseHome.setVisible(true);
+            this.pausePlay.setVisible(true);
+            this.physics.pause();
+        });
+
+        this.pauseHome.on("pointerdown", ()=> {
+            this.scene.start("scene0_welcome");
+        })
+    }
 
     animateBackground() {
         this.background.tilePositionX = this.cameras.main.scrollX * 0.5;
