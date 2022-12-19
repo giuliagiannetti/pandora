@@ -114,7 +114,7 @@ export default class Scene1 extends Phaser.Scene {
         this.player.y = this.chiave.y;}
         );
 
-        const followingEnemy = new Enemy(this, 5500, 200)
+        const followingEnemy = new Enemy(this, 5500, -300)
         this.playerEnemy = this.physics.add.existing(followingEnemy);
         this.playerEnemy.setScale(0.3);
         this.physics.add.collider(this.playerEnemy, this.floor);
