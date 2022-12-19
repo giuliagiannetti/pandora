@@ -16,7 +16,13 @@ export default class StoryScene extends Phaser.Scene {
       //assets
 
       //sfondo
-      this.load.image("storia1", "assets/images/story/testo1.jpg");
+      this.load.image("storia1", "assets/images/story/testo_mali.png");
+      this.load.image("scena1", "assets/images/story/scena1.jpg");
+      this.load.image("storia2", "assets/images/story/testo_olimpo.png");
+      this.load.image("scena2", "assets/images/story/scena2.jpg");
+      this.load.image("storia3", "assets/images/story/testo_polis.png");
+      this.load.image("scena3", "assets/images/story/scena3.jpg");
+      this.load.image("preplatform", "assets/images/story/testo_preplatform_1.png");
    };
 
 
