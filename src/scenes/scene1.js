@@ -114,7 +114,7 @@ export default class Scene1 extends Phaser.Scene {
         this.player.y = this.chiave.y;}
         );
 
-        const followingEnemy = new Enemy(this, 5500, -300)
+        const followingEnemy = new Enemy(this, 5350, 200)
         this.playerEnemy = this.physics.add.existing(followingEnemy);
         this.playerEnemy.setScale(0.3);
         this.physics.add.collider(this.playerEnemy, this.floor);
@@ -378,16 +378,16 @@ export default class Scene1 extends Phaser.Scene {
         let enemyY = this.playerEnemy.body.y + this.playerEnemy.displayHeight/2 + 10;
         if (followedPlayer.body.x >= 5100 && followedPlayer.body.x <= 6100 && followedPlayer.body.y > -600 && followedPlayer.body.y < 220){
         if(followedPlayer.body.x > enemyX) {
-            playerEnemy.body.setVelocityX(50);
+            playerEnemy.body.setVelocityX(15);
         }
         if(followedPlayer.body.x < enemyX) {
-            playerEnemy.body.setVelocityX(-50);
+            playerEnemy.body.setVelocityX(-15);
         }
         if(followedPlayer.body.y > enemyY) {
-            playerEnemy.body.setVelocityY(50);
+            playerEnemy.body.setVelocityY(19);
         }
         if(followedPlayer.body.y < enemyY) {
-            playerEnemy.body.setVelocityY(-50);
+            playerEnemy.body.setVelocityY(-19);
         }
         } else {playerEnemy.animateEnemyHouse();
         }

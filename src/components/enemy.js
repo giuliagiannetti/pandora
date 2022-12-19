@@ -48,7 +48,7 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
             this.body.setVelocityX(-100);
             this.flipX = false;
         }
-        if (this.x <= (this.initialPosition - 200) ) {
+        if (this.x <= (this.initialPosition - 100) ) {
             this.body.setVelocityX(100);
             this.flipX = true;
         }
