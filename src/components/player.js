@@ -37,8 +37,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.anims.create({
             key: "playerMove",
             frames: this.anims.generateFrameNumbers("playerrun", {
-                start: 0, 
-                end: 0,
+                start: 1, 
+                end: 4,
             }),
             frameRate: 15, //aggiornimao l'immagine ogni 15 frame per rendere l'animazione non troppo rapida
             repeat: -1 //ripetiamo all'infinito la stessa animazione
@@ -51,7 +51,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
                 start: 0, //frame con personagio fermo
                 end: 0, 
             }),
-            frameRate: 15,
+            frameRate: 50,
             repeat: -1 
         });
 

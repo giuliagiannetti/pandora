@@ -23,9 +23,26 @@ export default class Scene1 extends Phaser.Scene {
     preload() {
         console.log("scene1 - Executing preload()");
 
+        //giocatore
+      const player_spritesheet_config = {
+        frameWidth: 200,
+        frameHeight: 340,
+     };
+     this.load.spritesheet("playerrun", "assets/images/characters/spritesheetmedio.png", player_spritesheet_config);
+
+     //nemico
+     const monster_spritesheet_config = {
+        frameWidth: 1165,
+        frameHeight: 563,
+     };
+     this.load.spritesheet("enemyrun", "assets/images/characters/enemy.png", monster_spritesheet_config);
+        
+
+     //immagini di sfondo
         this.load.image("polis", "assets/images/background/tutorial.jpg"); //sfondo: uno in primo piano, con platform, costruzioni principali
         this.load.image("sfondo", "assets/images/background/rosso.jpg");
 
+     //elementi della scena
         this.load.image("platform1", "assets/images/environment_elements/platform1.png"); //platform statico
         this.load.image("pavement", "assets/images/environment_elements/pavement.png"); //pavimento
         this.load.image("verticale", "assets/images/environment_elements/verticale.png"); //colonna verticale

@@ -19,21 +19,6 @@ export default class WelcomeScene extends Phaser.Scene {
       //sfondo
       this.load.image("background_base", "assets/images/background/scherminiz_render_bozza1.jpg");
 
-      //giocatore
-      const player_spritesheet_config = {
-         frameWidth: 280,
-         frameHeight: 335,
-      };
-      this.load.spritesheet("playerrun", "assets/images/characters/omino.png", player_spritesheet_config);
-
-      //nemico
-      const monster_spritesheet_config = {
-         frameWidth: 1165,
-         frameHeight: 563,
-      };
-      this.load.spritesheet("enemyrun", "assets/images/characters/enemy.png", monster_spritesheet_config);
-
-
       //componenti grafiche (button)
       this.load.image("bottoneGioca", "assets/images/buttons/BottoneGioca.png");
       this.load.image("bottoneStoria", "assets/images/buttons/BottoneStoria.png");
