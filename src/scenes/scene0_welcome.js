@@ -71,7 +71,7 @@ export default class WelcomeScene extends Phaser.Scene {
       var light = this.lights.addLight(300, 300, 1300).setScrollFactor(0.0).setIntensity(3);
 
       this.lights.enable();
-      this.lights.setAmbientColor(0x555555);
+      this.lights.setAmbientColor(0xFFFFFF);
 
       this.input.on('pointermove', function (pointer) {
 

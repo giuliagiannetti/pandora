@@ -40,7 +40,7 @@ export default class Scene1 extends Phaser.Scene {
 
      //immagini di sfondo
         this.load.image("polis", "assets/images/background/tutorial.jpg"); //sfondo: uno in primo piano, con platform, costruzioni principali
-        this.load.image("sfondo", "assets/images/background/rosso.jpg");
+        this.load.image("sfondo", "assets/images/background/rosso.png");
 
      //elementi della scena
         this.load.image("platform1", "assets/images/environment_elements/platform1.png"); //platform statico
@@ -74,9 +74,9 @@ export default class Scene1 extends Phaser.Scene {
         this.background.setOrigin(0, 0.55);
         this.background.setScale(2);*/
 
-        this.background = this.add.tileSprite(0, 0, 1280, 2200, "sfondo");
-        this.background.setOrigin(0, 0.61);
-        this.background.setScrollFactor(0,0.5);
+        this.background = this.add.tileSprite(0, 0, 1280, 2400, "sfondo");
+        this.background.setOrigin(0, 0.70);
+        this.background.setScrollFactor(0,0.4);
 
 
         this.colonne = [];
@@ -95,7 +95,7 @@ export default class Scene1 extends Phaser.Scene {
 
 
         // Player
-        const thePlayer = new Player(this, 100, this.floorHeight, this.worldWidth, -400);
+        const thePlayer = new Player(this, 4000, this.floorHeight, this.worldWidth, -400);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
 
@@ -109,13 +109,12 @@ export default class Scene1 extends Phaser.Scene {
         const theEnemy = new Enemy(this, 7300, this.floorHeight);
         this.enemy = this.physics.add.existing(theEnemy);
         this.physics.add.collider(this.enemy, this.floor);
-        this.physics.add.collider(this.player, this.enemy, () => {
-            this.player.x = 3700;
-            this.player.y = this.floorHeight;
+        this.physics.add.collider(this.player, this.enemy, () =>
+        { this.player.x = this.chiave.x;
+        this.player.y = this.chiave.y;}
+        );
 
-        });
-
-        const followingEnemy = new Enemy(this, 5500, 200)
+        const followingEnemy = new Enemy(this, 5500, -300)
         this.playerEnemy = this.physics.add.existing(followingEnemy);
         this.playerEnemy.setScale(0.3);
         this.physics.add.collider(this.playerEnemy, this.floor);
@@ -123,8 +122,9 @@ export default class Scene1 extends Phaser.Scene {
 
 
         // Chiavi
-        this.chiave = this.add.image(5000, -450, "chiave").setScale(0.08);
+        this.chiave = this.add.image(5000, -490, "chiave").setScale(0.08);
         this.physics.add.overlap(this.player, this.chiave, this.collectChiavi);
+        this.piedistallo = this.add.rectangle(5000, -420, 80, 40, 0x000000);
 
 
         this.createStaticPlatforms();
@@ -228,7 +228,7 @@ export default class Scene1 extends Phaser.Scene {
         this.platforms.create(4000, 500, 'platform1').setScale(0.3).refreshBody();
 
        //casa1
-        this.platforms.create(5490, 260, 'pavement').setScale(0.5).refreshBody();//pavimento
+        this.pavimento = this.platforms.create(5490, 260, 'pavement').setScale(0.5).refreshBody();//pavimento
         this.platforms.create(5060, 184, 'platform1').setScale(0.4).refreshBody();//scalino
         this.platforms.create(5130, 122, 'platform1').setScale(0.4).refreshBody();//scalino
         this.platforms.create(5200, 60, 'platform1').setScale(0.4).refreshBody();//scalino
@@ -236,8 +236,8 @@ export default class Scene1 extends Phaser.Scene {
         this.chiavePlatform = this.platforms.create(5100, -350, 'platform1').setScale(0.7).refreshBody();//piattaforma chiave
         this.platforms.create(5600, -30, 'platform1').setScale(0.4).refreshBody();
         this.platforms.create(6000, -150, 'platform1').setScale(0.4).refreshBody();
-        this.platforms.create(6100, -230, 'verticale').setScale(0.5).refreshBody();//parete
-        this.platforms.create(5600, -680, 'pavement').setScale(0.4).refreshBody(); //tetto
+        this.parete = this.platforms.create(6100, -230, 'verticale').setScale(0.5).refreshBody();//parete
+        this.tetto = this.platforms.create(5600, -680, 'pavement').setScale(0.4).refreshBody(); //tetto
         this.platforms.create(4750, -525, 'platform1').setScale(0.4).refreshBody();
       
        //casa2
@@ -253,6 +253,10 @@ export default class Scene1 extends Phaser.Scene {
         this.physics.add.collider(this.platforms, this.player, () => {
             this.player.isJumping = false;
         });
+
+        this.physics.add.collider(this.parete, this.playerEnemy);
+        this.physics.add.collider(this.tetto, this.playerEnemy);
+        this.physics.add.collider(this.pavimento, this.playerEnemy);
 
 
     }
@@ -286,6 +290,7 @@ export default class Scene1 extends Phaser.Scene {
           this.physics.add.collider(this.jumpingPlatforms, this.player, () => { if (this.player.body.touching.down) {
             this.player.body.setVelocityY(-500)};
         });
+         
           
     }
 
@@ -325,6 +330,8 @@ export default class Scene1 extends Phaser.Scene {
         this.collectChiavi(this.player, this.chiave);
 
         this.pauseMenuBottons();
+
+
 
     }
 
@@ -367,12 +374,24 @@ export default class Scene1 extends Phaser.Scene {
     followPlayer(){
         let followedPlayer = this.player;
         let playerEnemy = this.playerEnemy;
-        if (followedPlayer.x >= 5100 && followedPlayer.x <= 6100 && followedPlayer.y > -600 && followedPlayer.y < 220) {
-           playerEnemy.x = followedPlayer.body.x;
-           playerEnemy.y = followedPlayer.body.y + 350;
-        } else {
-            playerEnemy.animateEnemyHouse();
+        let enemyX = this.playerEnemy.body.x + this.playerEnemy.displayWidth/2 + 10;
+        let enemyY = this.playerEnemy.body.y + this.playerEnemy.displayHeight/2 + 10;
+        if (followedPlayer.body.x >= 5100 && followedPlayer.body.x <= 6100 && followedPlayer.body.y > -600 && followedPlayer.body.y < 220){
+        if(followedPlayer.body.x > enemyX) {
+            playerEnemy.body.setVelocityX(50);
         }
+        if(followedPlayer.body.x < enemyX) {
+            playerEnemy.body.setVelocityX(-50);
+        }
+        if(followedPlayer.body.y > enemyY) {
+            playerEnemy.body.setVelocityY(50);
+        }
+        if(followedPlayer.body.y < enemyY) {
+            playerEnemy.body.setVelocityY(-50);
+        }
+        } else {playerEnemy.animateEnemyHouse();
+        }
+        
     }
 
 
@@ -389,9 +408,10 @@ export default class Scene1 extends Phaser.Scene {
         }
     }
 
-    
-
-
+    checkPoint(){
+        this.player.x = this.chiave.x;
+        this.player.y = this.chiave.y;
+    }
 
     checkSceneEnd() {
         if ((this.player.x >= this.game.config.width - this.player.displayWidth) && 
