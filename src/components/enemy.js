@@ -58,5 +58,7 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
         this.body.setVelocityX(-80);
     }
 
+    
+
 }
 

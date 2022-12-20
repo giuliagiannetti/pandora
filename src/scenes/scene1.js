@@ -9,6 +9,7 @@ export default class Scene1 extends Phaser.Scene {
     player;
     floorHeight;
     movingPlatform;
+  
 
     constructor() {
         super("scene1");
@@ -18,6 +19,7 @@ export default class Scene1 extends Phaser.Scene {
         console.log("scene1 - Executing init()");
         this.floorHeight = this.game.config.height - 100;
         this.worldWidth = 8426;
+        this.maxHearts = 4;
     }
 
     preload() {
@@ -95,9 +97,11 @@ export default class Scene1 extends Phaser.Scene {
 
 
         // Player
-        const thePlayer = new Player(this, 4000, this.floorHeight, this.worldWidth, -400);
+  
+        const thePlayer = new Player(this, 7000, this.floorHeight, this.worldWidth, -400);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
+        this.playerHearts = this.maxHearts;
 
 
         // Camera
@@ -106,20 +110,7 @@ export default class Scene1 extends Phaser.Scene {
 
         
         // Nemico
-        const theEnemy = new Enemy(this, 7300, this.floorHeight);
-        this.enemy = this.physics.add.existing(theEnemy);
-        this.physics.add.collider(this.enemy, this.floor);
-        this.physics.add.collider(this.player, this.enemy, () =>
-        { this.player.x = this.chiave.x;
-        this.player.y = this.chiave.y;}
-        );
-
-        const followingEnemy = new Enemy(this, 5350, 200)
-        this.playerEnemy = this.physics.add.existing(followingEnemy);
-        this.playerEnemy.setScale(0.3);
-        this.physics.add.collider(this.playerEnemy, this.floor);
-        this.playerEnemy.body.allowGravity = false;
-
+    
 
         // Chiavi
         this.chiave = this.add.image(5000, -490, "chiave").setScale(0.08);
@@ -132,6 +123,7 @@ export default class Scene1 extends Phaser.Scene {
         this.createJumpingPlatforms();
         this.createPorta();
         this.createColonnato();
+        this.createEnemy();
 
         
         //HUD
@@ -146,14 +138,17 @@ export default class Scene1 extends Phaser.Scene {
 
 
         this.lifeSpan = this.add.rectangle(190, 30, 180, 70, 0x2f1710).setOrigin(0,0).setScrollFactor(0,0);
-        this.lives = [];
+
+       
+        this.hearts = [];
         for (let i=0; i<3; i++) {
             let life = this.add.image(200+55*i, 40, "life");
             life.setScale(0.5);
             life.setOrigin(0,0);
             life.setScrollFactor(0,0);
-            this.lives.push(life);
-        }
+            this.hearts.push(life);}
+        
+      
 
         this.pausePanel = this.add.image(this.game.config.width/2, 100, "menuPausa");
         this.pausePanel.setOrigin(0.5,0).setScale(0.7);
@@ -176,6 +171,58 @@ export default class Scene1 extends Phaser.Scene {
         this.pausePlay.setVisible(false); 
         this.pausePlay.setScrollFactor(0,0);
         this.pausePlay.setInteractive();
+    }
+    
+    createEnemy() {
+        const theEnemy = new Enemy(this, 7300, this.floorHeight);
+        this.enemy = this.physics.add.existing(theEnemy);
+        this.physics.add.collider(this.enemy, this.floor);
+        
+        this.overlapEnemy = this.physics.add.overlap(this.player, this.enemy, this.hitEnemy, null, this);
+        
+        const followingEnemy = new Enemy(this, 5350, 200)
+        this.playerEnemy = this.physics.add.existing(followingEnemy);
+        this.playerEnemy.setScale(0.3);
+        this.physics.add.collider(this.playerEnemy, this.floor);
+        this.playerEnemy.body.allowGravity = false;
+
+        this.overlapEnemyPlayer = this.physics.add.overlap(this.player, this.playerEnemy, this.hitEnemyPlayer, null, this);
+
+    }
+
+    hitEnemy () {
+           /* let currentHeartCount = this.playerHearts;
+            let currentHeart = this.hearts[currentHeartCount - 1];
+            currentHeart.setAlpha(0);
+           */
+            this.playerHearts -= 1;
+            this.currentHeart = this.hearts[this.playerHearts - 1];
+            this.currentHeart.setAlpha(0);
+
+
+                if (this.playerHearts <= 1) {
+                    this.scene.start("scene0_welcome");
+                } else {
+                    this.player.x = this.chiave.x;
+                    this.player.y = this.chiave.y;
+                    this.game.scene.resume();
+                }
+            
+    }
+
+    hitEnemyPlayer () {
+        this.playerHearts -= 1;
+        this.currentHeart = this.hearts[this.playerHearts - 1];
+        this.currentHeart.setAlpha(0);
+
+        
+            if (this.playerHearts <= 1) {
+                this.scene.start("scene0_welcome");
+            } else {
+                this.player.x = this.scalino.x - 200;
+                this.player.y = this.scalino.y - 10;
+                this.game.scene.resume();
+            }
     }
     
 
@@ -225,11 +272,11 @@ export default class Scene1 extends Phaser.Scene {
 
         this.platforms.create(3410, 433, 'colonna').setScale(0.3).refreshBody();//colonna
         
-        this.platforms.create(4000, 500, 'platform1').setScale(0.3).refreshBody();
+        this.beforeJump = this.platforms.create(4000, 500, 'platform1').setScale(0.3).refreshBody();
 
        //casa1
         this.pavimento = this.platforms.create(5490, 260, 'pavement').setScale(0.5).refreshBody();//pavimento
-        this.platforms.create(5060, 184, 'platform1').setScale(0.4).refreshBody();//scalino
+        this.scalino = this.platforms.create(5060, 184, 'platform1').setScale(0.4).refreshBody();//scalino
         this.platforms.create(5130, 122, 'platform1').setScale(0.4).refreshBody();//scalino
         this.platforms.create(5200, 60, 'platform1').setScale(0.4).refreshBody();//scalino
         this.platforms.create(5270, -2, 'platform1').setScale(0.4).refreshBody();//scalino
@@ -369,28 +416,7 @@ export default class Scene1 extends Phaser.Scene {
     }
 
 
-    followPlayer(){
-        let followedPlayer = this.player;
-        let playerEnemy = this.playerEnemy;
-        let enemyX = this.playerEnemy.body.x + this.playerEnemy.displayWidth/2 + 10;
-        let enemyY = this.playerEnemy.body.y + this.playerEnemy.displayHeight/2 + 10;
-        if (followedPlayer.body.x >= 5100 && followedPlayer.body.x <= 6100 && followedPlayer.body.y > -600 && followedPlayer.body.y < 220){
-        if(followedPlayer.body.x > enemyX) {
-            playerEnemy.body.setVelocityX(15);
-        }
-        if(followedPlayer.body.x < enemyX) {
-            playerEnemy.body.setVelocityX(-15);
-        }
-        if(followedPlayer.body.y > enemyY) {
-            playerEnemy.body.setVelocityY(19);
-        }
-        if(followedPlayer.body.y < enemyY) {
-            playerEnemy.body.setVelocityY(-19);
-        }
-        } else {playerEnemy.animateEnemyHouse();
-        }
-        
-    }
+    
 
 
     collectChiavi() {
@@ -398,23 +424,20 @@ export default class Scene1 extends Phaser.Scene {
         let y_diff = Math.abs(this.player.y-this.chiave.y);4
         //let portaFermaY = this.portaGroup.y;
         let icon = this.chiaveIcon1;
-        if(x_diff < 75 && y_diff < 100 && this.player.x) {
+        if(x_diff < 75 && y_diff < 100) {
             this.chiave.destroy();
-            this.portaGroup.children.iterate(function (porta) { porta.movePorta();});
+            this.portaGroup.children.iterate(function (porta) {porta.movePorta();});
             icon.setAlpha(1);
             this.playerEnemy.animateEnemyHouse();
         }
     }
 
-    checkPoint(){
-        this.player.x = this.chiave.x;
-        this.player.y = this.chiave.y;
-    }
+
 
     checkSceneEnd() {
         if ((this.player.x >= this.game.config.width - this.player.displayWidth) && 
             this.key0.isDown) {
-            this.scene.start("scene2");
+            this.scene.start("scene3");
         }
     }
 }

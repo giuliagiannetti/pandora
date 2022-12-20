@@ -21,7 +21,7 @@ const config = {
             gravity: {
                  y: 500,  
                  },
-            debug: true
+            debug: false
         }
     }
 };
@@ -29,10 +29,10 @@ const config = {
 
 let game = new Phaser.Game(config);
 
-game.gameState = {
+/*game.gameState = {
     playTime: 30,
     score: 0,
     lives: 3
-}
+}*/
 
 game.scene.start ("scene0_welcome");  

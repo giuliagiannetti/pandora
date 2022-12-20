@@ -25,7 +25,7 @@ export default class Scene1 extends Phaser.Scene {
 
         this.load.image("platform1", "assets/images/environment_elements/platform1.png"); //platform statico
         this.load.image("pavement", "assets/images/environment_elements/pavement.png"); //pavimento
-        this.load.image("movingPlatform", "assets/images/environment_elements/movingPlatform.png"); //platform in movimento
+        this.load.image("movingPlatform", "assets/images/environment_elements/platform1.png"); //platform in movimento
 
     }
 
@@ -89,6 +89,8 @@ export default class Scene1 extends Phaser.Scene {
         this.platforms.create(2400, 587, 'platform1').setScale(0.4).refreshBody();
         this.platforms.create(2500, 525, 'platform1').setScale(0.4).refreshBody();
         this.platforms.create(2800, 475 , 'pavement').setScale(0.2).refreshBody();//pavimento
+
+      
 
         this.physics.add.collider(this.platforms, this.player, () => {
             this.player.isJumping = false;
