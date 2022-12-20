@@ -60,7 +60,7 @@ export default class WelcomeScene extends Phaser.Scene {
 
       //bottone cliccabile 
       this.bottone_storia.on("pointerdown", () => {
-         this.scene.start("scene_story");
+         this.scene.start("storie");
       });
 
       //bottone cliccabile 

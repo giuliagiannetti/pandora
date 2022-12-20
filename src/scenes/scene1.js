@@ -331,8 +331,6 @@ export default class Scene1 extends Phaser.Scene {
 
         this.pauseMenuBottons();
 
-
-
     }
 
     pauseMenuBottons(){
