@@ -191,10 +191,6 @@ export default class Scene1 extends Phaser.Scene {
     }
 
     hitEnemy () {
-           /* let currentHeartCount = this.playerHearts;
-            let currentHeart = this.hearts[currentHeartCount - 1];
-            currentHeart.setAlpha(0);
-           */
             this.playerHearts -= 1;
             this.currentHeart = this.hearts[this.playerHearts - 1];
             this.currentHeart.setAlpha(0);
@@ -203,6 +199,7 @@ export default class Scene1 extends Phaser.Scene {
                 if (this.playerHearts <= 1) {
                     this.scene.start("scene0_welcome");
                 } else {
+                    //checkpoint da inserire
                     this.player.x = this.chiave.x;
                     this.player.y = this.chiave.y;
                     this.game.scene.resume();
@@ -214,11 +211,12 @@ export default class Scene1 extends Phaser.Scene {
         this.playerHearts -= 1;
         this.currentHeart = this.hearts[this.playerHearts - 1];
         this.currentHeart.setAlpha(0);
-
         
+            
             if (this.playerHearts <= 1) {
                 this.scene.start("scene0_welcome");
             } else {
+                //checkpoint da inserire
                 this.player.x = this.scalino.x - 200;
                 this.player.y = this.scalino.y - 10;
                 this.game.scene.resume();
