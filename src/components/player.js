@@ -59,8 +59,8 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.anims.create({
             key: "playerJump",
             frames: this.anims.generateFrameNumbers("playerrun", {
-                start: 0, //selezionare frame per salto
-                end: 0, 
+                start: 2, //selezionare frame per salto
+                end: 2, 
             }),
             frameRate: 15, 
             repeat: -1

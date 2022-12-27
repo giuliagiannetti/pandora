@@ -98,7 +98,7 @@ export default class Scene1 extends Phaser.Scene {
 
         // Player
   
-        const thePlayer = new Player(this, 100, this.floorHeight, this.worldWidth, -400);
+        const thePlayer = new Player(this, 7000, this.floorHeight, this.worldWidth, -400);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
         this.playerHearts = this.maxHearts;
@@ -116,7 +116,9 @@ export default class Scene1 extends Phaser.Scene {
         this.chiave = this.add.image(5000, -490, "chiave").setScale(0.08);
         this.physics.add.overlap(this.player, this.chiave, this.collectChiavi);
         this.piedistallo = this.add.rectangle(5000, -420, 80, 40, 0x000000);
-    
+        let checkPoint = {x: 0, y: 0};
+        this.checkPoint = checkPoint;
+
 
         this.createStaticPlatforms();
         this.createMovingPlatforms();
@@ -326,8 +328,6 @@ export default class Scene1 extends Phaser.Scene {
         });
 
     }
-
-    
     
 
     update() {
@@ -378,16 +378,19 @@ export default class Scene1 extends Phaser.Scene {
         this.playerHearts -= 1;
         this.currentHeart = this.hearts[this.playerHearts - 1];
         this.currentHeart.setAlpha(0);
-
+        
+        let checkPoint1 = this.checkPoint;
 
             if (this.playerHearts <= 1) {
                 this.scene.start("scene0_welcome");
             } else {
-                this.player.body.x = this.scalino.x - 200;
+                /*this.player.body.x = this.scalino.x - 200;
                 this.player.body.y = this.scalino.y - 100;
-                this.playerEnemy.x = 5350;
-                this.playerEnemy.y = 200;
-                this.scene.resume();
+                this.playerEnemy.x = this.playerEnemy.initialPosition;
+                this.playerEnemy.y = this.playerEnemy.floorHeight;*/
+                this.scene.resume(this.followPlayer);
+                checkPoint1.x = this.beforeJump.body.x;
+                checkPoint1.y = this.beforeJump.body.y;
             }
 
     }
@@ -397,14 +400,18 @@ export default class Scene1 extends Phaser.Scene {
         this.currentHeart = this.hearts[this.playerHearts - 1];
         this.currentHeart.setAlpha(0);
 
+        let checkPoint2 = this.checkPoint;
 
         if (this.playerHearts <= 1) {
             this.scene.start("scene0_welcome");
         } else {
-            //checkpoint da inserire
             this.player.x = this.chiave.x;
             this.player.y = this.chiave.y;
-            this.scene.resume();
+            this.playerEnemy.x = this.playerEnemy.initialPosition;
+            this.playerEnemy.y = this.playerEnemy.floorHeight;
+            this.scene.resume(this.collectChiavi);
+            checkPoint2.x = this.piedistallo.x;
+            checkPoint2.y = this.piedistallo.y;
         }
             
     }
