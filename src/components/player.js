@@ -91,12 +91,12 @@ export default class Player extends Phaser.GameObjects.Sprite {
     manageMovements() {
         //tasto freccia sinistra premuto + giocatore a destra del limite sinistro del quadro
         if (this.cursorKeys.left.isDown && this.x >= 0) {
-            this.body.setVelocityX(-200); // Velocità per spostamento verso sinistra
+            this.body.setVelocityX(-250); // Velocità per spostamento verso sinistra
             this.flipX = true;
 
         // tasto freccia destra premuto + giocatore a sinistra del limite sinistro del quadro
         } else if (this.cursorKeys.right.isDown && this.x <= this.maxWidth - this.displayWidth){
-            this.body.setVelocityX(200);  // Velocità per spostamento verso destra
+            this.body.setVelocityX(250);  // Velocità per spostamento verso destra
             this.flipX = false;
 
         } else {

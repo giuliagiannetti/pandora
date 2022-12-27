@@ -98,7 +98,7 @@ export default class Scene1 extends Phaser.Scene {
 
         // Player
   
-        const thePlayer = new Player(this, 7000, this.floorHeight, this.worldWidth, -400);
+        const thePlayer = new Player(this, 100, this.floorHeight, this.worldWidth, -400);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
         this.playerHearts = this.maxHearts;
@@ -116,7 +116,7 @@ export default class Scene1 extends Phaser.Scene {
         this.chiave = this.add.image(5000, -490, "chiave").setScale(0.08);
         this.physics.add.overlap(this.player, this.chiave, this.collectChiavi);
         this.piedistallo = this.add.rectangle(5000, -420, 80, 40, 0x000000);
-
+    
 
         this.createStaticPlatforms();
         this.createMovingPlatforms();
@@ -171,6 +171,8 @@ export default class Scene1 extends Phaser.Scene {
         this.pausePlay.setVisible(false); 
         this.pausePlay.setScrollFactor(0,0);
         this.pausePlay.setInteractive();
+
+        
     }
     
     createEnemy() {
@@ -180,6 +182,7 @@ export default class Scene1 extends Phaser.Scene {
         
         this.overlapEnemy = this.physics.add.overlap(this.player, this.enemy, this.hitEnemy, null, this);
         
+
         const followingEnemy = new Enemy(this, 5350, 200)
         this.playerEnemy = this.physics.add.existing(followingEnemy);
         this.playerEnemy.setScale(0.3);
@@ -190,39 +193,6 @@ export default class Scene1 extends Phaser.Scene {
 
     }
 
-    hitEnemy () {
-            this.playerHearts -= 1;
-            this.currentHeart = this.hearts[this.playerHearts - 1];
-            this.currentHeart.setAlpha(0);
-
-
-                if (this.playerHearts <= 1) {
-                    this.scene.start("scene0_welcome");
-                } else {
-                    //checkpoint da inserire
-                    this.player.x = this.chiave.x;
-                    this.player.y = this.chiave.y;
-                    this.game.scene.resume();
-                }
-            
-    }
-
-    hitEnemyPlayer () {
-        this.playerHearts -= 1;
-        this.currentHeart = this.hearts[this.playerHearts - 1];
-        this.currentHeart.setAlpha(0);
-        
-            
-            if (this.playerHearts <= 1) {
-                this.scene.start("scene0_welcome");
-            } else {
-                //checkpoint da inserire
-                this.player.x = this.scalino.x - 200;
-                this.player.y = this.scalino.y - 10;
-                this.game.scene.resume();
-            }
-    }
-    
 
     createColonnato(){
         this.architrave = [];
@@ -357,6 +327,8 @@ export default class Scene1 extends Phaser.Scene {
 
     }
 
+    
+    
 
     update() {
 
@@ -377,6 +349,66 @@ export default class Scene1 extends Phaser.Scene {
         this.pauseMenuBottons();
 
     }
+    
+
+    followPlayer(){
+        let followedPlayer = this.player;
+        let playerEnemy = this.playerEnemy;
+        let enemyX = this.playerEnemy.body.x + this.playerEnemy.displayWidth/2 + 10;
+        let enemyY = this.playerEnemy.body.y + this.playerEnemy.displayHeight/2 + 10;
+        if (followedPlayer.body.x >= 5100 && followedPlayer.body.x <= 6100 && followedPlayer.body.y > -600 && followedPlayer.body.y < 220){
+        if(followedPlayer.body.x > enemyX) {
+            playerEnemy.body.setVelocityX(15);
+        }
+        if(followedPlayer.body.x < enemyX) {
+            playerEnemy.body.setVelocityX(-15);
+        }
+        if(followedPlayer.body.y > enemyY) {
+            playerEnemy.body.setVelocityY(19);
+        }
+        if(followedPlayer.body.y < enemyY) {
+            playerEnemy.body.setVelocityY(-19);
+        }
+        } else {playerEnemy.animateEnemyHouse();
+        }
+        
+    }
+
+    hitEnemyPlayer () {
+        this.playerHearts -= 1;
+        this.currentHeart = this.hearts[this.playerHearts - 1];
+        this.currentHeart.setAlpha(0);
+
+
+            if (this.playerHearts <= 1) {
+                this.scene.start("scene0_welcome");
+            } else {
+                this.player.body.x = this.scalino.x - 200;
+                this.player.body.y = this.scalino.y - 100;
+                this.playerEnemy.x = 5350;
+                this.playerEnemy.y = 200;
+                this.scene.resume();
+            }
+
+    }
+
+    hitEnemy () {
+        this.playerHearts -= 1;
+        this.currentHeart = this.hearts[this.playerHearts - 1];
+        this.currentHeart.setAlpha(0);
+
+
+        if (this.playerHearts <= 1) {
+            this.scene.start("scene0_welcome");
+        } else {
+            //checkpoint da inserire
+            this.player.x = this.chiave.x;
+            this.player.y = this.chiave.y;
+            this.scene.resume();
+        }
+            
+    }
+    
 
     pauseMenuBottons(){
         this.pausePlay.on("pointerdown", ()=>{
@@ -433,9 +465,9 @@ export default class Scene1 extends Phaser.Scene {
 
 
     checkSceneEnd() {
-        if ((this.player.x >= this.game.config.width - this.player.displayWidth) && 
+        if (//(this.player.x >= this.game.config.width - this.player.displayWidth) && 
             this.key0.isDown) {
-            this.scene.start("scene3");
+            this.scene.start("scene2");
         }
     }
 }
