@@ -37,7 +37,7 @@ export default class Scene1 extends Phaser.Scene {
 
         this.background = this.add.image(0, 0, "polis2");
         this.background.setOrigin(0, 0.55);
-        this.background.setPipeline('Light2D').setAlpha(0.5);
+        
 
         this.floor = this.add.rectangle(0, this.game.config.height,
             this.worldWidth + 100, this.game.config.height - this.floorHeight,
@@ -46,16 +46,13 @@ export default class Scene1 extends Phaser.Scene {
         this.physics.add.existing(this.floor, true);
 
 
-
         // Player
         const thePlayer = new Player(this, 100, this.floorHeight, this.worldWidth, -400);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
 
 
-
-        // Imposta la camera per seguire i movimenti del giocatore lungo l'asse x
-     
+        // Camera
         this.cameras.main.startFollow(this.player);
         this.cameras.main.setFollowOffset(0, 300);
 
@@ -67,6 +64,7 @@ export default class Scene1 extends Phaser.Scene {
         this.createStaticPlatforms();
         this.createMovingPlatforms();
 
+        this.background.setPipeline('Light2D').setAlpha(0.5);
         this.playerLight = this.lights.addLight(0, 0, 600).setIntensity(2).setColor(0xFFFFE0);
         this.lights.enable();
         this.lights.setAmbientColor(0x11111);

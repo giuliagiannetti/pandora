@@ -41,7 +41,6 @@ export default class Scene1 extends Phaser.Scene {
         
 
      //immagini di sfondo
-        this.load.image("polis", "assets/images/background/tutorial.jpg"); //sfondo: uno in primo piano, con platform, costruzioni principali
         this.load.image("sfondo", "assets/images/background/rosso.png");
 
      //elementi della scena
@@ -71,23 +70,10 @@ export default class Scene1 extends Phaser.Scene {
 
         this.key0 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ZERO);
 
-
-        /*this.background = this.add.image(0, 0, "polis");
-        this.background.setOrigin(0, 0.55);
-        this.background.setScale(2);*/
-
         this.background = this.add.tileSprite(0, 0, 1280, 2400, "sfondo");
         this.background.setOrigin(0, 0.70);
         this.background.setScrollFactor(0,0.4);
 
-
-        this.colonne = [];
-
-        for (let i=0; i<3; i++) {
-            let colonna = this.add.image(1850+250*i, 433, "colonna");
-            colonna.setScale(0.3);
-            this.colonne.push(colonna);
-        }
 
         this.floor = this.add.rectangle(0, this.game.config.height,
             this.worldWidth + 100, this.game.config.height - this.floorHeight,
@@ -97,8 +83,7 @@ export default class Scene1 extends Phaser.Scene {
 
 
         // Player
-  
-        const thePlayer = new Player(this, 7000, this.floorHeight, this.worldWidth, -400);
+        const thePlayer = new Player(this, 100, this.floorHeight, this.worldWidth, -400);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
         this.playerHearts = this.maxHearts;
@@ -107,9 +92,6 @@ export default class Scene1 extends Phaser.Scene {
         // Camera
         this.cameras.main.startFollow(this.player);
         this.cameras.main.setFollowOffset(0, 300);
-
-        
-        // Nemico
     
 
         // Chiavi
@@ -120,61 +102,20 @@ export default class Scene1 extends Phaser.Scene {
         this.checkPoint = checkPoint;
 
 
+        //piattaforme
         this.createStaticPlatforms();
         this.createMovingPlatforms();
         this.createJumpingPlatforms();
         this.createPorta();
         this.createColonnato();
+
+
+        //enemy
         this.createEnemy();
 
         
         //HUD
-        this.skillShow = this.add.circle(30, 30, 70, 0x2f1710);
-        this.skillShow.setOrigin(0,0);
-        this.skillShow.setScrollFactor(0,0);
-
-
-        this.chiaveIcon1 = this.add.image(190, 120, "chiaveicona").setScale(0.5).setAlpha(0);
-        this.chiaveIcon1.setOrigin(0,0);
-        this.chiaveIcon1.setScrollFactor(0,0);
-
-
-        this.lifeSpan = this.add.rectangle(190, 30, 180, 70, 0x2f1710).setOrigin(0,0).setScrollFactor(0,0);
-
-       
-        this.hearts = [];
-        for (let i=0; i<3; i++) {
-            let life = this.add.image(200+55*i, 40, "life");
-            life.setScale(0.5);
-            life.setOrigin(0,0);
-            life.setScrollFactor(0,0);
-            this.hearts.push(life);}
-        
-      
-
-        this.pausePanel = this.add.image(this.game.config.width/2, 100, "menuPausa");
-        this.pausePanel.setOrigin(0.5,0).setScale(0.7);
-        this.pausePanel.setVisible(false); 
-        this.pausePanel.setScrollFactor(0,0);
-        
-        this.pauseButton = this.add.image(1240, 35, "vaso");
-        this.pauseButton.setOrigin(1,0).setScale(0.4);
-        this.pauseButton.setScrollFactor(0,0);
-        this.pauseButton.setInteractive();
-        
-        this.pauseHome = this.add.image(510, 300, "home");
-        this.pauseHome.setOrigin(0.5,0).setScale(0.2);
-        this.pauseHome.setVisible(false); 
-        this.pauseHome.setScrollFactor(0,0);
-        this.pauseHome.setInteractive();
-
-        this.pausePlay = this.add.image(770, 300, "play");
-        this.pausePlay.setOrigin(0.5,0).setScale(0.18);
-        this.pausePlay.setVisible(false); 
-        this.pausePlay.setScrollFactor(0,0);
-        this.pausePlay.setInteractive();
-
-        
+        this.createHUD();
     }
     
     createEnemy() {
@@ -192,11 +133,20 @@ export default class Scene1 extends Phaser.Scene {
         this.playerEnemy.body.allowGravity = false;
 
         this.overlapEnemyPlayer = this.physics.add.overlap(this.player, this.playerEnemy, this.hitEnemyPlayer, null, this);
-
     }
 
 
     createColonnato(){
+
+        this.colonne = [];
+
+        for (let i=0; i<3; i++) {
+            let colonna = this.add.image(1850+250*i, 433, "colonna");
+            colonna.setScale(0.3);
+            this.colonne.push(colonna);
+        }
+
+
         this.architrave = [];
         let m = 54;
         
@@ -305,7 +255,7 @@ export default class Scene1 extends Phaser.Scene {
           this.jumpingPlatforms.create(4500, 415, 'rimbalzante').setScale(0.2).refreshBody();  
           
           this.physics.add.collider(this.jumpingPlatforms, this.player, () => { if (this.player.body.touching.down) {
-            this.player.body.setVelocityY(-500)};
+            this.player.body.setVelocityY(this.player.jumpSpeed - 100)};
         });
          
           
@@ -329,6 +279,53 @@ export default class Scene1 extends Phaser.Scene {
 
     }
     
+    createHUD() {
+        this.skillShow = this.add.circle(600, 30, 40, 0x2f1710);
+        this.skillShow.setOrigin(0,0);
+        this.skillShow.setScrollFactor(0,0);
+
+
+        this.chiaveIcon1 = this.add.image(230, 30, "chiaveicona").setScale(0.7).setAlpha(0.3);
+        this.chiaveIcon1.setOrigin(0,0);
+        this.chiaveIcon1.setScrollFactor(0,0);
+
+
+        this.lifeSpan = this.add.rectangle(30, 30, 180, 70, 0x2f1710).setOrigin(0,0).setScrollFactor(0,0);
+
+       
+        this.hearts = [];
+        for (let i=0; i<3; i++) {
+            let life = this.add.image(40+55*i, 40, "life");
+            life.setScale(0.5);
+            life.setOrigin(0,0);
+            life.setScrollFactor(0,0);
+            this.hearts.push(life);}
+        
+      
+
+        this.pausePanel = this.add.image(this.game.config.width/2, 100, "menuPausa");
+        this.pausePanel.setOrigin(0.5,0).setScale(0.7);
+        this.pausePanel.setVisible(false); 
+        this.pausePanel.setScrollFactor(0,0);
+        
+        this.pauseButton = this.add.image(1240, 30, "vaso");
+        this.pauseButton.setOrigin(1,0).setScale(0.25);
+        this.pauseButton.setScrollFactor(0,0);
+        this.pauseButton.setInteractive();
+        
+        this.pauseHome = this.add.image(510, 300, "home");
+        this.pauseHome.setOrigin(0.5,0).setScale(0.2);
+        this.pauseHome.setVisible(false); 
+        this.pauseHome.setScrollFactor(0,0);
+        this.pauseHome.setInteractive();
+
+        this.pausePlay = this.add.image(770, 300, "play");
+        this.pausePlay.setOrigin(0.5,0).setScale(0.18);
+        this.pausePlay.setVisible(false); 
+        this.pausePlay.setScrollFactor(0,0);
+        this.pausePlay.setInteractive();
+    }
+
 
     update() {
 
