@@ -53,7 +53,9 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image("rimbalzante", "assets/images/environment_elements/rimbalzo.png");//piattaforma rimbalzante
         this.load.image("movingPlatform", "assets/images/environment_elements/trave.png"); //platform in movimento
         this.load.image("chiave", "assets/images/environment_elements/chiave.png"); //chiave
+        this.load.image("banco", "assets/images/environment_elements/banco.png"); //bancarella
 
+     //elementi hud
         this.load.image("chiaveicona", "assets/images/hud/chiaveicona.png"); //chiave icona
         this.load.image("life", "assets/images/hud/life.png");
         this.load.image("vaso", "assets/images/hud/vasopausa.png");
@@ -83,7 +85,7 @@ export default class Scene1 extends Phaser.Scene {
 
 
         // Player
-        const thePlayer = new Player(this, 100, this.floorHeight, this.worldWidth, -400);
+        const thePlayer = new Player(this, 4000, this.floorHeight, this.worldWidth, -400);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
         this.playerHearts = this.maxHearts;
@@ -101,6 +103,8 @@ export default class Scene1 extends Phaser.Scene {
         let checkPoint = {x: 0, y: 0};
         this.checkPoint = checkPoint;
 
+        //enemy
+        this.createEnemy();
 
         //piattaforme
         this.createStaticPlatforms();
@@ -108,10 +112,6 @@ export default class Scene1 extends Phaser.Scene {
         this.createJumpingPlatforms();
         this.createPorta();
         this.createColonnato();
-
-
-        //enemy
-        this.createEnemy();
 
         
         //HUD
@@ -172,6 +172,12 @@ export default class Scene1 extends Phaser.Scene {
             let blocco = this.add.image(1370+m*i, 370, "blocco");
             blocco.setScale(0.1);
             this.architrave.push(blocco);
+
+    
+        for (let i=0; i<4; i++) {
+            let blocco = this.add.image(3850+m*i, 500, "blocco");
+            blocco.setScale(0.1);
+            this.architrave.push(blocco);
         }
 
         this.colonnato = this.physics.add.group(this.architrave);
@@ -184,6 +190,7 @@ export default class Scene1 extends Phaser.Scene {
             this.player.isJumping = false;
         })
     }
+}
 
 
     createStaticPlatforms() {
@@ -191,8 +198,6 @@ export default class Scene1 extends Phaser.Scene {
         this.platforms = this.physics.add.staticGroup()
 
         this.platforms.create(3410, 433, 'colonna').setScale(0.3).refreshBody();//colonna
-        
-        this.beforeJump = this.platforms.create(4000, 500, 'platform1').setScale(0.3).refreshBody();
 
        //casa1
         this.pavimento = this.platforms.create(5490, 260, 'pavement').setScale(0.5).refreshBody();//pavimento
@@ -228,6 +233,7 @@ export default class Scene1 extends Phaser.Scene {
 
     }
 
+
     createMovingPlatforms() {
 
         this.movingPlatforms = [];
@@ -250,16 +256,21 @@ export default class Scene1 extends Phaser.Scene {
 
     createJumpingPlatforms(){             
 
-          this.jumpingPlatforms = this.physics.add.staticGroup()
-
-          this.jumpingPlatforms.create(4500, 415, 'rimbalzante').setScale(0.2).refreshBody();  
-          
+          let jumpingPlatform = this.add.rectangle(4450, 415, 250, 20, 0x00000, 0);
+          this.jumpingPlatforms = this.physics.add.existing(jumpingPlatform);
+          this.jumpingPlatforms.body.allowGravity = false;
+          this.jumpingPlatforms.body.setImmovable(true);
+      
           this.physics.add.collider(this.jumpingPlatforms, this.player, () => { if (this.player.body.touching.down) {
             this.player.body.setVelocityY(this.player.jumpSpeed - 100)};
         });
+
+        this.banco = this.add.image(4300, this.floorHeight, "banco");
+        this.banco.setOrigin(0,1).setScale(0.3);
          
           
     }
+
 
     createPorta(){
         
@@ -279,6 +290,7 @@ export default class Scene1 extends Phaser.Scene {
 
     }
     
+
     createHUD() {
         this.skillShow = this.add.circle(600, 30, 40, 0x2f1710);
         this.skillShow.setOrigin(0,0);
@@ -352,7 +364,7 @@ export default class Scene1 extends Phaser.Scene {
         let followedPlayer = this.player;
         let playerEnemy = this.playerEnemy;
         let enemyX = this.playerEnemy.body.x + this.playerEnemy.displayWidth/2 + 10;
-        let enemyY = this.playerEnemy.body.y + this.playerEnemy.displayHeight/2 + 10;
+        let enemyY = this.playerEnemy.body.y + this.playerEnemy.displayHeight/2 + 50;
         if (followedPlayer.body.x >= 5100 && followedPlayer.body.x <= 6100 && followedPlayer.body.y > -600 && followedPlayer.body.y < 220){
         if(followedPlayer.body.x > enemyX) {
             playerEnemy.body.setVelocityX(15);
@@ -391,6 +403,7 @@ export default class Scene1 extends Phaser.Scene {
             }
 
     }
+
 
     hitEnemy () {
         this.playerHearts -= 1;
@@ -436,6 +449,7 @@ export default class Scene1 extends Phaser.Scene {
         })
     }
 
+
     animateBackground() {
         this.background.tilePositionX = this.cameras.main.scrollX * 0.5;
         this.background.tilePositionY = this.cameras.main.scrollY * 0.5;
@@ -448,9 +462,6 @@ export default class Scene1 extends Phaser.Scene {
             this.background.tilePositionY = this.cameras.main.scrollY * 0;
         }
     }
-
-
-    
 
 
     collectChiavi() {
