@@ -99,8 +99,6 @@ export default class Scene1 extends Phaser.Scene {
         // Chiavi
         this.chiave = this.add.image(5000, -490, "chiave").setScale(0.08);
         this.piedistallo = this.add.rectangle(5000, -420, 80, 40, 0x000000);
-        let checkPoint = {x: 0, y: 0};
-        this.checkPoint = checkPoint;
 
         //enemy
         this.createEnemy();
@@ -413,8 +411,6 @@ export default class Scene1 extends Phaser.Scene {
         this.currentHeart = this.hearts[this.playerHearts - 1];
         this.currentHeart.setAlpha(0);
 
-        let checkPoint2 = this.checkPoint;
-
         if (this.playerHearts <= 1) {
             this.scene.start("scene0_welcome");
         } else {
@@ -423,8 +419,6 @@ export default class Scene1 extends Phaser.Scene {
             this.playerEnemy.x = this.playerEnemy.initialPosition;
             this.playerEnemy.y = this.playerEnemy.floorHeight;
             this.scene.resume(this.collectChiavi);
-            checkPoint2.x = this.piedistallo.x;
-            checkPoint2.y = this.piedistallo.y;
         }
             
     }
