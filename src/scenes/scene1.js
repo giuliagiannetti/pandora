@@ -327,9 +327,9 @@ export default class Scene1 extends Phaser.Scene {
        
         this.hearts = [];
         for (let i=0; i<3; i++) {
-            let life = this.add.image(40+55*i, 40, "life");
+            let life = this.add.image(40 + 25.25 +55*i, 40 + 25.25, "life"); //i +25.25 sono per riposizionare la vita al centro della barra dato che ho settato il pivot in mezzo
             life.setScale(0.5);
-            life.setOrigin(0,0);
+            life.setOrigin(0.5,0.5); //settato il pivot in mezzo per l'animazione
             life.setScrollFactor(0,0);
             this.hearts.push(life);}
         
@@ -406,7 +406,14 @@ export default class Scene1 extends Phaser.Scene {
     hitEnemyPlayer () {
         this.playerHearts -= 1;
         this.currentHeart = this.hearts[this.playerHearts - 1];
-        this.currentHeart.setAlpha(0);
+        var heartFade = this.tweens.add({  
+            targets: this.currentHeart,
+            alpha: 0,
+            scaleX: 0,
+            scaleY: 0,
+            ease: 'Linear',
+            duration: 200
+        }); //sostituito il setAlpha con l'animazione, vscode mi dice che heartFade non è mai letto ma il codice va so idk
 
             if (this.playerHearts <= 1) {
                 this.scene.start("scene0_welcome");
@@ -419,7 +426,6 @@ export default class Scene1 extends Phaser.Scene {
             }
 
     }
-
 
     hitEnemy () {
         this.playerHearts -= 1;
