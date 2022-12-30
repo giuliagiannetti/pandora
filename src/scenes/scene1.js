@@ -41,7 +41,11 @@ export default class Scene1 extends Phaser.Scene {
         
 
      //immagini di sfondo
-        this.load.image("sfondo", "assets/images/background/rosso.png");
+        //this.load.image("sfondo", "assets/images/background/rosso.png");
+        this.load.image("parallax1", "assets/images/background/parallax1.png");
+        this.load.image("parallax2", "assets/images/background/parallax2.png");
+        this.load.image("parallax3", "assets/images/background/parallax3.png");
+        this.load.image("parallax4", "assets/images/background/parallax4.png");
 
      //elementi della scena
         this.load.image("platform1", "assets/images/environment_elements/platform1.png"); //platform statico
@@ -72,9 +76,19 @@ export default class Scene1 extends Phaser.Scene {
 
         this.key0 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ZERO);
 
-        this.background = this.add.tileSprite(0, 0, 1280, 2400, "sfondo");
-        this.background.setOrigin(0, 0.70);
-        this.background.setScrollFactor(0,0.4);
+        //sfondo parallax
+        this.background1 = this.add.tileSprite(0, 0, 1280, 2400, "parallax1");
+        this.background1.setOrigin(0, 0.70);
+        this.background1.setScrollFactor(0,0.4);
+        this.background2 = this.add.tileSprite(0, 0, 1280, 2400, "parallax2");
+        this.background2.setOrigin(0, 0.70);
+        this.background2.setScrollFactor(0,0.4);
+        this.background3 = this.add.tileSprite(0, 0, 1280, 2400, "parallax3");
+        this.background3.setOrigin(0, 0.70);
+        this.background3.setScrollFactor(0,0.4);
+        this.background4 = this.add.tileSprite(0, 0, 1280, 2400, "parallax4");
+        this.background4.setOrigin(0, 0.70);
+        this.background4.setScrollFactor(0,0.4);
 
 
         this.floor = this.add.rectangle(0, this.game.config.height,
@@ -448,15 +462,22 @@ export default class Scene1 extends Phaser.Scene {
 
 
     animateBackground() {
-        this.background.tilePositionX = this.cameras.main.scrollX * 0.5;
-        this.background.tilePositionY = this.cameras.main.scrollY * 0.5;
+        this.background1.tilePositionX = this.cameras.main.scrollX * 0.05;
+        this.background1.tilePositionY = this.cameras.main.scrollY * 0.05;
+        this.background2.tilePositionX = this.cameras.main.scrollX * 0.15;
+        this.background2.tilePositionY = this.cameras.main.scrollY * 0.15;
+        this.background3.tilePositionX = this.cameras.main.scrollX * 0.30;
+        this.background3.tilePositionY = this.cameras.main.scrollY * 0.30;
+        this.background4.tilePositionX = this.cameras.main.scrollX * 0.50;
+        this.background4.tilePositionY = this.cameras.main.scrollY * 0.50;
+        
+
+
         const startLineCamera = 400;
         const shiftCameraMax = 100;
         if (this.player.body.y + this.player.height / 2 < startLineCamera) {
             this.cameras.main.followOffset.y = Math.max(300 - shiftCameraMax, 300 - (startLineCamera - (this.player.body.y + this.player.height / 2)));
             console.log(this.cameras.main.followOffset.y);
-        } else if (this.player.body.y <= -720) {
-            this.background.tilePositionY = this.cameras.main.scrollY * 0;
         }
     }
 
