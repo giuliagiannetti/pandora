@@ -33,38 +33,36 @@ create() {
     
     
     //nel nome degli asset li chiamiamo testo e scena, nel preload li chiamiamo storia e scena e nel create li chiamiamo testo e ambient
-    this.testo1 = this.add.image(this.game.config.width / 2, this.game.config.height / 2, "storia1");
-    this.testo1.setOrigin(0.5, 0.5).setScale(0.36);
-    this.testo1.setAlpha(1);
-
-    this.ambiente1 = this.add.image(this.game.config.width / 2, this.game.config.height / 2, "scena1");
-    this.ambiente1.setOrigin(0.5, 0.5);
-    this.ambiente1.setAlpha(0);
-
-
-    this.testo2 = this.add.image(this.game.config.width / 2, this.game.config.height / 2, "storia2");
-    this.testo2.setOrigin(0.5, 0.5).setScale(0.36);
-    this.testo2.setAlpha(0);
-
-    this.ambiente2 = this.add.image(this.game.config.width / 2, this.game.config.height / 2, "scena2");
-    this.ambiente2.setOrigin(0.5, 0.5);
-    this.ambiente2.setAlpha(0);
-
-
-    this.testo3 = this.add.image(this.game.config.width / 2, this.game.config.height / 2, "storia3");
-    this.testo3.setOrigin(0.5, 0.5).setScale(0.36);
-    this.testo3.setAlpha(0);
-
-    this.ambiente3 = this.add.image(this.game.config.width / 2, this.game.config.height / 2, "scena3");
-    this.ambiente3.setOrigin(0.5, 0.5);
-    this.ambiente3.setAlpha(0);
-
-
     this.pregioco = this.add.image(this.game.config.width / 2, this.game.config.height / 2, "pregioco");
     this.pregioco.setOrigin(0.5, 0.5);
     this.pregioco.setAlpha(0);
 
 
+    this.ambiente3 = this.add.image(this.game.config.width / 2, this.game.config.height / 2, "scena3");
+    this.ambiente3.setOrigin(0.5, 0.5);
+    this.ambiente3.setAlpha(0);
+
+    this.testo3 = this.add.image(this.game.config.width / 2, this.game.config.height / 2, "storia3");
+    this.testo3.setOrigin(0.5, 0.5).setScale(0.36);
+    this.testo3.setAlpha(0);
+
+
+    this.ambiente2 = this.add.image(this.game.config.width / 2, this.game.config.height / 2, "scena2");
+    this.ambiente2.setOrigin(0.5, 0.5);
+    this.ambiente2.setAlpha(0);
+
+    this.testo2 = this.add.image(this.game.config.width / 2, this.game.config.height / 2, "storia2");
+    this.testo2.setOrigin(0.5, 0.5).setScale(0.36);
+    this.testo2.setAlpha(0);
+
+    
+    this.ambiente1 = this.add.image(this.game.config.width / 2, this.game.config.height / 2, "scena1");
+    this.ambiente1.setOrigin(0.5, 0.5);
+    this.ambiente1.setAlpha(0);
+
+    this.testo1 = this.add.image(this.game.config.width / 2, this.game.config.height / 2, "storia1");
+    this.testo1.setOrigin(0.5, 0.5).setScale(0.36);
+    this.testo1.setAlpha(1);
 
     
     //bottoni
@@ -86,11 +84,10 @@ create() {
       });
     }
 
-
     if (this.ambiente1.alpha = 1) {
       this.bottoneAvantiNero.on("pointerdown", () => {
-         this.testo2.setAlpha(1);
          this.ambiente1.setAlpha(0);
+         this.testo2.setAlpha(1);
       });
 
       this.bottoneIndietroNero.on("pointerdown", () => {
@@ -157,11 +154,10 @@ create() {
          this.pregioco.setAlpha(0);
       });
     } 
-
-    
-    
     
  };
+
+
 
  update() {
    if (this.keySpace.isDown) {
