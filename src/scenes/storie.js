@@ -13,8 +13,12 @@ export default class Storia1 extends Phaser.Scene {
         //assets
   
         //sfondo
-        this.load.image("storia1", "assets/images/story/testo_olimpo_2.png");
+        this.load.image("storia1", "assets/images/story/testo_olimpogiusto.png");
         this.load.image("scena1", "assets/images/story/scena1.jpg");
+
+        //bottoni
+        this.load.image("avantinero", "assets/images/story/avantinero.png");
+        this.load.image("indietronero", "assets/images/story/indietronero.png");
         
 }
 create() {
@@ -22,6 +26,7 @@ create() {
 
     this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     this.ambiente1 = this.add.image(this.game.config.width / 2, this.game.config.height / 2, "scena1");
+    
     this.ambiente1.setOrigin(0.5, 0.5);
     this.ambiente1.setAlpha(0);
     //posizione degli elementi 
@@ -29,6 +34,9 @@ create() {
     this.testo.setOrigin(0.5, 0.5).setScale(0.36);
     this.testo.setAlpha(1);
     
+    //bottoni
+    this.bottoneIndietroNero = this.add.image(200, 650, "indietronero");
+    this.bottoneAvantiNero = this.add.image(this.game.config.width - 200, 650, "avantinero");
     
  };
 
