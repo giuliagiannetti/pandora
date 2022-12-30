@@ -105,7 +105,7 @@ create() {
              this.scene.start("scene1");
           } 
        }); 
-       //bottone cliccabile 
+       
        this.bottoneIndietroNero.on("pointerdown", () => { //stessa cosa del bottone avanti
           console.log('bottone indietro premuto')
   
@@ -141,10 +141,7 @@ create() {
   };
   
   update() {
-    if (this.keySpace.isDown) {
-        this.ambiente1.setAlpha(1);
-        this.testo.setAlpha(1);
-     }
+    
   }
   
   
