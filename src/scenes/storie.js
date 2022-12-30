@@ -43,7 +43,7 @@ create() {
     this.ambiente3.setAlpha(0);
 
     this.testo3 = this.add.image(this.game.config.width / 2, this.game.config.height / 2, "storia3");
-    this.testo3.setOrigin(0.5, 0.5).setScale(0.36);
+    this.testo3.setOrigin(0.5, 0.5).setScale(1);
     this.testo3.setAlpha(0);
 
 
@@ -105,7 +105,12 @@ create() {
              this.scene.start("scene1");
           } 
        }); 
+<<<<<<< Updated upstream
        
+=======
+
+       //bottone cliccabile 
+>>>>>>> Stashed changes
        this.bottoneIndietroNero.on("pointerdown", () => { //stessa cosa del bottone avanti
           console.log('bottone indietro premuto')
   

@@ -87,7 +87,7 @@ export default class Scene1 extends Phaser.Scene {
         this.background3.setOrigin(0, 0.70);
         this.background3.setScrollFactor(0,0.4);
         this.background4 = this.add.tileSprite(0, 0, 1280, 2400, "parallax4");
-        this.background4.setOrigin(0, 0.70);
+        this.background4.setOrigin(0, 0.698);
         this.background4.setScrollFactor(0,0.4);
 
 
