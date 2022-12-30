@@ -40,9 +40,20 @@ export default class Scene2 extends Phaser.Scene {
 
         /*this.background = this.add.image(0, 0, "polis1");
         this.background.setOrigin(0, 0.55);*/
-        this.background = this.add.tileSprite(0, 0, 1280, 2400, "sfondo");
-        this.background.setOrigin(0, 0.70);
-        this.background.setScrollFactor(0,0.4);
+
+        //sfondo parallax
+        this.background1 = this.add.tileSprite(0, 0, 1280, 2400, "parallax1");
+        this.background1.setOrigin(0, 0.70);
+        this.background1.setScrollFactor(0,0.4);
+        this.background2 = this.add.tileSprite(0, 0, 1280, 2400, "parallax2");
+        this.background2.setOrigin(0, 0.70);
+        this.background2.setScrollFactor(0,0.4);
+        this.background3 = this.add.tileSprite(0, 0, 1280, 2400, "parallax3");
+        this.background3.setOrigin(0, 0.70);
+        this.background3.setScrollFactor(0,0.4);
+        this.background4 = this.add.tileSprite(0, 0, 1280, 2400, "parallax4");
+        this.background4.setOrigin(0, 0.70);
+        this.background4.setScrollFactor(0,0.4);   
 
         this.floor = this.add.rectangle(0, this.game.config.height,
             this.worldWidth + 100, this.game.config.height - this.floorHeight,
@@ -102,29 +113,11 @@ export default class Scene2 extends Phaser.Scene {
             life.setScrollFactor(0,0);
             this.hearts.push(life);}
         
-      
-
-        this.pausePanel = this.add.image(this.game.config.width/2, 100, "menuPausa");
-        this.pausePanel.setOrigin(0.5,0).setScale(0.7);
-        this.pausePanel.setVisible(false); 
-        this.pausePanel.setScrollFactor(0,0);
-        
         this.pauseButton = this.add.image(1240, 30, "vaso");
         this.pauseButton.setOrigin(1,0).setScale(0.25);
         this.pauseButton.setScrollFactor(0,0);
         this.pauseButton.setInteractive();
-        
-        this.pauseHome = this.add.image(510, 300, "home");
-        this.pauseHome.setOrigin(0.5,0).setScale(0.2);
-        this.pauseHome.setVisible(false); 
-        this.pauseHome.setScrollFactor(0,0);
-        this.pauseHome.setInteractive();
 
-        this.pausePlay = this.add.image(770, 300, "play");
-        this.pausePlay.setOrigin(0.5,0).setScale(0.18);
-        this.pausePlay.setVisible(false); 
-        this.pausePlay.setScrollFactor(0,0);
-        this.pausePlay.setInteractive();
     }
 
     /*createEnemy() {
@@ -133,15 +126,6 @@ export default class Scene2 extends Phaser.Scene {
         this.physics.add.collider(this.enemy, this.floor);
         
         this.overlapEnemy = this.physics.add.overlap(this.player, this.enemy, this.hitEnemy, null, this);
-        
-
-        const followingEnemy = new Enemy(this, 5350, 200)
-        this.playerEnemy = this.physics.add.existing(followingEnemy);
-        this.playerEnemy.setScale(0.3);
-        this.physics.add.collider(this.playerEnemy, this.floor);
-        this.playerEnemy.body.allowGravity = false;
-
-        this.overlapEnemyPlayer = this.physics.add.overlap(this.player, this.playerEnemy, this.hitEnemyPlayer, null, this);
     }*/
 
     createStaticPlatforms() {
@@ -167,12 +151,9 @@ export default class Scene2 extends Phaser.Scene {
     }
 
     createMovingPlatforms() {
-        // Inserisci delle piattaforme in movimento
+
         this.movingPlatforms = [];
-        //inserite le vostre piattaforme qua
         this.movingPlatforms.push(new movingPlatform(this, 2400, -350));
-
-
 
         this.movingPlatformGroup = this.physics.add.group(this.movingPlatforms);
         this.movingPlatformGroup.children.iterate(function (platform) {
@@ -217,12 +198,29 @@ export default class Scene2 extends Phaser.Scene {
         this.collectSandalo(this.player, this.sandalo);
 
         this.checkSceneEnd();
+
+        this.pauseMenuBottons();
+    }
+
+    pauseMenuBottons(){
+
+        this.pauseButton.on("pointerdown", ()=>{
+            this.scene.pause();
+            this.scene.launch("pause_menu", {sceneName: "scene2"});
+        });
     }
 
 
     animateBackground() {
-        this.background.tilePositionX = this.cameras.main.scrollX * 0.5;
-        this.background.tilePositionY = this.cameras.main.scrollY * 0.5;
+        this.background1.tilePositionX = this.cameras.main.scrollX * 0.05;
+        this.background1.tilePositionY = this.cameras.main.scrollY * 0.05;
+        this.background2.tilePositionX = this.cameras.main.scrollX * 0.15;
+        this.background2.tilePositionY = this.cameras.main.scrollY * 0.15;
+        this.background3.tilePositionX = this.cameras.main.scrollX * 0.30;
+        this.background3.tilePositionY = this.cameras.main.scrollY * 0.30;
+        this.background4.tilePositionX = this.cameras.main.scrollX * 0.50;
+        this.background4.tilePositionY = this.cameras.main.scrollY * 0.50;
+        
         const startLineCamera = 400;
         const shiftCameraMax = 70;
         if (this.player.body.y + this.player.height / 2 < startLineCamera) {
@@ -234,7 +232,7 @@ export default class Scene2 extends Phaser.Scene {
     collectSandalo() {
         let x_diff = Math.abs(this.player.x - this.sandalo.x);
         let y_diff = Math.abs(this.player.y - this.sandalo.y);
-        if (x_diff < 75 && y_diff < 100) {
+        if (x_diff < 70 && y_diff < 100) {
             this.sandalo.destroy();
             this.player.jumpSpeed = -600;
         }
