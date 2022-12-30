@@ -333,16 +333,17 @@ export default class Scene1 extends Phaser.Scene {
             life.setScrollFactor(0,0);
             this.hearts.push(life);}
         
-
-        this.pausePanel = this.add.image(this.game.config.width/2, 100, "menuPausa");
-        this.pausePanel.setOrigin(0.5,0).setScale(0.7);
-        this.pausePanel.setVisible(false); 
-        this.pausePanel.setScrollFactor(0,0);
         
         this.pauseButton = this.add.image(1240, 30, "vaso");
         this.pauseButton.setOrigin(1,0).setScale(0.25);
         this.pauseButton.setScrollFactor(0,0);
         this.pauseButton.setInteractive();
+
+        
+        /*this.pausePanel = this.add.image(this.game.config.width/2, 100, "menuPausa");
+        this.pausePanel.setOrigin(0.5,0).setScale(0.7);
+        this.pausePanel.setVisible(false); 
+        this.pausePanel.setScrollFactor(0,0);
         
         this.pauseHome = this.add.image(510, 300, "home");
         this.pauseHome.setOrigin(0.5,0).setScale(0.2);
@@ -354,7 +355,7 @@ export default class Scene1 extends Phaser.Scene {
         this.pausePlay.setOrigin(0.5,0).setScale(0.18);
         this.pausePlay.setVisible(false); 
         this.pausePlay.setScrollFactor(0,0);
-        this.pausePlay.setInteractive();
+        this.pausePlay.setInteractive();*/
     }
 
 
@@ -445,7 +446,13 @@ export default class Scene1 extends Phaser.Scene {
     
 
     pauseMenuBottons(){
-        this.pausePlay.on("pointerdown", ()=>{
+
+        this.pauseButton.on("pointerdown", ()=>{
+            this.scene.pause();
+            this.scene.launch("pause_menu", {sceneName: "scene1"});
+        });
+
+        /*this.pausePlay.on("pointerdown", ()=>{
             this.pauseButton.setVisible(true);
             this.pausePanel.setVisible(false);
             this.pauseHome.setVisible(false);
@@ -463,7 +470,7 @@ export default class Scene1 extends Phaser.Scene {
 
         this.pauseHome.on("pointerdown", ()=> {
             this.scene.start("scene0_welcome");
-        })
+        })*/
     }
 
 
@@ -476,8 +483,6 @@ export default class Scene1 extends Phaser.Scene {
         this.background3.tilePositionY = this.cameras.main.scrollY * 0.30;
         this.background4.tilePositionX = this.cameras.main.scrollX * 0.50;
         this.background4.tilePositionY = this.cameras.main.scrollY * 0.50;
-        
-
 
         const startLineCamera = 400;
         const shiftCameraMax = 100;
