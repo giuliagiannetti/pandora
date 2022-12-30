@@ -65,125 +65,94 @@ create() {
     this.testo1.setAlpha(1);
 
     
-    //bottoni
-    this.bottoneIndietroNero = this.add.image(200, 650, "indietronero");
-    this.bottoneAvantiNero = this.add.image(this.game.config.width - 200, 650, "avantinero");
-
-    this.bottoneIndietroNero.setInteractive();
-    this.bottoneAvantiNero.setInteractive();
-
-    //array di bottoni perchè se no si premono da soli
-    /*this.bottoniAvanti = [];
-        for (let i=0; i<7; i++) {
-         let bottoneAvantiNero = this.add.image(this.game.config.width - 200, 650, "avantinero");
-            this.bottoniavanti.push(bottoneAvantiNero);}*/
-
-    //bottone cliccabile 
-    if (this.testo1.alpha = 1) {
-      this.bottoneAvantiNero.on("pointerdown", () => {
-         console.log("sto andando avanti a ambiente1")
-         this.ambiente1.setAlpha(1);
-         this.testo1.setAlpha(0);
-      });
-
-      this.bottoneIndietroNero.on("pointerdown", () => {
-         console.log("sto tornando alla scena iniziale")
-         this.scene.start("scene0_welcome");
-      });
-    }
-
-    if (this.ambiente1.alpha = 1) {
-      this.bottoneAvantiNero.on("pointerdown", () => {
-         console.log("sto andando avanti a testo2")
-         this.ambiente1.setAlpha(0);
-         this.testo2.setAlpha(1);
-      });
-
-      this.bottoneIndietroNero.on("pointerdown", () => {
-         console.log("sto andando indietro a ambiente1")
-         this.testo1.setAlpha(1);
-         this.ambiente1.setAlpha(0);
-      });
-    }
-
-    if (this.testo2.alpha = 1) {
-      this.bottoneAvantiNero.on("pointerdown", () => {
-         console.log("sto andando avanti a ambiente2")
-         this.ambiente2.setAlpha(1);
-         this.testo2.setAlpha(0);
-      });
-
-      this.bottoneIndietroNero.on("pointerdown", () => {
-         console.log("sto andando inidietro a ambiente1")
-         this.ambiente1.setAlpha(1);
-         this.testo2.setAlpha(0);
-      });
-    } 
-
-    if (this.ambiente2.alpha = 1) {
-      this.bottoneAvantiNero.on("pointerdown", () => {
-         console.log("sto andando avanti a testo3")
-         this.testo3.setAlpha(1);
-         this.ambiente2.setAlpha(0);
-      });
-
-      this.bottoneIndietroNero.on("pointerdown", () => {
-         console.log("sto andando indietro a testo2")
-         this.testo2.setAlpha(1);
-         this.ambiente2.setAlpha(0);
-      });
-    } 
-
-    if (this.testo3.alpha = 1) {
-      this.bottoneAvantiNero.on("pointerdown", () => {
-         console.log("sto andando avanti a ambiente3")
-         this.ambiente3.setAlpha(1);
-         this.testo3.setAlpha(0);
-      });
-
-      this.bottoneIndietroNero.on("pointerdown", () => {
-         console.log("sto andando indietro a ambiente2")
-         this.ambiente2.setAlpha(1);
-         this.testo3.setAlpha(0);
-      });
-    } 
-
-    if (this.ambiente3.alpha = 1) {
-      this.bottoneAvantiNero.on("pointerdown", () => {
-         console.log("sto andando avanti a pregioco")
-         this.pregioco.setAlpha(1);
-         this.ambiente3.setAlpha(0);
-      });
-
-      this.bottoneIndietroNero.on("pointerdown", () => {
-         console.log("sto andando indietro a testo3")
-         this.testo3.setAlpha(1);
-         this.ambiente3.setAlpha(0);
-      });
-    } 
-
-    if (this.pregioco.alpha = 1) {
-      this.bottoneAvantiNero.on("pointerdown", () => {
-         console.log("sto iniziando scene1")
-         this.scene.start("scene1");
-      });
-
-      this.bottoneIndietroNero.on("pointerdown", () => {
-         console.log("sto andando indietro a ambiente3")
-         this.ambiente3.setAlpha(1);
-         this.pregioco.setAlpha(0);
-      });
-    } 
-    
- };
-
-
-
- update() {
-   if (this.keySpace.isDown) {
-       this.ambiente1.setAlpha(1);
-       this.testo.setAlpha(1);
-    }
+     //bottoni
+     this.bottoneIndietroNero = this.add.image(200, 650, "indietronero");
+     this.bottoneAvantiNero = this.add.image(this.game.config.width - 200, 650, "avantinero");
+  
+     this.bottoneIndietroNero.setInteractive();
+     this.bottoneAvantiNero.setInteractive();
+  
+     //array di bottoni perchè se no si premono da soli
+     /*this.bottoniAvanti = [];
+         for (let i=0; i<7; i++) {
+          let bottoneAvantiNero = this.add.image(this.game.config.width - 200, 650, "avantinero");
+             this.bottoniavanti.push(bottoneAvantiNero);}*/
+  
+       this.bottoneAvantiNero.on("pointerdown", () => { //risolto il problema: tutte le funzioni di if che fanno andare avanti sono dentro la funzione onpointerdown
+          console.log('bottone avanti premuto')
+  
+          if (this.testo1.alpha == 1) {
+             console.log("sto andando avanti a ambiente1")
+             this.ambiente1.setAlpha(1);
+             this.testo1.setAlpha(0);
+          } else if (this.ambiente1.alpha == 1) { //a mettere solo if non funziona perchè li fa tutti insieme, serve else if
+             console.log("sto andando avanti a testo2")
+             this.testo2.setAlpha(1);
+             this.ambiente1.setAlpha(0);
+          }else if (this.testo2.alpha == 1) {
+             console.log("sto andando avanti a ambiente2")
+             this.ambiente2.setAlpha(1);
+             this.testo2.setAlpha(0);
+          } else if (this.ambiente2.alpha == 1) {
+             console.log("sto andando avanti a testo3")
+             this.testo3.setAlpha(1);
+             this.ambiente2.setAlpha(0);
+          } else if (this.testo3.alpha == 1) {
+             console.log("sto andando avanti a ambiente3")
+             this.ambiente3.setAlpha(1);
+             this.testo3.setAlpha(0);
+          } else if (this.ambiente3.alpha == 1) {
+             console.log("sto andando avanti a pregioco")
+             this.pregioco.setAlpha(1);
+             this.ambiente3.setAlpha(0);
+          } else if (this.pregioco.alpha == 1) {
+             console.log("sto iniziando scene1")
+             this.scene.start("scene1");
+          } 
+       }); 
+       //bottone cliccabile 
+       this.bottoneIndietroNero.on("pointerdown", () => { //stessa cosa del bottone avanti
+          console.log('bottone indietro premuto')
+  
+          if (this.testo1.alpha == 1) {
+             console.log("sto tornando alla scena iniziale")
+             this.scene.start("scene0_welcome");
+          } else if (this.ambiente1.alpha == 1) {
+             console.log("sto andando indietro a ambiente1")
+             this.testo1.setAlpha(1);
+             this.ambiente1.setAlpha(0);
+          } else if (this.testo2.alpha == 1) {
+             console.log("sto andando inidietro a ambiente1")
+             this.ambiente1.setAlpha(1);
+             this.testo2.setAlpha(0);
+          } else if (this.ambiente2.alpha == 1) {
+             console.log("sto andando indietro a testo2")
+             this.testo2.setAlpha(1);
+             this.ambiente2.setAlpha(0);
+          } else if (this.testo3.alpha == 1) {
+             console.log("sto andando indietro a ambiente2")
+             this.ambiente2.setAlpha(1);
+             this.testo3.setAlpha(0);
+          } else if (this.ambiente3.alpha == 1) {
+             console.log("sto andando indietro a testo3")
+             this.testo3.setAlpha(1);
+             this.ambiente3.setAlpha(0);
+          } else if (this.pregioco.alpha == 1) {
+             console.log("sto andando indietro a ambiente3")
+             this.ambiente3.setAlpha(1);
+             this.pregioco.setAlpha(0);
+          } 
+       })
+  };
+  
+  update() {
+    if (this.keySpace.isDown) {
+        this.ambiente1.setAlpha(1);
+        this.testo.setAlpha(1);
+     }
+  }
+  
+  
+  
+ 
  }
-
-}
