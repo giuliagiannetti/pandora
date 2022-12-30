@@ -105,12 +105,7 @@ create() {
              this.scene.start("scene1");
           } 
        }); 
-<<<<<<< Updated upstream
        
-=======
-
-       //bottone cliccabile 
->>>>>>> Stashed changes
        this.bottoneIndietroNero.on("pointerdown", () => { //stessa cosa del bottone avanti
           console.log('bottone indietro premuto')
   
