@@ -72,11 +72,6 @@ create() {
      this.bottoneIndietroNero.setInteractive();
      this.bottoneAvantiNero.setInteractive();
   
-     //array di bottoni perchè se no si premono da soli
-     /*this.bottoniAvanti = [];
-         for (let i=0; i<7; i++) {
-          let bottoneAvantiNero = this.add.image(this.game.config.width - 200, 650, "avantinero");
-             this.bottoniavanti.push(bottoneAvantiNero);}*/
   
        this.bottoneAvantiNero.on("pointerdown", () => { //risolto il problema: tutte le funzioni di if che fanno andare avanti sono dentro la funzione onpointerdown
           console.log('bottone avanti premuto')
