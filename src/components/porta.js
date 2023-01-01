@@ -14,7 +14,6 @@ export default class Porta extends Phaser.GameObjects.Sprite {
         this.setScale(0.5);
         scene.physics.add.existing(this);
         this.body.setImmovable(true);
-   
 
     }
 
