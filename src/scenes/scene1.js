@@ -113,6 +113,7 @@ export default class Scene1 extends Phaser.Scene {
         // Chiavi
         this.chiave = this.add.image(5000, -490, "chiave").setScale(0.08);
         this.piedistallo = this.add.rectangle(5000, -420, 80, 40, 0x000000);
+        
 
         //enemy
         this.createEnemy();
