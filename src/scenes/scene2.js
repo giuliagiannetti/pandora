@@ -52,7 +52,7 @@ export default class Scene2 extends Phaser.Scene {
         this.background3.setOrigin(0, 0.70);
         this.background3.setScrollFactor(0,0.4);
         this.background4 = this.add.tileSprite(0, 0, 1280, 2400, "parallax4");
-        this.background4.setOrigin(0, 0.70);
+        this.background4.setOrigin(0, 0.698);
         this.background4.setScrollFactor(0,0.4);   
 
         this.floor = this.add.rectangle(0, this.game.config.height,
@@ -220,7 +220,7 @@ export default class Scene2 extends Phaser.Scene {
         this.background3.tilePositionY = this.cameras.main.scrollY * 0.30;
         this.background4.tilePositionX = this.cameras.main.scrollX * 0.50;
         this.background4.tilePositionY = this.cameras.main.scrollY * 0.50;
-        
+
         const startLineCamera = 400;
         const shiftCameraMax = 70;
         if (this.player.body.y + this.player.height / 2 < startLineCamera) {
