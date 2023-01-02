@@ -27,6 +27,8 @@ export default class Scene2 extends Phaser.Scene {
         this.load.image("pavement", "assets/images/environment_elements/pavement.png"); //pavimento
         this.load.image("rimbalzante", "assets/images/environment_elements/rimbalzo.png");//piattaforma rimbalzante
         this.load.image("movingPlatform", "assets/images/environment_elements/movingPlatform.png"); //platform in movimento
+        this.load.image("cassa", "assets/images/environment_elements/cassa.png");
+        this.load.image("cart", "assets/images/environment_elements/cart.png");
 
         this.load.image("sandalo", "assets/images/environment_elements/sandalo.png"); //sandali di hermes
 
@@ -38,8 +40,6 @@ export default class Scene2 extends Phaser.Scene {
 
         this.key0 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ZERO);
 
-        /*this.background = this.add.image(0, 0, "polis1");
-        this.background.setOrigin(0, 0.55);*/
 
         //sfondo parallax
         this.background1 = this.add.tileSprite(0, 0, 1280, 2400, "parallax1");
@@ -55,11 +55,24 @@ export default class Scene2 extends Phaser.Scene {
         this.background4.setOrigin(0, 0.698);
         this.background4.setScrollFactor(0,0.4);   
 
+        /*this.background = this.add.image(0, 0, "polis1");
+        this.background.setOrigin(0, 0.55);*/
+
+
         this.floor = this.add.rectangle(0, this.game.config.height,
             this.worldWidth + 100, this.game.config.height - this.floorHeight,
             0x000000, 0);
         this.floor.setOrigin(0, 1);
         this.physics.add.existing(this.floor, true);
+
+        //casse
+        this.cassa1 = this.add.image(850, 200, "cassa");
+        this.cassa1.setScale(0.18);
+        this.cassa2 = this.add.image(1300, 70, "cassa");
+        this.cassa2.setScale(0.27);
+        this.cassa3 = this.add.image(1700, -75, "cassa");
+        this.cassa3.setScale(0.18);
+        
 
         // Player
         const thePlayer = new Player(this, 100, this.floorHeight, this.worldWidth, -400);
@@ -129,15 +142,30 @@ export default class Scene2 extends Phaser.Scene {
     }*/
 
     createStaticPlatforms() {
-        // Aggiungi le piattaforme come un gruppo di oggetti statici
         this.platforms = this.physics.add.staticGroup()
 
-        this.platforms.create(800, 500, 'platform1').setScale(0.4).refreshBody(); //carretto
-        this.platforms.create(850, 200, 'platform1').setScale(0.5).refreshBody();
-        this.platforms.create(1300, 70, 'platform1').setScale(0.4).refreshBody();
-        this.platforms.create(1700, -75, 'platform1').setScale(0.5).refreshBody();
-        this.platforms.create(2750, -550, 'platform1').setScale(0.5).refreshBody();
-        this.platforms.create(3800, 60, 'platform1').setScale(0.5).refreshBody();
+        //this.platforms.create(800, 500, 'platform1').setScale(0.4).refreshBody(); //carretto
+        /*this.platforms.create(850, 200, 'platform1').setScale(0.5).refreshBody(); //cassa
+        this.platforms.create(1300, 70, 'platform1').setScale(0.4).refreshBody(); //cassa
+        this.platforms.create(1700, -75, 'platform1').setScale(0.5).refreshBody(); //cassa */
+        
+
+        let cassa1 = this.add.rectangle(850, 200, 130, 20, 0x00000, 0);
+        let cassa2 = this.add.rectangle(1300, 70, 200, 20, 0x00000, 0);
+        let cassa3 = this.add.rectangle(1700, -75, 130, 20, 0x00000, 0);
+        let carretto = this.add.rectangle(900, 500, 300, 50, 0x00000, 0);
+        this.casse = [cassa1, cassa2, cassa3, carretto];
+
+        this.cassaGroup = this.physics.add.staticGroup(this.casse);
+
+        //cart
+        this.cart = this.add.image(750, this.floorHeight +2, "cart");
+        this.cart.setOrigin(0,1).setScale(0.5);
+
+
+        this.platforms.create(2750, -550, 'platform1').setScale(0.5).refreshBody(); //piattaforma chiave
+        this.platforms.create(3100, -200, 'platform1').setScale(0.5).refreshBody(); //prima degli scalini --> vaso?
+        this.platforms.create(3700, 40, 'platform1').setScale(0.5).refreshBody(); //prima degli scalini --> vaso?
         this.platforms.create(3900, 582, 'platform1').setScale(0.4).refreshBody();//scalino
         this.platforms.create(4020, 520, 'platform1').setScale(0.4).refreshBody();//scalino
         this.platforms.create(4120, 458, 'platform1').setScale(0.4).refreshBody();//scalino
@@ -146,6 +174,9 @@ export default class Scene2 extends Phaser.Scene {
         this.platforms.create(4900, 265, 'pavement').setScale(0.4).refreshBody();//pavimento
 
         this.physics.add.collider(this.platforms, this.player, () => {
+            this.player.isJumping = false;
+        });
+        this.physics.add.collider(this.cassaGroup, this.player, () => {
             this.player.isJumping = false;
         });
     }
@@ -170,20 +201,36 @@ export default class Scene2 extends Phaser.Scene {
 
 
 
-    createJumpingPlatforms() {
+      createJumpingPlatforms(){             
 
-        this.jumpingPlatforms = this.physics.add.staticGroup()
-
-        this.jumpingPlatforms.create(300, 370, 'rimbalzante').setScale(0.2).refreshBody();
-        this.jumpingPlatforms.create(3300, 370, 'rimbalzante').setScale(0.2).refreshBody();
-
-        this.physics.add.collider(this.jumpingPlatforms, this.player, () => {
-            if (this.player.body.touching.down) {
-                this.player.body.setVelocityY(this.player.jumpSpeed - 100)
-            };
+        this.jumpingPlatform = [];
+        
+        for (let i=0; i<2; i++) {
+            let jumpPlat = this.add.rectangle(440 + 2900*i, 415, 250, 20, 0x00000, 0);
+            this.jumpingPlatform.push(jumpPlat);
+        }
+        
+        this.jumpingPlatformGroup = this.physics.add.group(this.jumpingPlatform);
+        this.jumpingPlatformGroup.children.iterate(function (platform) {
+            platform.body.allowGravity = false;
+            platform.body.setImmovable(true);
         });
+    
+        this.physics.add.collider(this.jumpingPlatformGroup, this.player, () => { if (this.player.body.touching.down) {
+          this.player.body.setVelocityY(this.player.jumpSpeed - 100)};
+      });
 
-    }
+      this.banchi = [];
+
+      for (let i=0; i<2; i++){
+        let banco = this.add.image(290 + 2900*i, this.floorHeight, "banco");
+        banco.setOrigin(0,1).setScale(0.3);
+        this.banchi.push(banco);
+      } 
+      
+       
+        
+  }
 
 
 
