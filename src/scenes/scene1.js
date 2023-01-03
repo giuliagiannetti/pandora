@@ -99,15 +99,11 @@ export default class Scene1 extends Phaser.Scene {
 
 
         // Player
-        const thePlayer = new Player(this, 4000, this.floorHeight, this.worldWidth, -400);
+        const thePlayer = new Player(this, 200, this.floorHeight, this.worldWidth, -400);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
         this.playerHearts = this.maxHearts;
-
-
-        // Camera
-        this.cameras.main.startFollow(this.player);
-        this.cameras.main.setFollowOffset(0, 300);
+       
        
 
         //enemy
@@ -380,7 +376,14 @@ export default class Scene1 extends Phaser.Scene {
 
         this.pauseMenuBottons();
 
+         // Camera
+         if (this.player.x > 500) {
+            this.cameras.main.startFollow(this.player);
+            this.cameras.main.setFollowOffset(0, 300);
+        } 
+
     }
+    
     
 
     followPlayer(){
