@@ -123,6 +123,8 @@ export default class Scene1 extends Phaser.Scene {
         this.piedistallo = this.add.rectangle(5000, -420, 80, 40, 0x000000);
         
 
+// ho spostato la camera nell'update per fare in modo che segua il giocatore solo dopo un certo punto
+
         //HUD
         this.createHUD();
     }
