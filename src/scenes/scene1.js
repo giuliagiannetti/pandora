@@ -88,7 +88,7 @@ export default class Scene1 extends Phaser.Scene {
         this.background3.setScrollFactor(0,0.4);
         this.background4 = this.add.tileSprite(0, 0, 1280, 2400, "parallax4");
         this.background4.setOrigin(0, 0.698);
-        this.background4.setScrollFactor(0,0.4);
+        this.background4.setScrollFactor(0,0.38);
 
 
         this.floor = this.add.rectangle(0, this.game.config.height,
@@ -109,6 +109,7 @@ export default class Scene1 extends Phaser.Scene {
         //enemy
         this.createEnemy();
 
+
         //piattaforme
         this.createStaticPlatforms();
         this.createMovingPlatforms();
@@ -123,9 +124,9 @@ export default class Scene1 extends Phaser.Scene {
         this.piedistallo = this.add.rectangle(5000, -420, 80, 40, 0x000000);
         
 
-// ho spostato la camera nell'update per fare in modo che segua il giocatore solo dopo un certo punto
         this.cameras.main.startFollow(this.player);
         this.cameras.main.setFollowOffset(0, 300);
+
 
         //HUD
         this.createHUD();
@@ -226,14 +227,15 @@ export default class Scene1 extends Phaser.Scene {
         this.platforms.create(4750, -525, 'platform1').setScale(0.4).refreshBody();
       
        //casa2
-        this.platforms.create(6700, -20, 'pavement').setScale(0.2).refreshBody();//pavimento
-        this.platforms.create(7580, -20, 'pavement').setScale(0.2).refreshBody();//pavimento
+        this.platforms.create(6275, -80, 'platform1').setScale(0.5).refreshBody();
+        this.platforms.create(6690, -20, 'pavement').setScale(0.21).refreshBody();//pavimento
+        this.platforms.create(7580, -20, 'pavement').setScale(0.21).refreshBody();//pavimento
         this.platforms.create(7859, 34, 'platform1').setScale(0.4).refreshBody();//scalino
         this.platforms.create(7939, 96, 'platform1').setScale(0.4).refreshBody();//scalino
         this.platforms.create(8019, 158, 'platform1').setScale(0.4).refreshBody();//scalino
         this.platforms.create(8099, 220, 'platform1').setScale(0.4).refreshBody();//scalino
         this.platforms.create(8317, 220, 'platform1').setScale(0.4).refreshBody();
-        this.platforms.create(7200, 300, 'platform1').setScale(0.5).refreshBody();
+        this.platforms.create(7100, 300, 'platform1').setScale(0.5).refreshBody();
 
         this.physics.add.collider(this.platforms, this.player, () => {
             this.player.isJumping = false;
@@ -278,7 +280,7 @@ export default class Scene1 extends Phaser.Scene {
             this.player.body.setVelocityY(this.player.jumpSpeed - 100)};
         });
 
-        this.banco = this.add.image(4300, this.floorHeight, "banco");
+        this.banco = this.add.image(4300, this.floorHeight + 5, "banco");
         this.banco.setOrigin(0,1).setScale(0.3);
          
           

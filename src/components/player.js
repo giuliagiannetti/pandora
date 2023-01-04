@@ -40,7 +40,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
                 start: 1, 
                 end: 4,
             }),
-            frameRate: 15, //aggiornimao l'immagine ogni 15 frame per rendere l'animazione non troppo rapida
+            frameRate: 12, //aggiornimao l'immagine ogni 15 frame per rendere l'animazione non troppo rapida
             repeat: -1 //ripetiamo all'infinito la stessa animazione
         });
 
@@ -51,7 +51,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
                 start: 0, //frame con personagio fermo
                 end: 0, 
             }),
-            frameRate: 50,
+            frameRate: 15,
             repeat: -1 
         });
 

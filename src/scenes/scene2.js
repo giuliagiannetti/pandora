@@ -53,7 +53,7 @@ export default class Scene2 extends Phaser.Scene {
         this.background3.setScrollFactor(0,0.4);
         this.background4 = this.add.tileSprite(0, 0, 1280, 2400, "parallax4");
         this.background4.setOrigin(0, 0.698);
-        this.background4.setScrollFactor(0,0.4);   
+        this.background4.setScrollFactor(0, 0.38);   
 
         /*this.background = this.add.image(0, 0, "polis1");
         this.background.setOrigin(0, 0.55);*/
@@ -223,7 +223,7 @@ export default class Scene2 extends Phaser.Scene {
       this.banchi = [];
 
       for (let i=0; i<2; i++){
-        let banco = this.add.image(290 + 2900*i, this.floorHeight, "banco");
+        let banco = this.add.image(290 + 2900*i, this.floorHeight + 5, "banco");
         banco.setOrigin(0,1).setScale(0.3);
         this.banchi.push(banco);
       } 
