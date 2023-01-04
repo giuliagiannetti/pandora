@@ -124,6 +124,8 @@ export default class Scene1 extends Phaser.Scene {
         
 
 // ho spostato la camera nell'update per fare in modo che segua il giocatore solo dopo un certo punto
+        this.cameras.main.startFollow(this.player);
+        this.cameras.main.setFollowOffset(0, 300);
 
         //HUD
         this.createHUD();
@@ -379,9 +381,8 @@ export default class Scene1 extends Phaser.Scene {
         this.pauseMenuBottons();
 
          // Camera
-         if (this.player.x > 500) {
-            this.cameras.main.startFollow(this.player);
-            this.cameras.main.setFollowOffset(0, 300);
+         if (this.player.body.x < this.game.config.width/2 ) {
+            this.cameras.main.followOffset.x = -this.game.config.width/2 + this.player.body.x;
         } 
 
     }
