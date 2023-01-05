@@ -6,6 +6,7 @@ import Scene2 from "./scenes/scene2.js";
 import Scene3 from "./scenes/scene3.js";
 import storie from "./scenes/storie.js";
 import PauseMenu from "./menu/pause_menu.js";
+import GameOver from "./menu/gameover.js";
 
 
 const config = {
@@ -13,7 +14,7 @@ const config = {
     width: 1280,
     height: 720,
     backgroundColor: 0x000000, 
-    scene: [ WelcomeScene, Scene1, Scene2, Scene3, StoryScene, CreditsScene, storie, PauseMenu ],
+    scene: [ WelcomeScene, Scene1, Scene2, Scene3, StoryScene, CreditsScene, storie, PauseMenu, GameOver ],
     pixelArt: false,
     parent: "game_area", 
     physics: {
@@ -30,10 +31,8 @@ const config = {
 
 let game = new Phaser.Game(config);
 
-/*game.gameState = {
-    playTime: 30,
-    score: 0,
-    lives: 3
-}*/
+game.gameState = {
+    lives: 3,
+}
 
 game.scene.start ("scene0_welcome");  

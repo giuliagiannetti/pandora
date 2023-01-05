@@ -19,7 +19,7 @@ export default class Scene1 extends Phaser.Scene {
         console.log("scene1 - Executing init()");
         this.floorHeight = this.game.config.height - 100;
         this.worldWidth = 8426;
-        this.maxHearts = 4;
+        //this.maxHearts = 4;
     }
 
     preload() {
@@ -102,7 +102,7 @@ export default class Scene1 extends Phaser.Scene {
         const thePlayer = new Player(this, 200, this.floorHeight, this.worldWidth, -400);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
-        this.playerHearts = this.maxHearts;
+        this.playerHearts = this.game.gameState.lives;
        
        
 
@@ -138,7 +138,6 @@ export default class Scene1 extends Phaser.Scene {
         this.physics.add.collider(this.enemy, this.floor);
         
         this.overlapEnemy = this.physics.add.overlap(this.player, this.enemy, this.hitEnemy, null, this);
-        
 
         const followingEnemy = new Enemy(this, 5350, 200)
         this.playerEnemy = this.physics.add.existing(followingEnemy);
@@ -416,7 +415,7 @@ export default class Scene1 extends Phaser.Scene {
 
     hitEnemyPlayer () {
         this.playerHearts -= 1;
-        this.currentHeart = this.hearts[this.playerHearts - 1];
+        this.currentHeart = this.hearts[this.playerHearts];
         var heartFade = this.tweens.add({  
             targets: this.currentHeart,
             alpha: 0,
@@ -426,8 +425,8 @@ export default class Scene1 extends Phaser.Scene {
             duration: 200
         }); //sostituito il setAlpha con l'animazione, vscode mi dice che heartFade non è mai letto ma il codice va so idk
 
-            if (this.playerHearts <= 1) {
-                this.scene.start("scene0_welcome");
+            if (this.playerHearts <= 0) {
+                this.scene.start("gameover");
             } else {
                 this.player.body.x = this.scalino.x - 200;
                 this.player.body.y = this.scalino.y - 110;
@@ -443,8 +442,8 @@ export default class Scene1 extends Phaser.Scene {
         this.currentHeart = this.hearts[this.playerHearts - 1];
         this.currentHeart.setAlpha(0);
 
-        if (this.playerHearts <= 1) {
-            this.scene.start("scene0_welcome");
+        if (this.playerHearts <= 0) {
+            this.scene.start("gameover");
         } else {
             this.player.x = this.chiave.x;
             this.player.y = this.chiave.y;
