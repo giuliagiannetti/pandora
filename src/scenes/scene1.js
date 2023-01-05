@@ -86,14 +86,14 @@ export default class Scene1 extends Phaser.Scene {
         this.background3 = this.add.tileSprite(0, 0, 1280, 2400, "parallax3");
         this.background3.setOrigin(0, 0.70);
         this.background3.setScrollFactor(0,0.4);
-        this.background4 = this.add.tileSprite(0, 0, 1280, 2400, "parallax4");
+        /*this.background4 = this.add.tileSprite(0, 0, 1280, 2400, "parallax4");
         this.background4.setOrigin(0, 0.698);
-        this.background4.setScrollFactor(0,0.38);
+        this.background4.setScrollFactor(0,0.38);*/
 
 
         this.floor = this.add.rectangle(0, this.game.config.height,
             this.worldWidth + 100, this.game.config.height - this.floorHeight,
-            0xFFFFFF, 0);
+            0x260907, 1);
         this.floor.setOrigin(0, 1);
         this.physics.add.existing(this.floor, true);
 
@@ -492,8 +492,8 @@ export default class Scene1 extends Phaser.Scene {
         this.background2.tilePositionY = this.cameras.main.scrollY * 0.15;
         this.background3.tilePositionX = this.cameras.main.scrollX * 0.30;
         this.background3.tilePositionY = this.cameras.main.scrollY * 0.30;
-        this.background4.tilePositionX = this.cameras.main.scrollX * 0.50;
-        this.background4.tilePositionY = this.cameras.main.scrollY * 0.50;
+        //this.background4.tilePositionX = this.cameras.main.scrollX * 0.50;
+        //this.background4.tilePositionY = this.cameras.main.scrollY * 0.50;
 
         const startLineCamera = 400;
         const shiftCameraMax = 100;
