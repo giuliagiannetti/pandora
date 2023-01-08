@@ -80,7 +80,8 @@ export default class Scene2 extends Phaser.Scene {
         this.physics.add.collider(this.player, this.floor);
 
         //sandali di Hermes
-        this.sandalo = this.physics.add.image(1700, -135, "sandalo").setScale(0.08);
+        this.sandalo = this.add.image(1700, -140, "sandalo");
+        this.sandalo.setScale(0.08);
         this.physics.add.overlap(this.player, this.sandalo, this.collectSandalo, null, this);
 
 
@@ -142,6 +143,8 @@ export default class Scene2 extends Phaser.Scene {
     }*/
 
     createStaticPlatforms() {
+
+        this.platforms = this.physics.add.staticGroup()
    
         let cassa1 = this.add.rectangle(850, 200, 130, 20, 0x00000, 0);
         let cassa2 = this.add.rectangle(1300, 70, 200, 20, 0x00000, 0);
@@ -154,6 +157,7 @@ export default class Scene2 extends Phaser.Scene {
         //cart
         this.cart = this.add.image(750, this.floorHeight +2, "cart");
         this.cart.setOrigin(0,1).setScale(0.5);
+
 
         this.platforms.create(2750, -550, 'platform1').setScale(0.5).refreshBody(); //piattaforma chiave
         this.platforms.create(3100, -200, 'platform1').setScale(0.5).refreshBody(); //prima degli scalini --> vaso?
@@ -273,12 +277,16 @@ export default class Scene2 extends Phaser.Scene {
     }
 
     collectSandalo() {
+        let x_diff = Math.abs(this.player.x - this.sandalo.x);
+        let y_diff = Math.abs(this.player.y - this.sandalo.y);
+        if (x_diff < 70 && y_diff < 100) {
             this.sandalo.destroy();
             this.player.jumpSpeed = -600;
+        }
     }
 
     checkSceneEnd() {
-        if ((this.player.x >= this.game.config.width - this.player.displayWidth) &&
+        if (//(this.player.x >= this.game.config.width - this.player.displayWidth) &&
             this.key0.isDown) {
             this.scene.start("scene3");
         

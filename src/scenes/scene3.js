@@ -36,7 +36,8 @@ export default class Scene1 extends Phaser.Scene {
         this.key0 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ZERO);
 
         this.background = this.add.image(0, 0, "polis2");
-        this.background.setOrigin(0, 0.55);
+        this.background.setOrigin(0, 0.55).setAlpha(0);
+       
         
 
         this.floor = this.add.rectangle(0, this.game.config.height,
@@ -65,9 +66,10 @@ export default class Scene1 extends Phaser.Scene {
         this.createMovingPlatforms();
 
         this.background.setPipeline('Light2D').setAlpha(0.5);
-        this.playerLight = this.lights.addLight(0, 0, 600).setIntensity(2).setColor(0xFFFFE0);
+        this.playerLight = this.lights.addLight(0, 0, 600).setIntensity(2).setColor(0xFFFFFF);
         this.lights.enable();
         this.lights.setAmbientColor(0x11111);
+
     }
 
 
@@ -113,6 +115,7 @@ export default class Scene1 extends Phaser.Scene {
         this.physics.add.collider(this.movingPlatformGroup, this.player, () => {
             this.player.isJumping = false;
         });
+
     }
 
 
