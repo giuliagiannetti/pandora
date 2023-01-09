@@ -15,7 +15,7 @@ export default class Scene1 extends Phaser.Scene {
     init() {
         console.log("scene3 - Executing init()");
         this.floorHeight = this.game.config.height - 100;
-        this.worldWidth = 3700;
+        this.worldWidth = 3800;
     }
 
     preload() {
@@ -26,6 +26,9 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image("platform1", "assets/images/environment_elements/platform1.png"); //platform statico
         this.load.image("pavement", "assets/images/environment_elements/pavement.png"); //pavimento
         this.load.image("movingPlatform", "assets/images/environment_elements/platform1.png"); //platform in movimento
+        this.load.image("colonnaTempio", "assets/images/environment_elements/colonnaolimpo.png");
+
+        this.load.image("parallax1", "assets/images/background/parallax1.png");
 
     }
 
@@ -35,14 +38,20 @@ export default class Scene1 extends Phaser.Scene {
        
         this.key0 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ZERO);
 
-        this.background = this.add.image(0, 0, "polis2");
-        this.background.setOrigin(0, 0.55).setAlpha(0);
-       
-        
 
-        this.floor = this.add.rectangle(0, this.game.config.height,
+        this.colonne = [];
+
+
+        for (let i=0; i<20; i++) {
+            let colonna = this.add.image(-600 + 300*i, this.floorHeight +5, "colonnaTempio");
+            colonna.setOrigin(0,1).setScale(0.5);
+            this.colonne.push(colonna);
+        }
+
+
+        this.floor = this.add.rectangle(-700, this.game.config.height,
             this.worldWidth + 100, this.game.config.height - this.floorHeight,
-            0x000000, 100);
+            0x260907, 1);
         this.floor.setOrigin(0, 1);
         this.physics.add.existing(this.floor, true);
 
@@ -53,22 +62,28 @@ export default class Scene1 extends Phaser.Scene {
         this.physics.add.collider(this.player, this.floor);
 
 
+        this.createStaticPlatforms();
+        this.createMovingPlatforms();
+
+
+        this.background1 = this.add.tileSprite(0, 0, 1280, 2400, "parallax1");
+        this.background1.setOrigin(0, 0.7);
+        this.background1.setScrollFactor(0,0.4);
+        
+
         // Camera
         this.cameras.main.startFollow(this.player);
         this.cameras.main.setFollowOffset(0, 300);
 
      
         // Nemico
+       
 
-
-        // Inserisci delle piattaforme statiche
-        this.createStaticPlatforms();
-        this.createMovingPlatforms();
-
-        this.background.setPipeline('Light2D').setAlpha(0.5);
-        this.playerLight = this.lights.addLight(0, 0, 600).setIntensity(2).setColor(0xFFFFFF);
+        this.background1.setPipeline('Light2D').setAlpha(0.6);
+        this.playerLight = this.lights.addLight(0, 0, 700, 0xFFFFFF).setIntensity(2).setColor(0xFFFFFF);
         this.lights.enable();
-        this.lights.setAmbientColor(0x11111);
+        this.lights.setAmbientColor(0x000000);
+     
 
     }
 
@@ -79,15 +94,16 @@ export default class Scene1 extends Phaser.Scene {
         this.platforms = this.physics.add.staticGroup()
 
         this.platforms.create(780, -20 , 'pavement').setScale(0.58).refreshBody();//pavimento
-        this.platforms.create(600, 520, 'platform1').setScale(0.5).refreshBody();
-        this.platforms.create(1780, 260, 'platform1').setScale(0.5).refreshBody();
-        this.platforms.create(1000, -170, 'platform1').setScale(0.5).refreshBody();
-        this.platforms.create(500, -310, 'platform1').setScale(0.5).refreshBody();
-        this.platforms.create(2500, -40, 'platform1').setScale(0.4).refreshBody();
+        this.platforms.create(600, 520, 'movingPlatform').setScale(0.15).refreshBody();
+        this.platforms.create(1780, 260, 'movingPlatform').setScale(0.15).refreshBody();
+        this.platforms.create(1000, -170, 'movingPlatform').setScale(0.15).refreshBody();
+        this.platforms.create(500, -310, 'movingPlatform').setScale(0.15).refreshBody();
+        this.platforms.create(2500, -40, 'movingPlatform').setScale(0.15).refreshBody();
+        
 
         //statua
-        this.platforms.create(2400, 587, 'platform1').setScale(0.4).refreshBody();
-        this.platforms.create(2500, 525, 'platform1').setScale(0.4).refreshBody();
+        this.platforms.create(2400, 587, 'movingPlatform').setScale(0.15).refreshBody();
+        this.platforms.create(2500, 525, 'movingPlatform').setScale(0.15).refreshBody();
         this.platforms.create(2800, 475 , 'pavement').setScale(0.2).refreshBody();//pavimento
 
       
@@ -141,8 +157,8 @@ export default class Scene1 extends Phaser.Scene {
 
 
     animateBackground() {
-        this.background.tilePositionX = this.cameras.main.scrollX * 0.5;
-        this.background.tilePositionY = this.cameras.main.scrollY * 0.5;
+        this.background1.tilePositionX = this.cameras.main.scrollX * 0.5;
+        this.background1.tilePositionY = this.cameras.main.scrollY * 0.5;
         const startLineCamera = 400;
         const shiftCameraMax = 70;
         if (this.player.body.y + this.player.height / 2 < startLineCamera) {
