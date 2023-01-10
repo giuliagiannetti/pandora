@@ -99,7 +99,7 @@ export default class Scene1 extends Phaser.Scene {
 
 
         // Player
-        const thePlayer = new Player(this, 400, 200, this.worldWidth, -400);
+        const thePlayer = new Player(this, 7000, 200, this.worldWidth, -400);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
         this.playerHearts = this.game.gameState.lives;
@@ -391,8 +391,8 @@ export default class Scene1 extends Phaser.Scene {
         if (this.player.body.x < this.game.config.width/2 ) {
             this.cameras.main.followOffset.x = -800 + this.player.body.x;
         } 
-        if (this.player.body.x > 7800 ) {
-            this.cameras.main.followOffset.x = -7800 + this.player.body.x;
+        if (this.player.body.x > 7705 ) {
+            this.cameras.main.followOffset.x = -7740 + this.player.body.x;
         } 
 
         
@@ -501,8 +501,6 @@ export default class Scene1 extends Phaser.Scene {
             this.cameras.main.followOffset.y = Math.max(300 - shiftCameraMax, 300 - (startLineCamera - (this.player.body.y + this.player.height / 2)));
             console.log(this.cameras.main.followOffset.y);
         }
-
-
             }
 
 
@@ -522,10 +520,11 @@ export default class Scene1 extends Phaser.Scene {
 
 
     checkSceneEnd() {
-        if (this.player.x >= (this.worldWidth - this.player.body.width)
-             //&& this.key0.isDown
+        if (//this.player.x >= (this.worldWidth - this.player.body.width)
+             //&& 
+             this.key0.isDown
             ) {
-            this.scene.start("scene2");
+            this.scene.start("scene3");
         }
     }
 }
