@@ -82,15 +82,15 @@ export default class Scene1 extends Phaser.Scene {
         this.darker = this.add.image(0, 0,  "darker");
         this.darker.setOrigin(0, 0.70);
         this.darker.setScrollFactor(0,0.4);
-        this.darker.setAlpha(0.5);
+        this.darker.setAlpha(0.4);
 
         // Camera
         this.cameras.main.startFollow(this.player);
         this.cameras.main.setFollowOffset(0, 300);
  
 
-        this.background.setPipeline('Light2D').setAlpha(0.5);
-        this.playerLight = this.lights.addLight(0, 0, 800).setIntensity(2);
+        this.background.setPipeline('Light2D').setAlpha(0.7);
+        this.playerLight = this.lights.addLight(0, 0, 800).setIntensity(2.8).setColor(0xffffff);
         this.lights.enable();
         //this.lights.setAmbientColor(0x000000);
         
@@ -143,13 +143,6 @@ export default class Scene1 extends Phaser.Scene {
         });
 
     }
-
-
-
-    //createJumpingPlatforms
-    // this.physics.add.collider(this.movingPlatforms, this.player, ()=> {
-    // this.player.isJumping = true;});
-
 
 
 
