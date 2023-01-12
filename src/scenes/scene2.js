@@ -30,7 +30,7 @@ export default class Scene2 extends Phaser.Scene {
         this.load.image("cassa", "assets/images/environment_elements/cassa.png");
         this.load.image("cart", "assets/images/environment_elements/cart.png");
 
-        this.load.image("sandalo", "assets/images/environment_elements/sandalo.png"); //sandali di hermes
+        this.load.image("sandalo", "assets/images/weapons/sandali.png"); //sandali di hermes
 
         this.load.image("tempio", "assets/images/environment_elements/tempio.png");
         this.load.image("scalino", "assets/images/environment_elements/scalino.png");
@@ -85,8 +85,8 @@ export default class Scene2 extends Phaser.Scene {
 
 
         //sandali di Hermes
-        this.sandalo = this.add.image(1700, -140, "sandalo");
-        this.sandalo.setScale(0.08);
+        this.sandalo = this.add.image(1700, -145, "sandalo");
+        this.sandalo.setScale(0.15);
         this.physics.add.overlap(this.player, this.sandalo, this.collectSandalo, null, this);
 
 
