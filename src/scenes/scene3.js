@@ -89,7 +89,7 @@ export default class Scene1 extends Phaser.Scene {
  
 
         this.background.setPipeline('Light2D').setAlpha(0.7);
-        this.playerLight = this.lights.addLight(0, 0, 800).setIntensity(2.8).setColor(0xffffff);
+        this.playerLight = this.lights.addLight(0, 0, 850).setIntensity(2.8).setColor(0xffffff);
         this.lights.enable();
         //this.lights.setAmbientColor(0x000000);
         
@@ -153,8 +153,8 @@ export default class Scene1 extends Phaser.Scene {
             platform.animateMovingPlatform();
         });
 
-        this.playerLight.x = this.player.body.x + 70;
-        this.playerLight.y = this.player.body.y + 70;
+        this.playerLight.x = this.player.body.x + this.player.body.width/2;
+        this.playerLight.y = this.player.body.y + this.player.body.height/2;
 
          // Camera
          if (this.player.body.x < this.game.config.width/2 ) {

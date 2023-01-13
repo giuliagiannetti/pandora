@@ -524,7 +524,7 @@ export default class Scene1 extends Phaser.Scene {
              //&& 
              this.key0.isDown
             ) {
-            this.scene.start("scene2");
+            this.scene.start("scene3");
         }
     }
 }
