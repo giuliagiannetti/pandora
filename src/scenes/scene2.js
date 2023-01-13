@@ -1,4 +1,5 @@
-import Player from "../components/player.js"
+import Player from "../components/player.js";
+import Enemy from "../components/enemy.js";
 import movingPlatform from "../components/movingPlatform.js"
 
 export default class Scene2 extends Phaser.Scene {
@@ -35,7 +36,10 @@ export default class Scene2 extends Phaser.Scene {
         this.load.image("tempio", "assets/images/environment_elements/tempio.png");
         this.load.image("scalino", "assets/images/environment_elements/scalino.png");
         this.load.image("basamento", "assets/images/environment_elements/basamento.png");
-
+        this.load.image("mela", "assets/images/environment_elements/mela.png");
+        this.load.image("mela1", "assets/images/environment_elements/mela1.png");
+        this.load.image("mela2", "assets/images/environment_elements/mela2.png");
+    
     }
 
     create() {
@@ -70,22 +74,23 @@ export default class Scene2 extends Phaser.Scene {
         this.physics.add.existing(this.floor, true);
 
         //casse
-        this.cassa1 = this.add.image(850, 200, "cassa");
-        this.cassa1.setScale(0.18);
-        this.cassa2 = this.add.image(1300, 70, "cassa");
-        this.cassa2.setScale(0.27);
-        this.cassa3 = this.add.image(1700, -75, "cassa");
-        this.cassa3.setScale(0.18);
+        this.cassa1 = this.add.image(950, 200, "cassa");
+        this.cassa1.setScale(0.19);
+        this.cassa2 = this.add.image(1400, 70, "cassa");
+        this.cassa2.setScale(0.28);
+        this.cassa3 = this.add.image(1800, -75, "cassa");
+        this.cassa3.setScale(0.19);
         
 
         // Player
         const thePlayer = new Player(this, 100, this.floorHeight, this.worldWidth, -400);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
+        this.playerHearts = this.game.gameState.lives;
 
 
         //sandali di Hermes
-        this.sandalo = this.add.image(1700, -145, "sandalo");
+        this.sandalo = this.add.image(1800, -145, "sandalo");
         this.sandalo.setScale(0.15);
         this.physics.add.overlap(this.player, this.sandalo, this.collectSandalo, null, this);
 
@@ -100,11 +105,25 @@ export default class Scene2 extends Phaser.Scene {
         this.createMovingPlatforms();
         this.createJumpingPlatforms();
 
+        //mele
+        this.mele = [];
 
-        
+        for (let i=0; i<5; i++) {
+            let mela = this.add.image(750 + 300*i, 50 - 100*i, "mela");
+            mela.setOrigin(0,1).setScale(0.1);
+            this.mele.push(mela);
+
+            let mela1 = this.add.image(900+ 250*i, 300 - 120*i, "mela1");
+            mela1.setOrigin(0,1).setScale(0.1);
+            this.mele.push(mela1);
+
+            let mela2 = this.add.image(1000+ 280*i, 100 - 100*i, "mela2");
+            mela2.setOrigin(0,1).setScale(0.1);
+            this.mele.push(mela2);
+        }
 
         //enemy
-        //this.createEnemy();
+        this.createEnemy();
 
         
         //HUD
@@ -142,28 +161,30 @@ export default class Scene2 extends Phaser.Scene {
 
     }
 
-    /*createEnemy() {
-        const theEnemy = new Enemy(this, 7300, this.floorHeight);
+    createEnemy() {
+        const theEnemy = new Enemy(this, 2550, -330);
         this.enemy = this.physics.add.existing(theEnemy);
+        this.enemy.setScale(0.4);
         this.physics.add.collider(this.enemy, this.floor);
+        this.enemy.body.allowGravity = false;
         
-        this.overlapEnemy = this.physics.add.overlap(this.player, this.enemy, this.hitEnemy, null, this);
-    }*/
+        this.physics.add.overlap(this.player, this.enemy, this.hitEnemy, null, this);
+    }
 
     createStaticPlatforms() {
 
         this.platforms = this.physics.add.staticGroup()
    
-        let cassa1 = this.add.rectangle(850, 200, 130, 20, 0x00000, 0);
-        let cassa2 = this.add.rectangle(1300, 70, 200, 20, 0x00000, 0);
-        let cassa3 = this.add.rectangle(1700, -75, 130, 20, 0x00000, 0);
-        let carretto = this.add.rectangle(900, 500, 300, 50, 0x00000, 0);
+        let cassa1 = this.add.rectangle(950, 200, 130, 30, 0x00000, 0);
+        let cassa2 = this.add.rectangle(1400, 70, 200, 30, 0x00000, 0);
+        let cassa3 = this.add.rectangle(1800, -75, 130, 30, 0x00000, 0);
+        let carretto = this.add.rectangle(1000, 500, 300, 50, 0x00000, 0);
         this.casse = [cassa1, cassa2, cassa3, carretto];
 
         this.cassaGroup = this.physics.add.staticGroup(this.casse);
 
         //cart
-        this.cart = this.add.image(750, this.floorHeight +2, "cart");
+        this.cart = this.add.image(850, this.floorHeight +2, "cart");
         this.cart.setOrigin(0,1).setScale(0.5);
 
 
@@ -242,14 +263,12 @@ export default class Scene2 extends Phaser.Scene {
         });
     }
 
-
-
       createJumpingPlatforms(){             
 
         this.jumpingPlatform = [];
         
-        for (let i=0; i<2; i++) {
-            let jumpPlat = this.add.rectangle(440 + 2800*i, 415, 250, 20, 0x00000, 0);
+        for (let i=0; i<3; i++) {
+            let jumpPlat = this.add.rectangle(540 + 1400*i, 415, 250, 20, 0x00000, 0);
             this.jumpingPlatform.push(jumpPlat);
         }
         
@@ -265,8 +284,8 @@ export default class Scene2 extends Phaser.Scene {
 
       this.banchi = [];
 
-      for (let i=0; i<2; i++){
-        let banco = this.add.image(290 + 2800*i, this.floorHeight, "banco");
+      for (let i=0; i<3; i++){
+        let banco = this.add.image(390 + 1400*i, this.floorHeight, "banco");
         banco.setOrigin(0,1).setScale(0.3);
         this.banchi.push(banco);
       } 
@@ -276,11 +295,13 @@ export default class Scene2 extends Phaser.Scene {
   }
 
 
-
     update() {
         // Azioni che vengono eseguite a ogni frame del gioco
         this.player.manageMovements();
+        this.enemy.animateEnemy();
+
         this.animateBackground();
+
         this.movingPlatformGroup.children.iterate(function (platform) {
             platform.animateMovingPlatform();
         });
@@ -334,6 +355,28 @@ export default class Scene2 extends Phaser.Scene {
             this.sandalo.destroy();
             this.player.jumpSpeed = -600;
         }
+    }
+
+    hitEnemy () {
+        this.playerHearts -= 1;
+        this.currentHeart = this.hearts[this.playerHearts];
+        var heartFade = this.tweens.add({  
+            targets: this.currentHeart,
+            alpha: 0,
+            scaleX: 0,
+            scaleY: 0,
+            ease: 'Linear',
+            duration: 200
+        });
+
+
+        if (this.playerHearts <= 0) {
+            this.scene.start("gameover");
+        } else {
+            this.player.body.x = this.sandalo.x - 10;
+            this.player.body.y = this.sandalo.y - 100;
+        }
+            
     }
 
     checkSceneEnd() {

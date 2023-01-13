@@ -41,7 +41,16 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
             this.body.setVelocityX(180);
             this.flipX = true;
         }
-    }
+
+        if (this.y >= this.floorHeight){
+            this.body.setVelocityY(-30);
+        }
+
+        if (this.y < this.floorHeight - 40){
+            this.body.setVelocityY(30);
+        }
+
+}
 
     animateEnemyHouse(){
         if (this.x >= this.initialPosition) {

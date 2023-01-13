@@ -140,6 +140,7 @@ export default class Scene1 extends Phaser.Scene {
         const theEnemy = new Enemy(this, 7300, this.floorHeight);
         this.enemy = this.physics.add.existing(theEnemy);
         this.physics.add.collider(this.enemy, this.floor);
+        this.enemy.body.allowGravity = false;
         
         this.overlapEnemy = this.physics.add.overlap(this.player, this.enemy, this.hitEnemy, null, this);
 
@@ -416,7 +417,9 @@ export default class Scene1 extends Phaser.Scene {
         if(followedPlayer.body.y < enemyY) {
             playerEnemy.body.setVelocityY(-19);
         }
-        } else {playerEnemy.animateEnemyHouse();
+        } else {
+            playerEnemy.animateEnemyHouse();
+            playerEnemy.body.setVelocityY(0);
         }
         
     }
@@ -431,7 +434,7 @@ export default class Scene1 extends Phaser.Scene {
             scaleY: 0,
             ease: 'Linear',
             duration: 200
-        }); //sostituito il setAlpha con l'animazione, vscode mi dice che heartFade non è mai letto ma il codice va so idk
+        });
 
             if (this.playerHearts <= 0) {
                 this.scene.start("gameover");
@@ -462,10 +465,10 @@ export default class Scene1 extends Phaser.Scene {
         if (this.playerHearts <= 0) {
             this.scene.start("gameover");
         } else {
-            this.player.x = this.chiave.x;
-            this.player.y = this.chiave.y;
-            this.playerEnemy.x = this.playerEnemy.initialPosition;
-            this.playerEnemy.y = this.playerEnemy.floorHeight;
+            this.player.body.x = this.chiave.x;
+            this.player.body.y = this.chiave.y;
+            //this.playerEnemy.x = this.playerEnemy.initialPosition;
+            //this.playerEnemy.y = this.playerEnemy.floorHeight;
             this.scene.resume(this.collectChiavi);
         }
             
