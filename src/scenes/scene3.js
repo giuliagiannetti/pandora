@@ -15,7 +15,7 @@ export default class Scene1 extends Phaser.Scene {
     init() {
         console.log("scene3 - Executing init()");
         this.floorHeight = this.game.config.height - 100;
-        this.worldWidth = 3800;
+        this.worldWidth = 3200;
     }
 
     preload() {
@@ -30,7 +30,6 @@ export default class Scene1 extends Phaser.Scene {
 
         this.load.image("parallax0", "assets/images/background/parallax0.png");
         this.load.image("parallax01", "assets/images/background/parallax01.png");
-        this.load.image("darker", "assets/images/background/darker.png");
     }
 
     create() {
@@ -53,7 +52,7 @@ export default class Scene1 extends Phaser.Scene {
 
         
         this.floor = this.add.rectangle(0, this.game.config.height,
-            this.worldWidth + 100, this.game.config.height - this.floorHeight,
+            this.worldWidth + 150, this.game.config.height - this.floorHeight,
             0x260907, 1);
         this.floor.setOrigin(0, 1);
         this.physics.add.existing(this.floor, true);
@@ -79,10 +78,10 @@ export default class Scene1 extends Phaser.Scene {
         //this.background = this.add.image(0, 0, "polis2");
         //this.background.setOrigin(0, 0.55).setAlpha(0);
 
-        this.darker = this.add.image(0, 0,  "darker");
+        /*this.darker = this.add.image(0, 0,  "darker");
         this.darker.setOrigin(0, 0.70);
         this.darker.setScrollFactor(0,0.4);
-        this.darker.setAlpha(0.4);
+        this.darker.setAlpha(0.4);*/
 
         // Camera
         this.cameras.main.startFollow(this.player);
@@ -162,8 +161,8 @@ export default class Scene1 extends Phaser.Scene {
             this.cameras.main.followOffset.x = -700 + this.player.body.x;
         } 
      
-        if (this.player.body.x > 3250 ) {
-            this.cameras.main.followOffset.x = -3310 + this.player.body.x;
+        if (this.player.body.x > 2650 ) {
+            this.cameras.main.followOffset.x = -2710 + this.player.body.x;
         } 
     }
 

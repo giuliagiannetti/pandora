@@ -169,6 +169,14 @@ export default class Scene2 extends Phaser.Scene {
         this.enemy.body.allowGravity = false;
         
         this.physics.add.overlap(this.player, this.enemy, this.hitEnemy, null, this);
+
+        const EnemyTempio = new Enemy(this, 3850, 255);
+        this.enemyTempio = this.physics.add.existing(EnemyTempio);
+        this.physics.add.collider(this.enemyTempio, this.floor);
+        this.enemyTempio.body.allowGravity = false;
+
+        this.physics.add.overlap(this.player, this.enemyTempio, this.hitEnemyTempio, null, this);
+
     }
 
     createStaticPlatforms() {
@@ -210,7 +218,13 @@ export default class Scene2 extends Phaser.Scene {
             let scalino = this.add.image(3900 + 250*i, (this.floorHeight -195) -93*i , "scalino");
             scalino.setOrigin(0,1).setScale(0.9);
             this.scale.push(scalino);
+
+            let scalino1 = this.add.image(4895 + 250*i, (this.floorHeight -195) -93*i , "scalino");
+            scalino1.setOrigin(0,1).setScale(0.9).setFlipX(true);
+            this.scale.push(scalino1);
         }
+
+        
 
         let basamento = this.add.image(3650, this.floorHeight, "basamento");
         basamento.setOrigin(0,1).setScale(0.85);
@@ -268,7 +282,7 @@ export default class Scene2 extends Phaser.Scene {
         this.jumpingPlatform = [];
         
         for (let i=0; i<3; i++) {
-            let jumpPlat = this.add.rectangle(540 + 1400*i, 415, 250, 20, 0x00000, 0);
+            let jumpPlat = this.add.rectangle(540 + 1300*i, 415, 250, 20, 0x00000, 0);
             this.jumpingPlatform.push(jumpPlat);
         }
         
@@ -285,7 +299,7 @@ export default class Scene2 extends Phaser.Scene {
       this.banchi = [];
 
       for (let i=0; i<3; i++){
-        let banco = this.add.image(390 + 1400*i, this.floorHeight, "banco");
+        let banco = this.add.image(390 + 1300*i, this.floorHeight, "banco");
         banco.setOrigin(0,1).setScale(0.3);
         this.banchi.push(banco);
       } 
@@ -298,7 +312,9 @@ export default class Scene2 extends Phaser.Scene {
     update() {
         // Azioni che vengono eseguite a ogni frame del gioco
         this.player.manageMovements();
+
         this.enemy.animateEnemy();
+        this.enemyTempio.animateEnemytempio();
 
         this.animateBackground();
 
@@ -329,7 +345,6 @@ export default class Scene2 extends Phaser.Scene {
         });
     }
 
-
     animateBackground() {
         this.background1.tilePositionX = this.cameras.main.scrollX * 0.05;
         this.background1.tilePositionY = this.cameras.main.scrollY * 0.05;
@@ -341,7 +356,7 @@ export default class Scene2 extends Phaser.Scene {
         //this.background4.tilePositionY = this.cameras.main.scrollY * 0.50;
 
         const startLineCamera = 400;
-        const shiftCameraMax = 70;
+        const shiftCameraMax = 150;
         if (this.player.body.y + this.player.height / 2 < startLineCamera) {
             this.cameras.main.followOffset.y = Math.max(300 - shiftCameraMax, 300 - (startLineCamera - (this.player.body.y + this.player.height / 2)));
             console.log(this.cameras.main.followOffset.y);
@@ -375,6 +390,28 @@ export default class Scene2 extends Phaser.Scene {
         } else {
             this.player.body.x = this.sandalo.x - 10;
             this.player.body.y = this.sandalo.y - 100;
+        }
+            
+    }
+
+    hitEnemyTempio () {
+        this.playerHearts -= 1;
+        this.currentHeart = this.hearts[this.playerHearts];
+        var heartFade = this.tweens.add({  
+            targets: this.currentHeart,
+            alpha: 0,
+            scaleX: 0,
+            scaleY: 0,
+            ease: 'Linear',
+            duration: 200
+        });
+
+
+        if (this.playerHearts <= 0) {
+            this.scene.start("gameover");
+        } else {
+            this.player.body.x = 2750;
+            this.player.body.y = -650;
         }
             
     }

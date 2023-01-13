@@ -63,11 +63,18 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
         }
     }
 
-    velFollowPlayer(){
-        this.body.setVelocityX(-80);
+    animateEnemytempio (){
+        if (this.x >= this.initialPosition) {
+            this.body.setVelocityX(-100);
+            this.body.setVelocityY(100);
+            this.flipX = false;
+        }
+        if (this.x <= (this.initialPosition - 150) ) {
+            this.body.setVelocityX(100);
+            this.body.setVelocityY(-100);
+            this.flipX = true;
+        }
     }
-
-    
 
 }
 
