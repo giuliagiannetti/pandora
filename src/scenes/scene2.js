@@ -95,6 +95,10 @@ export default class Scene2 extends Phaser.Scene {
         this.physics.add.overlap(this.player, this.sandalo, this.collectSandalo, null, this);
 
 
+        this.chiave = this.add.image(2750, -650, "chiave").setScale(0.2);
+        this.piedistallo = this.add.rectangle(5000, -420, 80, 40, 0x000000);
+
+
         // Camera
         this.cameras.main.startFollow(this.player);
         this.cameras.main.setFollowOffset(0, 300);
@@ -324,6 +328,8 @@ export default class Scene2 extends Phaser.Scene {
 
         this.collectSandalo(this.player, this.sandalo);
 
+        this.collectChiavi(this.player, this.chiave);
+
         this.checkSceneEnd();
 
         this.pauseMenuBottons();
@@ -372,6 +378,20 @@ export default class Scene2 extends Phaser.Scene {
         }
     }
 
+
+    collectChiavi() {
+        let x_diff = Math.abs(this.player.x-this.chiave.x);
+        let y_diff = Math.abs(this.player.y-this.chiave.y);4
+        //let portaFermaY = this.portaGroup.y;
+        let icon = this.chiaveIcon1;
+        if(x_diff < 75 && y_diff < 100) {
+            this.chiave.destroy();
+            icon.setAlpha(1);
+        }
+    }
+
+
+
     hitEnemy () {
         this.playerHearts -= 1;
         this.currentHeart = this.hearts[this.playerHearts];
@@ -410,9 +430,8 @@ export default class Scene2 extends Phaser.Scene {
         if (this.playerHearts <= 0) {
             this.scene.start("gameover");
         } else {
-            this.player.body.x = 2750;
-            this.player.body.y = -650;
-        }
+            this.player.body.x = this.chiave.x +10;
+            this.player.body.y = this.chiave.y -150;}
             
     }
 
