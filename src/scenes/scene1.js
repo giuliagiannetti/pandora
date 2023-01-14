@@ -51,13 +51,24 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image("platform1", "assets/images/environment_elements/platform1.png"); //platform statico
         this.load.image("pavement", "assets/images/environment_elements/pavement.png"); //pavimento
         this.load.image("verticale", "assets/images/environment_elements/verticale.png"); //colonna verticale
+
         this.load.image("colonna", "assets/images/environment_elements/colonna.png");
         this.load.image("porta", "assets/images/environment_elements/verticale.png"); //porta
-        this.load.image("blocco", "assets/images/environment_elements/blocco.png")//blocco architrave
-        this.load.image("rimbalzante", "assets/images/environment_elements/rimbalzo.png");//piattaforma rimbalzante
+        this.load.image("blocco", "assets/images/environment_elements/blocco.png");//blocco architrave
+
+        this.load.image("colonnaCasa", "assets/images/environment_elements/casa/colonna3.png");
+        this.load.image("pavimento1", "assets/images/environment_elements/casa/pavimento1.png");
+        this.load.image("pavimento2", "assets/images/environment_elements/casa/pavimento2.png");
+        this.load.image("pavimento3", "assets/images/environment_elements/casa/pavimento3.png");
+
+
         this.load.image("movingPlatform", "assets/images/environment_elements/trave.png"); //platform in movimento
-        this.load.image("chiave", "assets/images/environment_elements/chiave3d.png"); //chiave
+      
         this.load.image("banco", "assets/images/environment_elements/banco.png"); //bancarella
+        this.load.image("rimbalzante", "assets/images/environment_elements/rimbalzo.png");//piattaforma rimbalzante
+
+        this.load.image("chiave", "assets/images/environment_elements/chiave3d.png"); //chiave
+        
 
      //elementi hud
         this.load.image("chiaveicona", "assets/images/hud/chiaveicona.png"); //chiave icona
@@ -99,7 +110,7 @@ export default class Scene1 extends Phaser.Scene {
 
 
         // Player
-        const thePlayer = new Player(this, 7000, 200, this.worldWidth -100, -400);
+        const thePlayer = new Player(this, 4000, 200, this.worldWidth -100, -400);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
         this.playerHearts = this.game.gameState.lives;
@@ -115,6 +126,7 @@ export default class Scene1 extends Phaser.Scene {
         this.createJumpingPlatforms();
         this.createPorta();
         this.createColonnato();
+        this.createCasa();
 
 
         // Chiavi
@@ -189,7 +201,7 @@ export default class Scene1 extends Phaser.Scene {
         for (let i=0; i<5; i++) {
             let blocco = this.add.image(1370+m*i, 370, "blocco");
             blocco.setScale(0.1);
-            this.architrave.push(blocco);
+            this.architrave.push(blocco);}
 
     
         for (let i=0; i<4; i++) {
@@ -208,7 +220,6 @@ export default class Scene1 extends Phaser.Scene {
             this.player.isJumping = false;
         })
     }
-}
 
 
     createStaticPlatforms() {
@@ -217,16 +228,55 @@ export default class Scene1 extends Phaser.Scene {
 
         this.platforms.create(3410, 433, 'colonna').setScale(0.3).refreshBody();//colonna
 
-       //casa1
-        this.pavimento = this.platforms.create(5490, 260, 'pavement').setScale(0.5).refreshBody();//pavimento
+
+    }
+
+    createCasa() {
+        //casa1
+        for (let i=0; i<7; i++) {
+            let colonnaCasa = this.add.image(4900+270*i, this.floorHeight, "colonnaCasa");
+            colonnaCasa.setOrigin(0,1).setScale(0.35);
+        }
+
+        this.pavimento1 = this.add.image(4850, 280, "pavimento1");
+        this.pavimento1.setOrigin(0,1);
+        this.physics.add.existing(this.pavimento1, true);
+
+        this.pavimento2 = this.add.image(5950, 280, "pavimento2");
+        this.pavimento2.setOrigin(0,1);
+        this.physics.add.existing(this.pavimento2, true);
+
+        /*this.scaliniGroup = this.physics.add.group(this.scalini);
+        this.scaliniGroup.children.iterate(function (platform) {
+            platform.body.allowGravity = false;
+            platform.body.setImmovable(true);
+        });*/
+
+        this.pavimenti3 = [];
+
+        for (let i=0; i<2; i++) {
+            let pavimento3 = this.add.image(4900+1000*i, -330 + 200*i, "pavimento3");
+            pavimento3.setOrigin(0,1);
+            this.pavimenti3.push(pavimento3);
+        }
+
+        this.pavimenti3Group = this.physics.add.staticGroup(this.pavimenti3);
+        this.physics.add.collider(this.pavimenti3Group, this.player, () => {
+            this.player.isJumping = false;
+        })
+
+
+
+
+        //this.pavimento = this.platforms.create(5490, 260, 'pavement').setScale(0.5).refreshBody();//pavimento
         this.scalino = this.platforms.create(5060, 184, 'platform1').setScale(0.4).refreshBody();//scalino
         this.platforms.create(5130, 122, 'platform1').setScale(0.4).refreshBody();//scalino
         this.platforms.create(5200, 60, 'platform1').setScale(0.4).refreshBody();//scalino
         this.platforms.create(5270, -2, 'platform1').setScale(0.4).refreshBody();//scalino
-        this.chiavePlatform = this.platforms.create(5100, -350, 'platform1').setScale(0.7).refreshBody();//piattaforma chiave
+        //this.chiavePlatform = this.platforms.create(5100, -350, 'platform1').setScale(0.7).refreshBody();//piattaforma chiave
         this.platforms.create(5600, -30, 'platform1').setScale(0.4).refreshBody();
-        this.platforms.create(6000, -150, 'platform1').setScale(0.4).refreshBody();
-        this.parete = this.platforms.create(6100, -240, 'verticale').setScale(0.5).refreshBody();//parete
+        //this.platforms.create(6000, -150, 'platform1').setScale(0.4).refreshBody();
+        this.parete = this.platforms.create(6080, -240, 'verticale').setScale(0.5).refreshBody();//parete
         this.tetto = this.platforms.create(5600, -680, 'pavement').setScale(0.4).refreshBody(); //tetto
         this.platforms.create(4750, -525, 'platform1').setScale(0.4).refreshBody();
   
@@ -249,11 +299,14 @@ export default class Scene1 extends Phaser.Scene {
 
         this.physics.add.collider(this.parete, this.playerEnemy);
         this.physics.add.collider(this.tetto, this.playerEnemy);
-        this.physics.add.collider(this.pavimento, this.playerEnemy);
-
-
+        this.physics.add.collider(this.pavimento1, this.playerEnemy);
+        this.physics.add.collider(this.pavimento1, this.player, () => {
+            this.player.isJumping = false;
+        });
+        this.physics.add.collider(this.pavimento2, this.player, () => {
+            this.player.isJumping = false;
+        });
     }
-
 
     createMovingPlatforms() {
 
@@ -402,19 +455,21 @@ export default class Scene1 extends Phaser.Scene {
     followPlayer(){
         let followedPlayer = this.player;
         let playerEnemy = this.playerEnemy;
-        let enemyX = this.playerEnemy.body.x + this.playerEnemy.displayWidth/2 + 10;
-        let enemyY = this.playerEnemy.body.y + this.playerEnemy.displayHeight/2 + 50;
+        let enemyX = this.playerEnemy.body.x + this.playerEnemy.displayWidth/2;
+        let enemyY = this.playerEnemy.body.y + this.playerEnemy.displayHeight/2;
+        let playerY = this.player.body.y + this.player.displayHeight/2;
+        let playerX = this.player.body.x + this.player.displayWidth/2;
         if (followedPlayer.body.x >= 5100 && followedPlayer.body.x <= 6100 && followedPlayer.body.y > -600 && followedPlayer.body.y < 220){
-        if(followedPlayer.body.x > enemyX) {
+        if(playerX > enemyX) {
             playerEnemy.body.setVelocityX(15);
         }
-        if(followedPlayer.body.x < enemyX) {
+        if(playerX < enemyX) {
             playerEnemy.body.setVelocityX(-15);
         }
-        if(followedPlayer.body.y > enemyY) {
+        if(playerY > enemyY) {
             playerEnemy.body.setVelocityY(19);
         }
-        if(followedPlayer.body.y < enemyY) {
+        if(playerY < enemyY) {
             playerEnemy.body.setVelocityY(-19);
         }
         } else {
