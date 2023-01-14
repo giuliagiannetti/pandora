@@ -68,6 +68,7 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image("rimbalzante", "assets/images/environment_elements/rimbalzo.png");//piattaforma rimbalzante
 
         this.load.image("chiave", "assets/images/environment_elements/chiave3d.png"); //chiave
+        this.load.image("chiaveContorno", "assets/images/environment_elements/chiave3dcontorno.png"); 
         
 
      //elementi hud
@@ -131,7 +132,17 @@ export default class Scene1 extends Phaser.Scene {
 
         // Chiavi
         this.chiave = this.add.image(5000, -490, "chiave").setScale(0.2);
-        //this.physics.add.overlap(this.player, this.chiave, this.collectChiavi, null, this);
+        this.chiaveContorno = this.add.image(5000, -490, "chiaveContorno").setScale(0.21).setAlpha(0.75).setBlendMode(Phaser.BlendModes.ADD);
+
+        this.tweens.add({
+            targets: this.chiaveContorno,
+            alpha: 0,
+            duration: 1500,
+            ease: 'Sine.easeInOut',
+            loop: -1,
+            yoyo: true
+        });
+
         this.piedistallo = this.add.rectangle(5000, -420, 80, 40, 0x000000);
         
 
@@ -566,6 +577,7 @@ export default class Scene1 extends Phaser.Scene {
         let icon = this.chiaveIcon1;
         if(x_diff < 75 && y_diff < 100) {
             this.chiave.destroy();
+            this.chiaveContorno.destroy();
             this.portaGroup.children.iterate(function (porta) {porta.movePorta();});
             icon.setAlpha(1);
             this.playerEnemy.animateEnemyHouse();
