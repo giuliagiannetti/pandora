@@ -30,6 +30,9 @@ export default class Scene1 extends Phaser.Scene {
 
         this.load.image("parallax0", "assets/images/background/parallax0.png");
         this.load.image("parallax01", "assets/images/background/parallax01.png");
+
+        this.load.image("fuoco", "assets/images/environment_elements/fuoco.png");
+
     }
 
     create() {
@@ -56,6 +59,12 @@ export default class Scene1 extends Phaser.Scene {
             0x260907, 1);
         this.floor.setOrigin(0, 1);
         this.physics.add.existing(this.floor, true);
+
+
+        this.fuoco = this.add.image(230, this.floorHeight, "fuoco");
+        this.fuoco.setOrigin(0,1).setScale(0.3);
+        this.physics.add.existing(this.fuoco, true);
+       
 
 
         // Player
@@ -86,10 +95,10 @@ export default class Scene1 extends Phaser.Scene {
         // Camera
         this.cameras.main.startFollow(this.player);
         this.cameras.main.setFollowOffset(0, 300);
- 
+
 
         this.background.setPipeline('Light2D').setAlpha(0.7);
-        this.playerLight = this.lights.addLight(0, 0, 850).setIntensity(2.8).setColor(0xffffff);
+        this.playerLight = this.lights.addLight(270, 510, 850).setIntensity(2.8).setColor(0xffffff);
         this.lights.enable();
         //this.lights.setAmbientColor(0x000000);
         
@@ -153,8 +162,7 @@ export default class Scene1 extends Phaser.Scene {
             platform.animateMovingPlatform();
         });
 
-        this.playerLight.x = this.player.body.x + this.player.body.width/2;
-        this.playerLight.y = this.player.body.y + this.player.body.height/2;
+        this.collectFuoco();
 
          // Camera
          if (this.player.body.x < this.game.config.width/2 ) {
@@ -164,6 +172,24 @@ export default class Scene1 extends Phaser.Scene {
         if (this.player.body.x > 2650 ) {
             this.cameras.main.followOffset.x = -2710 + this.player.body.x;
         } 
+    }
+
+    collectFuoco() {
+        if (this.player.y < this.fuoco.y) {
+            this.playerLight.x = this.player.body.x + this.player.body.width/2;
+            this.playerLight.y = this.player.body.y + this.player.body.height/2; 
+            
+        }
+        if (this.player.x > this.fuoco.x) {
+            this.playerLight.x = this.player.body.x + this.player.body.width/2;
+            this.playerLight.y = this.player.body.y + this.player.body.height/2;  
+ 
+        }
+        
+        if (this.player.x <= this.fuoco.x && this.player.y == this.fuoco.y){
+            this.playerLight.x = 270;
+            this.playerLight.y = 510;    
+        }
     }
 
 
