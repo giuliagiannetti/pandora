@@ -69,6 +69,8 @@ export default class Scene1 extends Phaser.Scene {
 
         this.load.image("chiave", "assets/images/environment_elements/chiave3d.png"); //chiave
         this.load.image("chiaveContorno", "assets/images/environment_elements/chiave3dcontorno.png"); 
+        this.load.image("piedistallo", "assets/images/environment_elements/piedistallo.png"); 
+        this.load.image("piedistalloCheck", "assets/images/environment_elements/piedistalloCheck.png"); 
         
 
      //elementi hud
@@ -109,6 +111,24 @@ export default class Scene1 extends Phaser.Scene {
         this.floor.setOrigin(0, 1);
         this.physics.add.existing(this.floor, true);
 
+        // Chiavi
+        this.chiave = this.add.image(5000, -530, "chiave").setScale(0.2);
+        this.chiaveContorno = this.add.image(5000, -530, "chiaveContorno").setScale(0.21).setAlpha(0.75).setBlendMode(Phaser.BlendModes.ADD);
+
+        this.tweens.add({
+            targets: this.chiaveContorno,
+            alpha: 0,
+            duration: 1500,
+            ease: 'Sine.easeInOut',
+            loop: -1,
+            yoyo: true
+        });
+
+        this.piedistallo = this.add.image(4920, -370, "piedistallo");
+        this.piedistallo.setOrigin(0,1).setScale(0.19);
+        this.piedistalloCheck = this.add.image(4920, -370, "piedistalloCheck");
+        this.piedistalloCheck.setOrigin(0,1).setScale(0.19).setAlpha(0);
+
 
         // Player
         const thePlayer = new Player(this, 4000, 200, this.worldWidth -100, -400);
@@ -128,22 +148,6 @@ export default class Scene1 extends Phaser.Scene {
         this.createPorta();
         this.createColonnato();
         this.createCasa();
-
-
-        // Chiavi
-        this.chiave = this.add.image(5000, -490, "chiave").setScale(0.2);
-        this.chiaveContorno = this.add.image(5000, -490, "chiaveContorno").setScale(0.21).setAlpha(0.75).setBlendMode(Phaser.BlendModes.ADD);
-
-        this.tweens.add({
-            targets: this.chiaveContorno,
-            alpha: 0,
-            duration: 1500,
-            ease: 'Sine.easeInOut',
-            loop: -1,
-            yoyo: true
-        });
-
-        this.piedistallo = this.add.rectangle(5000, -420, 80, 40, 0x000000);
         
 
         this.piedistallo = this.add.rectangle(3900, 470, 80, 40, 0x000000);
@@ -581,6 +585,12 @@ export default class Scene1 extends Phaser.Scene {
             this.portaGroup.children.iterate(function (porta) {porta.movePorta();});
             icon.setAlpha(1);
             this.playerEnemy.animateEnemyHouse();
+            this.tweens.add({  
+                targets: this.piedistalloCheck,
+                alpha: 1,
+                ease: 'Linear',
+                duration: 250
+            });
         }
     }
 
