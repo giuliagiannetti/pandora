@@ -18,7 +18,7 @@ export default class Scene1 extends Phaser.Scene {
     init() {
         console.log("scene1 - Executing init()");
         this.floorHeight = this.game.config.height - 100;
-        this.worldWidth = 8426;
+        this.worldWidth = 8500;
         //this.maxHearts = 4;
     }
 
@@ -66,9 +66,10 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image("scalino2", "assets/images/environment_elements/casa/scalino2.png");
         this.load.image("scalino3", "assets/images/environment_elements/casa/scalino3.png");
         this.load.image("scalino4", "assets/images/environment_elements/casa/scalino4.png");
+
+        this.load.image("moving", "assets/images/environment_elements/casa/scalino4.png");
         this.load.image("tetto", "assets/images/environment_elements/casa/tetto.png");
-
-
+        this.load.image("tettoPlat", "assets/images/environment_elements/casa/tettoPlat.png");
 
         this.load.image("movingPlatform", "assets/images/environment_elements/trave.png"); //platform in movimento
 
@@ -139,7 +140,7 @@ export default class Scene1 extends Phaser.Scene {
 
 
         // Player
-        const thePlayer = new Player(this, 4000, 200, this.worldWidth - 100, -400);
+        const thePlayer = new Player(this, 6500, -750, this.worldWidth - 100, -400);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
         this.playerHearts = this.game.gameState.lives;
@@ -150,7 +151,6 @@ export default class Scene1 extends Phaser.Scene {
 
 
         //piattaforme
-        this.createStaticPlatforms();
         this.createMovingPlatforms();
         this.createJumpingPlatforms();
         this.createPorta();
@@ -243,17 +243,12 @@ export default class Scene1 extends Phaser.Scene {
         this.physics.add.collider(this.architrave, this.player, () => {
             this.player.isJumping = false;
         })
-    }
 
-
-    createStaticPlatforms() {
-        // Aggiungi le piattaforme come un gruppo di oggetti statici
         this.platforms = this.physics.add.staticGroup()
-
         this.platforms.create(3410, 433, 'colonna').setScale(0.3).refreshBody();//colonna
 
-
     }
+
 
     createCasa() {
         //casa1
@@ -272,11 +267,6 @@ export default class Scene1 extends Phaser.Scene {
         this.pavimento2.setOrigin(0, 1);
         this.physics.add.existing(this.pavimento2, true);
 
-        /*this.scaliniGroup = this.physics.add.group(this.scalini);
-        this.scaliniGroup.children.iterate(function (platform) {
-            platform.body.allowGravity = false;
-            platform.body.setImmovable(true);
-        });*/
 
         this.pavimenti3 = [];
 
@@ -291,37 +281,41 @@ export default class Scene1 extends Phaser.Scene {
             this.player.isJumping = false;
         })
 
-
-        //this.pavimento = this.platforms.create(5490, 260, 'pavement').setScale(0.5).refreshBody();//pavimento
-
         this.scalino = this.platforms.create(4950, 213, 'scalino2').setOrigin(0, 1).setScale(0.7).refreshBody();//scalino
         this.platforms.create(5000, 179, 'scalino3').setOrigin(0, 1).setScale(0.7).refreshBody();//scalino
         this.platforms.create(5050, 145, 'scalino3').setOrigin(0, 1).setScale(0.7).refreshBody();//scalino
         this.platforms.create(5100, 111, 'scalino4').setOrigin(0, 1).setScale(0.7).refreshBody();//scalino
         this.platforms.create(5150, 75, 'scalino4').setOrigin(0, 1).setScale(0.7).refreshBody();//scalino
-        //this.chiavePlatform = this.platforms.create(5100, -350, 'platform1').setScale(0.7).refreshBody();//piattaforma chiave
         this.platforms.create(5600, -30, 'pavimento3').setScale(0.8).refreshBody();
-        //this.platforms.create(6000, -150, 'platform1').setScale(0.4).refreshBody();
+        this.platforms.create(4700, -400, 'scalino3').setOrigin(0,1).refreshBody();//scalino dopo chiave
+        this.platforms.create(4550, -450, 'scalino3').setOrigin(0,1).refreshBody();//scalino dopo chiave
+        this.platforms.create(4300, -500, 'scalino2').setOrigin(0,1).refreshBody();//scalino dopo chiave
+        this.platforms.create(4400, -550, 'colonnaCasa').setOrigin(0,1).setScale(0.35).refreshBody();//parete
+        this.platforms.create(4850, -650, 'scalino4').setOrigin(0,1).refreshBody();
+
+        this.scalinoTetto = this.platforms.create(5870, -530, 'scalino4').setOrigin(0, 1).refreshBody(); 
+        this.scalinoTetto.flipX = true;
+        this.tetto = this.platforms.create(5350, -650, 'tetto').setOrigin(0, 1).setScale(0.8).refreshBody(); //tetto
+        this.platforms.create(5150, -650, 'tettoPlat').setScale(0.95).setOrigin(0, 1).refreshBody(); //piattaforma tetto
+        this.platTetto = this.platforms.create(5840, -650, 'tettoPlat').setScale(0.95).setOrigin(0, 1).refreshBody();
+        this.platTetto.flipX = true;//piattaforma tetto
+        this.platforms.create(6250, -510, 'scalino4').setOrigin(0, 1).refreshBody(); //piattaforma tetto
+        
         this.parete = this.platforms.create(6100, 210, 'colonnaCasa').setOrigin(0, 1).setScale(0.35).refreshBody();//parete
         this.parete = this.platforms.create(5980, -200, 'colonnaCasa').setOrigin(0, 1).setScale(0.35).refreshBody();//parete
-        //this.tetto = this.platforms.create(5600, -680, 'pavement').setScale(0.4).refreshBody(); //tetto
-        this.platforms.create(5150, -600, 'pavimento3').setScale(1.1).setOrigin(0, 1).refreshBody(); //piattaforma tetto
-        this.scalinoTetto = this.platforms.create(5870, -530, 'scalino4').setScale(1.25).setOrigin(0, 1).refreshBody(); //piattaforma tetto
-        this.scalinoTetto.flipX = true;
-        this.tetto = this.platforms.create(5350, -595, 'tetto').setOrigin(0, 1).setScale(0.8).refreshBody(); //tetto
-        this.platforms.create(4750, -525, 'scalino3').setScale(0.8).refreshBody();
+
 
         //casa2
-        this.platforms.create(6275, -80, 'platform1').setScale(0.5).refreshBody();
-        this.platforms.create(6690, -20, 'pavement').setScale(0.21).refreshBody();//pavimento
-        this.platforms.create(7580, -20, 'pavement').setScale(0.21).refreshBody();//pavimento
-        this.platforms.create(7859, 34, 'platform1').setScale(0.4).refreshBody();//scalino
-        this.platforms.create(7939, 96, 'platform1').setScale(0.4).refreshBody();//scalino
-        this.platforms.create(8019, 158, 'platform1').setScale(0.4).refreshBody();//scalino
-        this.platforms.create(8099, 220, 'platform1').setScale(0.4).refreshBody();//scalino
-        this.platforms.create(8317, 220, 'platform1').setScale(0.4).refreshBody();
-        this.platforms.create(7100, 300, 'platform1').setScale(0.5).refreshBody();
-        this.platforms.create(8400, 50, 'verticale').setScale(0.5).refreshBody();//parete
+        this.platforms.create(6400, -350, 'scalino3').setOrigin(0, 1).refreshBody(); //piattaforma tetto
+        this.platforms.create(6700, -70, 'pavimento1').setOrigin(0,1).refreshBody();
+        this.platforms.create(7700, -70, 'pavimento3').setOrigin(0,1).refreshBody();
+        this.platforms.create(7750, -140, 'colonnaSpezzata').setOrigin(0,1).setScale(0.235).refreshBody();
+        this.platforms.create(7600, -140, 'colonnaCasa').setOrigin(0,1).setScale(0.35).refreshBody();
+        this.platforms.create(6600, -15, 'scalino3').setOrigin(0,1).setScale(1.1).refreshBody();//pavimento
+        this.platforms.create(6290, 115, 'scalino4').setOrigin(0, 1).setScale(0.9).refreshBody(); //piattaforma tetto
+        this.platforms.create(7000, 350, 'scalino1').setOrigin(0,1).refreshBody();
+        this.platforms.create(6600, 550, 'scalino4').setOrigin(0,1).setScale(0.8).refreshBody();
+        this.platforms.create(6700, 490, 'scalino4').setOrigin(0,1).setScale(0.8).refreshBody();
 
 
         this.physics.add.collider(this.platforms, this.player, () => {
@@ -480,7 +474,7 @@ export default class Scene1 extends Phaser.Scene {
             this.cameras.main.followOffset.x = -800 + this.player.body.x;
         }
         if (this.player.body.x > (this.worldWidth - this.game.config.width / 2)) {
-            this.cameras.main.followOffset.x = -(this.worldWidth - this.game.config.width / 2) + this.player.body.x;
+            this.cameras.main.followOffset.x = -(this.worldWidth - this.game.config.width / 2) + this.player.body.x ;
         }
     }
 
@@ -616,11 +610,8 @@ export default class Scene1 extends Phaser.Scene {
 
 
     checkSceneEnd() {
-        if (//this.player.x >= (this.worldWidth - this.player.body.width)
-            //&& 
-            this.key0.isDown
-        ) {
-            this.scene.start("scene3");
+        if (this.player.x >= this.worldWidth - this.game.config.width/2) {
+            this.scene.start("scene2");
         }
     }
 }

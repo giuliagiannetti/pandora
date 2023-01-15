@@ -4,7 +4,7 @@ export default class movingPlatform extends Phaser.GameObjects.Sprite {
     initialX;
 
     constructor(scene, x, y) {
-        super(scene, x, y, "scalino4");
+        super(scene, x, y, "moving");
         scene.add.existing(this);
         this.initialX = x;
         this.floorHeight = y;

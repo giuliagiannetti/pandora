@@ -12,7 +12,7 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
         this.initialPosition = x;
         this.floorHeight = y;
         this.setOrigin(0, 1); 
-        this.setScale(0.5);
+        this.setScale(0.4);
         /*this.stepLength = 15;
         this.maxWidth = maxWidth;*/
 
