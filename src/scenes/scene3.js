@@ -24,7 +24,7 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image("polis2", "assets/images/background/sfondo_3.png");
 
         this.load.image("platform1", "assets/images/environment_elements/platform1.png"); //platform statico
-        this.load.image("pavement", "assets/images/environment_elements/pavement.png"); //pavimento
+        this.load.image("traveTempio", "assets/images/environment_elements/traveTempio.png"); //pavimento
         this.load.image("movingPlatform", "assets/images/environment_elements/platform1.png"); //platform in movimento
         this.load.image("colonnaTempio", "assets/images/environment_elements/colonnaolimpo.png");
 
@@ -32,6 +32,7 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image("parallax01", "assets/images/background/parallax01.png");
 
         this.load.image("fuoco", "assets/images/environment_elements/fuoco.png");
+        this.load.image("statua", "assets/images/environment_elements/statua.png");
 
     }
 
@@ -108,23 +109,34 @@ export default class Scene1 extends Phaser.Scene {
 
     
     createStaticPlatforms() {
-        // Aggiungi le piattaforme come un gruppo di oggetti statici
         this.platforms = this.physics.add.staticGroup()
 
-        this.platforms.create(780, -20 , 'pavement').setScale(0.58).refreshBody();//pavimento
-        this.platforms.create(600, 520, 'movingPlatform').setScale(0.15).refreshBody();
-        this.platforms.create(1780, 260, 'movingPlatform').setScale(0.15).refreshBody();
-        this.platforms.create(1000, -170, 'movingPlatform').setScale(0.15).refreshBody();
-        this.platforms.create(500, -310, 'movingPlatform').setScale(0.15).refreshBody();
-        this.platforms.create(2500, -40, 'movingPlatform').setScale(0.15).refreshBody();
+        this.platforms.create(60, 20, 'traveTempio').setOrigin(0,1).refreshBody();//pavimento
+        this.platforms.create(2000, 20, 'traveTempio').setOrigin(0,1).refreshBody();//pavimento
+        this.platforms.create(600, 520, 'scalino3').refreshBody();
+        this.platforms.create(1400, 260, 'scalino3').refreshBody();
+        this.platforms.create(2050, 390, 'scalino3').setOrigin(0,1).refreshBody();
+        this.platforms.create(1900, 260, 'scalino4').setOrigin(0,1).setScale(0.9).refreshBody();
+        this.platforms.create(1000, -170, 'scalino3').refreshBody();
+        this.platforms.create(570, -310, 'scalino3').refreshBody();
         
 
         //statua
-        this.platforms.create(2400, 587, 'movingPlatform').setScale(0.15).refreshBody();
-        this.platforms.create(2500, 525, 'movingPlatform').setScale(0.15).refreshBody();
-        this.platforms.create(2800, 475 , 'pavement').setScale(0.2).refreshBody();//pavimento
+        let statuaGradino = this.add.rectangle(2501, this.floorHeight - 135, 400,270, 0x000000, 0);
+        statuaGradino.setOrigin(0,1);
+        let statuaPav = this.add.rectangle(2400, this.floorHeight, 500,135, 0x000000, 0);
+        statuaPav.setOrigin(0,1);
+        
+        this.statuaBase = [statuaGradino, statuaPav];
+        this.statuabaseGroup = this.physics.add.staticGroup(this.statuaBase);
+        this.physics.add.collider(this.statuabaseGroup, this.player, () => {
+            this.player.isJumping = false;
+        });
 
-      
+
+        this.statua = this.add.image(2300, this.floorHeight, "statua");
+        this.statua.setOrigin(0,1);
+
 
         this.physics.add.collider(this.platforms, this.player, () => {
             this.player.isJumping = false;
@@ -132,11 +144,10 @@ export default class Scene1 extends Phaser.Scene {
     }
 
     createMovingPlatforms() {
-        // Inserisci delle piattaforme in movimento
+      
         this.movingPlatforms = [];
-        //inserite le vostre piattaforme qua
-        this.movingPlatforms.push(new movingPlatform(this, 1300, 380));
-        this.movingPlatforms.push(new movingPlatform(this, 2210, 105));
+        this.movingPlatforms.push(new movingPlatform(this, 1150, 380));
+        this.movingPlatforms.push(new movingPlatform(this, 1890, 115));
     
         this.movingPlatformGroup = this.physics.add.group(this.movingPlatforms);
         this.movingPlatformGroup.children.iterate(function (platform) {
@@ -155,7 +166,6 @@ export default class Scene1 extends Phaser.Scene {
 
 
     update() {
-        // Azioni che vengono eseguite a ogni frame del gioco
         this.player.manageMovements();
         this.animateBackground();
         this.movingPlatformGroup.children.iterate(function (platform) {
@@ -186,7 +196,7 @@ export default class Scene1 extends Phaser.Scene {
  
         }
         
-        if (this.player.x <= this.fuoco.x && this.player.y == this.fuoco.y){
+        if (this.player.x <= this.fuoco.x && this.player.y <= this.fuoco.y){
             this.playerLight.x = 270;
             this.playerLight.y = 510;    
         }
