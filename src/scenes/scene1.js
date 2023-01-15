@@ -138,9 +138,14 @@ export default class Scene1 extends Phaser.Scene {
         this.piedistalloCheck = this.add.image(4920, -370, "piedistalloCheck");
         this.piedistalloCheck.setOrigin(0, 1).setScale(0.19).setAlpha(0);
 
+        this.piedistallo0 = this.add.image(3865, 500, "piedistallo");
+        this.piedistallo0.setOrigin(0, 1).setScale(0.19);
+        this.piedistalloCheck0 = this.add.image(3865, 500, "piedistalloCheck");
+        this.piedistalloCheck0.setOrigin(0, 1).setScale(0.19).setAlpha(0);
+
 
         // Player
-        const thePlayer = new Player(this, 6500, -750, this.worldWidth - 100, -400);
+        const thePlayer = new Player(this, 640, 400, this.worldWidth - 100, -400);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
         this.playerHearts = this.game.gameState.lives;
@@ -156,11 +161,7 @@ export default class Scene1 extends Phaser.Scene {
         this.createPorta();
         this.createColonnato();
         this.createCasa();
-
-
-        this.piedistallo = this.add.rectangle(3900, 470, 80, 40, 0x000000);
-        this.piedistallo.setOrigin(0, 1);
-
+        
 
         this.cameras.main.startFollow(this.player, true);
         this.cameras.main.setLerp(0.15, 0.15);
@@ -252,7 +253,7 @@ export default class Scene1 extends Phaser.Scene {
 
     createCasa() {
         //casa1
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 4; i++) {
             let colonnaCasa = this.add.image(4900 + 270 * i, this.floorHeight, "colonnaCasa");
             colonnaCasa.setOrigin(0, 1).setScale(0.35);
         }
@@ -303,6 +304,7 @@ export default class Scene1 extends Phaser.Scene {
         
         this.parete = this.platforms.create(6100, 210, 'colonnaCasa').setOrigin(0, 1).setScale(0.35).refreshBody();//parete
         this.parete = this.platforms.create(5980, -200, 'colonnaCasa').setOrigin(0, 1).setScale(0.35).refreshBody();//parete
+        this.platforms.create(5984, this.floorHeight, 'colonnaCasa').setOrigin(0, 1).setScale(0.35).refreshBody();//parete
 
 
         //casa2
@@ -337,7 +339,7 @@ export default class Scene1 extends Phaser.Scene {
 
         this.movingPlatforms = [];
 
-        this.movingPlatforms.push(new movingPlatform(this, 3000, 220));
+        this.movingPlatforms.push(new movingPlatform(this, 3000, 220, "trave"));
         this.movingPlatforms.push(new movingPlatform(this, 5800, -290));
 
         this.movingPlatformGroup = this.physics.add.group(this.movingPlatforms);
@@ -403,16 +405,6 @@ export default class Scene1 extends Phaser.Scene {
         this.chiaveIcon1.setScrollFactor(0, 0);
 
 
-        /*this.chiaviIcons = [];
-        for (let i=0; i<3; i++) {
-            let chiave = this.add.image(355-60*i, 30, "chiaveicona");
-            chiave.setScale(0.7);
-            chiave.setOrigin(0,0);
-            chiave.setAlpha(0.3);
-            chiave.setScrollFactor(0,0);
-            this.chiaviIcons.push(chiave);}*/
-
-
         this.lifeSpan = this.add.rectangle(30, 30, 180, 70, 0x2f1710).setOrigin(0, 0).setScrollFactor(0, 0);
 
 
@@ -431,23 +423,6 @@ export default class Scene1 extends Phaser.Scene {
         this.pauseButton.setScrollFactor(0, 0);
         this.pauseButton.setInteractive();
 
-
-        /*this.pausePanel = this.add.image(this.game.config.width/2, 100, "menuPausa");
-        this.pausePanel.setOrigin(0.5,0).setScale(0.7);
-        this.pausePanel.setVisible(false); 
-        this.pausePanel.setScrollFactor(0,0);
-        
-        this.pauseHome = this.add.image(510, 300, "home");
-        this.pauseHome.setOrigin(0.5,0).setScale(0.2);
-        this.pauseHome.setVisible(false); 
-        this.pauseHome.setScrollFactor(0,0);
-        this.pauseHome.setInteractive();
-
-        this.pausePlay = this.add.image(770, 300, "play");
-        this.pausePlay.setOrigin(0.5,0).setScale(0.18);
-        this.pausePlay.setVisible(false); 
-        this.pausePlay.setScrollFactor(0,0);
-        this.pausePlay.setInteractive();*/
     }
 
 
@@ -469,9 +444,11 @@ export default class Scene1 extends Phaser.Scene {
 
         this.pauseMenuBottons();
 
+        this.checkpoint0();
+
         // Camera
         if (this.player.body.x < this.game.config.width / 2) {
-            this.cameras.main.followOffset.x = -800 + this.player.body.x;
+            this.cameras.main.followOffset.x = -this.game.config.width/2 + this.player.body.x;
         }
         if (this.player.body.x > (this.worldWidth - this.game.config.width / 2)) {
             this.cameras.main.followOffset.x = -(this.worldWidth - this.game.config.width / 2) + this.player.body.x ;
@@ -522,8 +499,8 @@ export default class Scene1 extends Phaser.Scene {
         if (this.playerHearts <= 0) {
             this.scene.start("gameover");
         } else {
-            this.player.body.x = this.scalino.x - 200;
-            this.player.body.y = this.scalino.y - 110;
+            this.player.body.x = this.piedistallo0.x + 20;
+            this.player.body.y = this.piedistallo0.y - 300;
             this.playerEnemy.x = this.playerEnemy.initialPosition;
             this.playerEnemy.y = this.playerEnemy.floorHeight;
             this.scene.resume(this.followPlayer);
@@ -589,7 +566,7 @@ export default class Scene1 extends Phaser.Scene {
 
     collectChiavi() {
         let x_diff = Math.abs(this.player.x - this.chiave.x);
-        let y_diff = Math.abs(this.player.y - this.chiave.y); 4
+        let y_diff = Math.abs(this.player.y - this.chiave.y); 
         //let portaFermaY = this.portaGroup.y;
         let icon = this.chiaveIcon1;
         if (x_diff < 75 && y_diff < 100) {
@@ -607,10 +584,23 @@ export default class Scene1 extends Phaser.Scene {
         }
     }
 
+    checkpoint0() {
+        let x_diff0 = Math.abs(this.player.x - this.piedistallo0.x);
+        let y_diff0 = Math.abs(this.player.y - this.piedistallo0.y); 
+        //let portaFermaY = this.portaGroup.y;
+        if (x_diff0 < 75 && y_diff0 < 100) {
+            this.tweens.add({
+                targets: this.piedistalloCheck0,
+                alpha: 1,
+                ease: 'Linear',
+                duration: 250
+            });
+        }
+    }
 
 
     checkSceneEnd() {
-        if (this.player.x >= this.worldWidth - this.game.config.width/2) {
+        if (this.player.x >= this.worldWidth - 300) {
             this.scene.start("scene2");
         }
     }

@@ -96,7 +96,7 @@ export default class Scene2 extends Phaser.Scene {
 
 
         this.chiave = this.add.image(2750, -650, "chiave").setScale(0.2);
-        this.piedistallo = this.add.rectangle(5000, -420, 80, 40, 0x000000);
+        this.piedistallo = this.add.rectangle(2740, -600, 80, 40, 0x000000);
 
 
         // Camera
