@@ -2,23 +2,23 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
 
     initialPosition;
     floorHeight;
-    stepLength;           
+    stepLength;
     maxWidth;
 
 
     constructor(scene, x, y /*, maxWidth*/) {
-		super(scene, x, y, "enemyrun");
+        super(scene, x, y, "enemyrun");
         scene.add.existing(this);
         this.initialPosition = x;
         this.floorHeight = y;
-        this.setOrigin(0, 1); 
+        this.setOrigin(0, 1);
         this.setScale(0.4);
         /*this.stepLength = 15;
         this.maxWidth = maxWidth;*/
 
         //this.initAnimation();
     }
-    
+
     /*initAnimation() {
         this.anims.create({
             key: "enemyMove",
@@ -42,34 +42,50 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
             this.flipX = true;
         }
 
-        if (this.y >= this.floorHeight){
+        if (this.y >= this.floorHeight) {
             this.body.setVelocityY(-30);
         }
 
-        if (this.y < this.floorHeight - 40){
+        if (this.y < this.floorHeight - 40) {
             this.body.setVelocityY(30);
         }
 
-}
+    }
 
-    animateEnemyHouse(){
+    animateEnemyHouse() {
         if (this.x >= this.initialPosition) {
             this.body.setVelocityX(-100);
             this.flipX = false;
         }
-        if (this.x <= (this.initialPosition - 100) ) {
+        if (this.x <= (this.initialPosition - 100)) {
             this.body.setVelocityX(100);
             this.flipX = true;
         }
+        if (this.y <= this.initialPosition - 10) {
+            this.body.setVelocityY(19)
+        }
+
     }
 
-    animateEnemytempio (){
+    returnToInitialY() {
+        if (this.y >= this.initialPosition + 5) {
+         this.body.setVelocityY(-19)
+        }
+        if (this.y <= this.initialPosition - 5) {
+            this.body.setVelocityY(+ 19)
+        }
+        else{
+            this.body.setVelocityY(0)
+        }
+    }
+
+    animateEnemytempio() {
         if (this.x >= this.initialPosition) {
             this.body.setVelocityX(-100);
             this.body.setVelocityY(100);
             this.flipX = false;
         }
-        if (this.x <= (this.initialPosition - 150) ) {
+        if (this.x <= (this.initialPosition - 150)) {
             this.body.setVelocityX(100);
             this.body.setVelocityY(-100);
             this.flipX = true;
