@@ -92,7 +92,7 @@ export default class Scene2 extends Phaser.Scene {
         //sandali di Hermes
         this.sandalo = this.add.image(1800, -145, "sandalo");
         this.sandalo.setScale(0.15);
-        this.physics.add.overlap(this.player, this.sandalo, this.collectSandalo, null, this);
+        //this.physics.add.overlap(this.player, this.sandalo, this.collectSandalo, null, this);
 
 
         this.chiave = this.add.image(2750, -650, "chiave").setScale(0.2);
