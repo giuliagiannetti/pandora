@@ -145,7 +145,7 @@ export default class Scene1 extends Phaser.Scene {
 
 
         // Player
-        const thePlayer = new Player(this, 4100, 400, this.worldWidth - 100, -400);
+        const thePlayer = new Player(this, 680, 400, this.worldWidth - 100, -400);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
         this.playerHearts = this.game.gameState.lives;
@@ -499,7 +499,8 @@ export default class Scene1 extends Phaser.Scene {
         });
 
         if (this.playerHearts <= 0) {
-            this.scene.start("gameover");
+            this.scene.start("gameover1");
+            this.scene.stop();
         } else {
             this.player.body.x = this.piedistallo0.x + 20;
             this.player.body.y = this.piedistallo0.y - 300;
@@ -525,12 +526,10 @@ export default class Scene1 extends Phaser.Scene {
 
 
         if (this.playerHearts <= 0) {
-            this.scene.start("gameover");
+            this.scene.start("gameover1");
         } else {
             this.player.body.x = this.chiave.x;
             this.player.body.y = this.chiave.y;
-            //this.playerEnemy.x = this.playerEnemy.initialPosition;
-            //this.playerEnemy.y = this.playerEnemy.floorHeight;
             this.scene.resume(this.collectChiavi);
         }
 

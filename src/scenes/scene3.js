@@ -34,6 +34,8 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image("fuoco", "assets/images/environment_elements/fuoco.png");
         this.load.image("statua", "assets/images/environment_elements/statua.png");
 
+        this.load.image("mask", "assets/images/environment_elements/mask1.png")
+
     }
 
     create() {
@@ -42,9 +44,16 @@ export default class Scene1 extends Phaser.Scene {
        
         this.key0 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ZERO);
         
-        this.background0 = this.add.tileSprite(0, 0, 1280, 2400, "parallax01");
-        this.background0.setOrigin(0, 0.70);
-        this.background0.setScrollFactor(0,0.4);
+        this.background0 = this.add.image(0,720, "parallax01");
+        this.background0.setOrigin(0,1);
+        
+        
+        this.floor = this.add.rectangle(0, this.game.config.height,
+            this.worldWidth + 150, this.game.config.height - this.floorHeight,
+            0x260907, 1);
+        this.floor.setOrigin(0, 1);
+        this.physics.add.existing(this.floor, true);
+
 
         this.colonne = [];
 
@@ -54,20 +63,11 @@ export default class Scene1 extends Phaser.Scene {
             this.colonne.push(colonna);
         }
 
-        
-        this.floor = this.add.rectangle(0, this.game.config.height,
-            this.worldWidth + 150, this.game.config.height - this.floorHeight,
-            0x260907, 1);
-        this.floor.setOrigin(0, 1);
-        this.physics.add.existing(this.floor, true);
-
 
         this.fuoco = this.add.image(230, this.floorHeight, "fuoco");
         this.fuoco.setOrigin(0,1).setScale(0.3);
         this.physics.add.existing(this.fuoco, true);
        
-
-
         // Player
         const thePlayer = new Player(this, 100, this.floorHeight, this.worldWidth, -400);
         this.player = this.physics.add.existing(thePlayer);
@@ -81,31 +81,27 @@ export default class Scene1 extends Phaser.Scene {
         this.createStaticPlatforms();
         this.createMovingPlatforms();
 
-        this.background = this.add.tileSprite(0, 0, 1280, 2400, "parallax0");
-        this.background.setOrigin(0, 0.70);
-        this.background.setScrollFactor(0,0.4);
 
-        //this.background = this.add.image(0, 0, "polis2");
-        //this.background.setOrigin(0, 0.55).setAlpha(0);
+        this.background = this.add.image(0, 720, "parallax0");
+        this.background.setOrigin(0, 1);
 
-        /*this.darker = this.add.image(0, 0,  "darker");
-        this.darker.setOrigin(0, 0.70);
-        this.darker.setScrollFactor(0,0.4);
-        this.darker.setAlpha(0.4);*/
 
         this.background.setPipeline('Light2D').setAlpha(0.7);
-        this.playerLight = this.lights.addLight(270, 510, 850).setIntensity(2.8).setColor(0xffffff);
+        this.playerLight = this.lights.addLight(270, 510, 850).setIntensity(2.8);
         this.lights.enable();
-        //this.lights.setAmbientColor(0x000000);
+        this.lights.setAmbientColor(0x000000);
+        this.make.sprite({
+            x: 0,
+            y: 800,
+            key: 'mask',
+            add: true,
+        });
 
 
         // Camera
         this.cameras.main.startFollow(this.player);
         this.cameras.main.setFollowOffset(0, 300);
 
-
-        
-        
 
     }
 
@@ -207,13 +203,6 @@ export default class Scene1 extends Phaser.Scene {
 
 
     animateBackground() {
-        //this.background0.tilePositionX = this.cameras.main.scrollX * 0.5;
-       // this.background0.tilePositionY = this.cameras.main.scrollY * 0.5;
-
-       // this.background.tilePositionX = this.cameras.main.scrollX * 0.5;
-       // this.background.tilePositionY = this.cameras.main.scrollY * 0.5;
-
-
         const startLineCamera = 400;
         const shiftCameraMax = 70;
         if (this.player.body.y + this.player.height / 2 < startLineCamera) {
