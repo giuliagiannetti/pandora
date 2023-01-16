@@ -406,7 +406,7 @@ export default class Scene2 extends Phaser.Scene {
 
 
         if (this.playerHearts <= 0) {
-            this.scene.start("gameover");
+            this.scene.start("gameover2");
         } else {
             this.player.body.x = this.sandalo.x - 10;
             this.player.body.y = this.sandalo.y - 100;
