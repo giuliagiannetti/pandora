@@ -93,15 +93,18 @@ export default class Scene1 extends Phaser.Scene {
         this.darker.setScrollFactor(0,0.4);
         this.darker.setAlpha(0.4);*/
 
+        this.background.setPipeline('Light2D').setAlpha(0.7);
+        this.playerLight = this.lights.addLight(270, 510, 850).setIntensity(2.8).setColor(0xffffff);
+        this.lights.enable();
+        //this.lights.setAmbientColor(0x000000);
+
+
         // Camera
         this.cameras.main.startFollow(this.player);
         this.cameras.main.setFollowOffset(0, 300);
 
 
-        this.background.setPipeline('Light2D').setAlpha(0.7);
-        this.playerLight = this.lights.addLight(270, 510, 850).setIntensity(2.8).setColor(0xffffff);
-        this.lights.enable();
-        //this.lights.setAmbientColor(0x000000);
+        
         
 
     }
@@ -196,19 +199,19 @@ export default class Scene1 extends Phaser.Scene {
  
         }
         
-        if (this.player.x <= this.fuoco.x && this.player.y <= this.fuoco.y){
-            this.playerLight.x = 270;
+        if (this.player.x <= this.fuoco.x && this.player.y <= this.fuoco.y && this.player.y >= 400 ){
+            this.playerLight.x = 270
             this.playerLight.y = 510;    
         }
     }
 
 
     animateBackground() {
-        this.background0.tilePositionX = this.cameras.main.scrollX * 0.5;
-        this.background0.tilePositionY = this.cameras.main.scrollY * 0.5;
+        //this.background0.tilePositionX = this.cameras.main.scrollX * 0.5;
+       // this.background0.tilePositionY = this.cameras.main.scrollY * 0.5;
 
-        this.background.tilePositionX = this.cameras.main.scrollX * 0.5;
-        this.background.tilePositionY = this.cameras.main.scrollY * 0.5;
+       // this.background.tilePositionX = this.cameras.main.scrollX * 0.5;
+       // this.background.tilePositionY = this.cameras.main.scrollY * 0.5;
 
 
         const startLineCamera = 400;
