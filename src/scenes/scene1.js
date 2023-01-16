@@ -605,7 +605,7 @@ export default class Scene1 extends Phaser.Scene {
         if ( this.key0.isDown)
             //this.player.x >= this.worldWidth - 300)
             {
-            this.scene.start("scene3");
+            this.scene.start("scene2");
         }
     }
 }
