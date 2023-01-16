@@ -42,9 +42,8 @@ export default class Scene1 extends Phaser.Scene {
        
         this.key0 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ZERO);
         
-        this.background0 = this.add.tileSprite(0, 0, 1280, 2400, "parallax01");
-        this.background0.setOrigin(0, 0.70);
-        this.background0.setScrollFactor(0,0.4);
+        this.background0 = this.add.image(0,720, "parallax01");
+        this.background0.setOrigin(0,1);
 
         this.colonne = [];
 
@@ -81,9 +80,8 @@ export default class Scene1 extends Phaser.Scene {
         this.createStaticPlatforms();
         this.createMovingPlatforms();
 
-        this.background = this.add.tileSprite(0, 0, 1280, 2400, "parallax0");
-        this.background.setOrigin(0, 0.70);
-        this.background.setScrollFactor(0,0.4);
+        this.background = this.add.image(0, 720, "parallax0");
+        this.background.setOrigin(0, 1);
 
         //this.background = this.add.image(0, 0, "polis2");
         //this.background.setOrigin(0, 0.55).setAlpha(0);
@@ -94,7 +92,7 @@ export default class Scene1 extends Phaser.Scene {
         this.darker.setAlpha(0.4);*/
 
         this.background.setPipeline('Light2D').setAlpha(0.7);
-        this.playerLight = this.lights.addLight(270, 510, 850).setIntensity(2.8).setColor(0xffffff);
+        this.playerLight = this.lights.addLight(270, 510, 850).setIntensity(2.8);
         this.lights.enable();
         //this.lights.setAmbientColor(0x000000);
 
@@ -103,9 +101,6 @@ export default class Scene1 extends Phaser.Scene {
         this.cameras.main.startFollow(this.player);
         this.cameras.main.setFollowOffset(0, 300);
 
-
-        
-        
 
     }
 
