@@ -20,11 +20,11 @@ create(){
     this.background = this.add.image(0, 0, "gameover");
     this.background.setOrigin(0,0);
     
-    this.home = this.add.image(2*this.game.config/3 - 120, 510, "home");
+    this.home = this.add.image(2*this.game.config.width/3 - 120, 510, "home");
     this.home.setOrigin(0.5,0).setScale(0.2);
     this.home.setInteractive();
 
-    this.restartButton = this.add.image(this.game.config/3 + 120, 510, "restart");
+    this.restartButton = this.add.image(this.game.config.width/3 + 120, 510, "restart");
     this.restartButton.setOrigin(0.5,0).setScale(0.2);
     this.restartButton.setInteractive();
 
