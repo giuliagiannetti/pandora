@@ -11,7 +11,7 @@ export default class Porta extends Phaser.GameObjects.Sprite {
         scene.add.existing(this);
         this.portaX = x;
         this.portaY = y;
-        this.setScale(0.5);
+        this.setScale(0.4);
         scene.physics.add.existing(this);
         this.body.setImmovable(true);
 
@@ -22,7 +22,7 @@ export default class Porta extends Phaser.GameObjects.Sprite {
             this.body.setVelocityY(300);
 
         }
-        if (this.y >= (this.portaY + 200)) {
+        if (this.y >= (this.portaY + 251)) {
             this.body.setVelocityY(0);
         }
         

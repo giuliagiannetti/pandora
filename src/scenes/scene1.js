@@ -53,7 +53,7 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image("verticale", "assets/images/environment_elements/verticale.png"); //colonna verticale
 
         this.load.image("colonna", "assets/images/environment_elements/colonna.png");
-        this.load.image("porta", "assets/images/environment_elements/verticale.png"); //porta
+        this.load.image("porta", "assets/images/environment_elements/casa/parete.png"); //porta
         this.load.image("blocco", "assets/images/environment_elements/blocco.png");//blocco architrave
 
         this.load.image("colonnaSpezzata", "assets/images/environment_elements/casa/colonna1.png");
@@ -145,7 +145,7 @@ export default class Scene1 extends Phaser.Scene {
 
 
         // Player
-        const thePlayer = new Player(this, 640, 400, this.worldWidth - 100, -400);
+        const thePlayer = new Player(this, 4100, 400, this.worldWidth - 100, -400);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
         this.playerHearts = this.game.gameState.lives;
@@ -379,7 +379,7 @@ export default class Scene1 extends Phaser.Scene {
 
         this.porta = [];
 
-        this.porta.push(new Porta(this, 5230, -750));
+        this.porta.push(new Porta(this, 5280, -750));
 
         this.portaGroup = this.physics.add.group(this.porta);
         this.portaGroup.children.iterate(function (porta) {
@@ -467,9 +467,11 @@ export default class Scene1 extends Phaser.Scene {
         if (followedPlayer.body.x >= 5100 && followedPlayer.body.x <= 6100 && followedPlayer.body.y > -600 && followedPlayer.body.y < 220) {
             if (playerX > enemyX) {
                 playerEnemy.body.setVelocityX(15);
+                playerEnemy.flipX = true;
             }
             if (playerX < enemyX) {
                 playerEnemy.body.setVelocityX(-15);
+                playerEnemy.flipX = false;
             }
             if (playerY > enemyY) {
                 playerEnemy.body.setVelocityY(19);
