@@ -39,6 +39,8 @@ export default class Scene2 extends Phaser.Scene {
         this.load.image("piedistallo", "assets/images/environment_elements/piedistallo.png");
         this.load.image("piedistalloCheck", "assets/images/environment_elements/piedistalloCheck.png");
 
+        this.load.image("colonna", "assets/images/environment_elements/colonna.png");//colonna separatoria
+
         this.load.image("tempio", "assets/images/environment_elements/tempio.png");
         this.load.image("scalino", "assets/images/environment_elements/scalino.png");
         this.load.image("basamento", "assets/images/environment_elements/basamento.png");
@@ -117,18 +119,25 @@ export default class Scene2 extends Phaser.Scene {
         this.cassa2.setScale(0.28);
         this.cassa3 = this.add.image(2680, -560, "cassa");
         this.cassa3.setScale(0.19);
-        this.cassa4 = this.add.image(2800, -50, "cassa");
-        this.cassa4.setScale(0.28);
+        this.cassa4 = this.add.image(3100, -290, "cassa");
+        this.cassa4.setScale(0.19);
+        this.cassa5 = this.add.image(2800, -90, "cassa");
+        this.cassa5.setScale(0.19);
+        this.cassa6 = this.add.image(2890, 120, "cassa");
+        this.cassa6.setScale(0.19);
+        this.cassa7 = this.add.image(2420, 400, "cassa");
+        this.cassa7.setAngle(240).setScale(0.28);
+        /*this.cassa8 = this.add.image(2410, 120, "cassa");
+        this.cassa8.setAngle(90).setScale(0.19);**/
 
 
 
         // Player
-        //const thePlayer = new Player(this, 100, this.floorHeight, this.worldWidth, -400);
-        const thePlayer = new Player(this, 3200, -800, this.worldWidth, -400);
+        const thePlayer = new Player(this, 100, this.floorHeight, this.worldWidth, -400);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
         this.playerHearts = this.game.gameState.lives;
-       // this.player.jumpSpeed = -600;
+        //this.player.jumpSpeed = -600;
 
         // Camera
         this.cameras.main.startFollow(this.player);
@@ -163,6 +172,18 @@ export default class Scene2 extends Phaser.Scene {
             let mela4 = this.add.image(2500 + 150 * i, -900 + 90 * i, "mela2");
             mela4.setOrigin(0, 1).setScale(0.1);
             this.mele.push(mela4);
+
+            let mela5 = this.add.image(2750 + 150 * i, -230 + 210 * i, "mela");
+            mela5.setOrigin(0, 1).setScale(0.1);
+            this.mele.push(mela5);
+
+            let mela6 = this.add.image(2820 + 120 * i, -200 - 150 * i, "mela");
+            mela6.setOrigin(0, 1).setScale(0.1);
+            this.mele.push(mela6);
+
+            let mela7 = this.add.image(3200 - 100 * i, 10 - 90 * i, "mela");
+            mela7.setOrigin(0, 1).setScale(0.1);
+            this.mele.push(mela7);
 
         }
 
@@ -242,27 +263,34 @@ export default class Scene2 extends Phaser.Scene {
         let cassa4 = this.add.rectangle(3100, -290, 130, 30, 0x00000, 0);
         let cassa5 = this.add.rectangle(2800, -90, 130, 30, 0x00000, 0);
         let cassa6 = this.add.rectangle(2890, 120, 130, 30, 0x00000, 0);
+        //cassa ribaltata
+        let cassa7 = this.add.rectangle(2390, 345, 60, 60, 0x00000, 0);
+        let cassa7Bis = this.add.rectangle(2440, 440, 50, 115, 0x00000, 0);
+
         let carretto = this.add.rectangle(1000, 500, 300, 50, 0x00000, 0);
         let carretto1 = this.add.rectangle(3430, -490, 300, 50, 0x00000, 0);
-        this.casse = [cassa1, cassa2, cassa3, cassa4, cassa5, cassa6, carretto, carretto1];
+        //carretto ribaltato
+        let carretto2 = this.add.rectangle(2290, -10, 50, 300, 0x00000, 0);
+        let carretto2Bis = this.add.rectangle(2275, 235, 10, 190, 0x00000, 0);
 
+        this.casse = [cassa1, cassa2, cassa3, cassa4, cassa5, cassa6, cassa7, cassa7Bis, carretto, carretto1, carretto2, carretto2Bis ];
         this.cassaGroup = this.physics.add.staticGroup(this.casse);
 
         //cart
         this.cart = this.add.image(850, this.floorHeight + 2, "cart");
         this.cart.setOrigin(0, 1).setScale(0.5);
 
-        this.cart1 = this.add.image(3300, -430, "cart");
+        this.cart1 = this.add.image(3250, -430, "cart");
         this.cart1.flipY = true
         this.cart1.setOrigin(0, 1).setScale(0.5);
 
+        //carretto ribaltato
+        this.cart2 = this.add.image(2200, -170, "cart");
+        this.cart2.setOrigin(0, 1).setAngle(90).setScale(0.5);
+
 
         this.platforms.create(1800, -75, 'scalino3').setScale(1).setOrigin(0, 0).refreshBody(); //piattaforma sandali
-        //this.platforms.create(3230, -500, 'scalino3').setScale(1.2).setOrigin(0, 0).refreshBody(); //piattaforma chiave
         this.platforms.create(3200, -730, 'scalino3').setScale(1.2).setOrigin(0, 0).refreshBody(); //piattaforma chiave
-        //this.platforms.create(3100, -200, 'platform1').setScale(0.5).refreshBody(); //prima degli scalini --> vaso?
-        //this.platforms.create(3700, 40, 'platform1').setScale(0.5).refreshBody(); //prima degli scalini --> vaso?
-
 
         let tempioPav = this.add.rectangle(4950, 290 - 230, 1000, 100, 0x000000, 0);
         tempioPav.setOrigin(0, 1);
@@ -469,7 +497,7 @@ export default class Scene2 extends Phaser.Scene {
 
 
 
-   /* hitEnemy() {
+    hitEnemy() {
         this.playerHearts -= 1;
         this.currentHeart = this.hearts[this.playerHearts];
         var heartFade = this.tweens.add({
@@ -511,7 +539,32 @@ export default class Scene2 extends Phaser.Scene {
             this.player.body.y = this.chiave.y - 150;
         }
 
-    }**/
+    }
+
+    hitEnemyTempio2() {
+        this.playerHearts -= 1;
+        this.currentHeart = this.hearts[this.playerHearts];
+        var heartFade = this.tweens.add({
+            targets: this.currentHeart,
+            alpha: 0,
+            scaleX: 0,
+            scaleY: 0,
+            ease: 'Linear',
+            duration: 200
+        });
+
+
+        if (this.playerHearts <= 0) {
+            this.scene.start("gameover2");
+        } else {
+            this.player.body.x = this.chiave.x + 10;
+            this.player.body.y = this.chiave.y - 150;
+        }
+
+    }
+
+
+
 
     followPlayer() {
         let followedPlayer = this.player;
@@ -520,17 +573,17 @@ export default class Scene2 extends Phaser.Scene {
         let enemyY = this.enemyTempio.body.y + this.enemyTempio.displayHeight / 2;
         let playerY = this.player.body.y + this.player.displayHeight / 2;
         let playerX = this.player.body.x + this.player.displayWidth / 2;
-        if (followedPlayer.body.x >= 4400 && followedPlayer.body.x <= 6500 && followedPlayer.body.y > -600 && followedPlayer.body.y < 300) {
-            if (playerX > enemyX) {
-                enemyTempio.body.setVelocityX(220);
+        if (followedPlayer.body.x >= 3530 && followedPlayer.body.x <= 4900 && followedPlayer.body.y > -900 && followedPlayer.body.y < -100) {
+            if (playerX >= enemyX) {
+                enemyTempio.body.setVelocityX(260);
                 enemyTempio.flipX = true;
             }
             if (playerX < enemyX) {
-                enemyTempio.body.setVelocityX(-220);
-                enemyTempio.flipX = false;
+                enemyTempio.body.setVelocityX(-260);
+                enemyTempio.flipX = true;
             }
-            if (playerY > enemyY) {
-                enemyTempio.body.setVelocityY(180);
+            if (playerY >= enemyY) {
+                enemyTempio.body.setVelocityY(200);
             }
             if (playerY < enemyY) {
                 enemyTempio.body.setVelocityY(-180);
