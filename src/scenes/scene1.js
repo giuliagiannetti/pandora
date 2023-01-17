@@ -145,7 +145,7 @@ export default class Scene1 extends Phaser.Scene {
 
 
         // Player
-        const thePlayer = new Player(this, 680, 400, this.worldWidth - 100, -400);
+        const thePlayer = new Player(this, 7100, 0, this.worldWidth - 100, -400);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
         this.playerHearts = this.game.gameState.lives;
@@ -156,12 +156,19 @@ export default class Scene1 extends Phaser.Scene {
 
 
         //piattaforme
+        //this.createPorta();
+        this.porta = this.add.image(5280, -750, "porta").setScale(0.4);
+        this.physics.add.existing(this.porta, false);
+        this.porta.body.allowGravity = false;
+        this.porta.body.setImmovable(true);
+        this.porta.body.setVelocityY(0);
+        this.physics.add.collider(this.porta, this.floor);
+        
         this.createMovingPlatforms();
         this.createJumpingPlatforms();
-        this.createPorta();
         this.createColonnato();
         this.createCasa();
-        
+
 
         this.cameras.main.startFollow(this.player, true);
         this.cameras.main.setLerp(0.15, 0.15);
@@ -195,7 +202,7 @@ export default class Scene1 extends Phaser.Scene {
         this.colonne = [];
 
         for (let i = 0; i < 3; i++) {
-            let colonna = this.add.image(1850 + 250 * i, 433, "colonna");
+            let colonna = this.add.image(1840 + 250 * i, 433, "colonna");
             colonna.setScale(0.3);
             this.colonne.push(colonna);
         }
@@ -269,25 +276,16 @@ export default class Scene1 extends Phaser.Scene {
         this.physics.add.existing(this.pavimento2, true);
 
 
-        this.pavimenti3 = [];
-
-        for (let i = 0; i < 2; i++) {
-            let pavimento3 = this.add.image(4900 + 1000 * i, -330 + 200 * i, "pavimento3");
-            pavimento3.setOrigin(0, 1);
-            this.pavimenti3.push(pavimento3);
-        }
-
-        this.pavimenti3Group = this.physics.add.staticGroup(this.pavimenti3);
-        this.physics.add.collider(this.pavimenti3Group, this.player, () => {
-            this.player.isJumping = false;
-        })
-
         this.scalino = this.platforms.create(4950, 213, 'scalino2').setOrigin(0, 1).setScale(0.7).refreshBody();//scalino
         this.platforms.create(5000, 179, 'scalino3').setOrigin(0, 1).setScale(0.7).refreshBody();//scalino
         this.platforms.create(5050, 145, 'scalino3').setOrigin(0, 1).setScale(0.7).refreshBody();//scalino
         this.platforms.create(5100, 111, 'scalino4').setOrigin(0, 1).setScale(0.7).refreshBody();//scalino
         this.platforms.create(5150, 75, 'scalino4').setOrigin(0, 1).setScale(0.7).refreshBody();//scalino
-        this.platforms.create(5600, -30, 'pavimento3').setScale(0.8).refreshBody();
+
+        this.platChiave = this.platforms.create(4880, -330, 'pavimento3').setOrigin(0, 1).refreshBody();
+        this.platforms.create(5880, -130, 'pavimento3').setOrigin(0, 1).refreshBody();
+
+        this.platforms.create(5690, -30, 'pavimento3').setScale(0.8).refreshBody();
         this.platforms.create(4700, -400, 'scalino3').setOrigin(0,1).refreshBody();//scalino dopo chiave
         this.platforms.create(4550, -450, 'scalino3').setOrigin(0,1).refreshBody();//scalino dopo chiave
         this.platforms.create(4300, -500, 'scalino2').setOrigin(0,1).refreshBody();//scalino dopo chiave
@@ -333,6 +331,12 @@ export default class Scene1 extends Phaser.Scene {
         this.physics.add.collider(this.pavimento2, this.player, () => {
             this.player.isJumping = false;
         });
+
+        this.physics.add.collider(this.platChiave, this.porta, ()=> {
+            this.porta.setPosition(5280, -495);
+            this.porta.body.setVelocityY(0);
+         });
+
     }
 
     createMovingPlatforms() {
@@ -371,11 +375,10 @@ export default class Scene1 extends Phaser.Scene {
         this.banco = this.add.image(4300, this.floorHeight + 5, "banco");
         this.banco.setOrigin(0, 1).setScale(0.3);
 
-
     }
 
 
-    createPorta() {
+    /*createPorta() {
 
         this.porta = [];
 
@@ -391,7 +394,7 @@ export default class Scene1 extends Phaser.Scene {
             this.player.isJumping = false;
         });
 
-    }
+    }*/
 
 
     createHUD() {
@@ -445,6 +448,7 @@ export default class Scene1 extends Phaser.Scene {
         this.pauseMenuBottons();
 
         this.checkpoint0();
+
 
         // Camera
         if (this.player.body.x < this.game.config.width / 2) {
@@ -530,7 +534,7 @@ export default class Scene1 extends Phaser.Scene {
         } else {
             this.player.body.x = this.chiave.x;
             this.player.body.y = this.chiave.y;
-            this.scene.resume(this.collectChiavi);
+            this.scene.resume();
         }
 
     }
@@ -564,16 +568,25 @@ export default class Scene1 extends Phaser.Scene {
         }
     }
 
+    portaMove() {
+        let portaUp = this.porta;
+        if (portaUp.body.y <= portaUp.y) {
+            portaUp.body.setVelocityY(300);
+        }
+        if (portaUp.body.y >= (this.porta.y + 255)) {
+            portaUp.body.setVelocityY(0);
+        }
+    }
 
     collectChiavi() {
         let x_diff = Math.abs(this.player.x - this.chiave.x);
         let y_diff = Math.abs(this.player.y - this.chiave.y); 
         //let portaFermaY = this.portaGroup.y;
         let icon = this.chiaveIcon1;
-        if (x_diff < 75 && y_diff < 100) {
+        if (x_diff < 110 && y_diff < 110) {
             this.chiave.destroy();
             this.chiaveContorno.destroy();
-            this.portaGroup.children.iterate(function (porta) { porta.movePorta(); });
+            //this.portaGroup.children.iterate(function (porta) { porta.movePorta(); });
             icon.setAlpha(1);
             this.playerEnemy.animateEnemyHouse();
             this.tweens.add({
@@ -582,6 +595,7 @@ export default class Scene1 extends Phaser.Scene {
                 ease: 'Linear',
                 duration: 250
             });
+            this.portaMove();
         }
     }
 

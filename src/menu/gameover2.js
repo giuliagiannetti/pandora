@@ -21,11 +21,11 @@ create(){
     this.background.setOrigin(0,0);
     
     this.home = this.add.image(2*this.game.config.width/3 - 120, 510, "home");
-    this.home.setOrigin(0.5,0).setScale(0.2);
+    this.home.setOrigin(0.5,0).setScale(0.18);
     this.home.setInteractive();
 
     this.restartButton = this.add.image(this.game.config.width/3 + 120, 510, "restart");
-    this.restartButton.setOrigin(0.5,0).setScale(0.2);
+    this.restartButton.setOrigin(0.5,0).setScale(0.18);
     this.restartButton.setInteractive();
 
     this.home.on("pointerdown", ()=> {
