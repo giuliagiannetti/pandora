@@ -84,13 +84,16 @@ export default class Scene2 extends Phaser.Scene {
         this.cassa1.setScale(0.19);
         this.cassa2 = this.add.image(1400, 70, "cassa");
         this.cassa2.setScale(0.28);
-        this.cassa3 = this.add.image(2680, -560,  "cassa");
+        this.cassa3 = this.add.image(2680, -560, "cassa");
         this.cassa3.setScale(0.19);
+        this.cassa3 = this.add.image(3600, -270, "cassa");
+        this.cassa3.setScale(0.28);
+
 
 
         // Player
-        const thePlayer = new Player(this, 100, this.floorHeight, this.worldWidth, -400);
-        //const thePlayer = new Player(this, 3200, -800, this.worldWidth, -400);
+         //const thePlayer = new Player(this, 100, this.floorHeight, this.worldWidth, -400);
+        const thePlayer = new Player(this, 3200, -800, this.worldWidth, -400);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
         this.playerHearts = this.game.gameState.lives;
@@ -154,14 +157,14 @@ export default class Scene2 extends Phaser.Scene {
             mela2.setOrigin(0, 1).setScale(0.1);
             this.mele.push(mela2);
 
-            let mela3 = this.add.image(2650 + 90 * i, -600 - 130 *i, "mela");
+            let mela3 = this.add.image(2650 + 90 * i, -600 - 130 * i, "mela");
             mela3.setOrigin(0, 1).setScale(0.1);
             this.mele.push(mela3);
 
-            let mela4 = this.add.image(2500 + 150 * i, -900 + 90 *i, "mela2");
+            let mela4 = this.add.image(2500 + 150 * i, -900 + 90 * i, "mela2");
             mela4.setOrigin(0, 1).setScale(0.1);
             this.mele.push(mela4);
-        
+
         }
 
         //enemy
@@ -213,7 +216,7 @@ export default class Scene2 extends Phaser.Scene {
 
         this.physics.add.overlap(this.player, this.enemy, this.hitEnemy, null, this);
 
-        const EnemyTempio = new Enemy(this, 3850, 255);
+        const EnemyTempio = new Enemy(this, 4080, -300);
         this.enemyTempio = this.physics.add.existing(EnemyTempio);
         this.physics.add.collider(this.enemyTempio, this.floor);
         this.enemyTempio.body.allowGravity = false;
@@ -229,8 +232,9 @@ export default class Scene2 extends Phaser.Scene {
         let cassa1 = this.add.rectangle(950, 200, 130, 30, 0x00000, 0);
         let cassa2 = this.add.rectangle(1400, 70, 200, 30, 0x00000, 0);
         let cassa3 = this.add.rectangle(2680, -560, 130, 30, 0x00000, 0);
+        let cassa4 = this.add.rectangle(3600, -270, 200, 30, 0x00000, 0);
         let carretto = this.add.rectangle(1000, 500, 300, 50, 0x00000, 0);
-        this.casse = [cassa1, cassa2, cassa3, carretto];
+        this.casse = [cassa1, cassa2, cassa3, cassa4, carretto];
 
         this.cassaGroup = this.physics.add.staticGroup(this.casse);
 
@@ -241,7 +245,7 @@ export default class Scene2 extends Phaser.Scene {
 
         this.platforms.create(1800, -75, 'scalino3').setScale(1).setOrigin(0, 0).refreshBody(); //piattaforma sandali
         this.platforms.create(3230, -500, 'scalino3').setScale(1.2).setOrigin(0, 0).refreshBody(); //piattaforma chiave
-        this.platforms.create(3100, -200, 'platform1').setScale(0.5).refreshBody(); //prima degli scalini --> vaso?
+        //this.platforms.create(3100, -200, 'platform1').setScale(0.5).refreshBody(); //prima degli scalini --> vaso?
         this.platforms.create(3700, 40, 'platform1').setScale(0.5).refreshBody(); //prima degli scalini --> vaso?
 
 
@@ -360,7 +364,8 @@ export default class Scene2 extends Phaser.Scene {
         this.player.manageMovements();
 
         this.enemy.animateEnemy();
-        this.enemyTempio.animateEnemytempio();
+        this.enemyTempio.animateEnemy();
+        this.followPlayer();
 
         this.animateBackground();
 
@@ -376,7 +381,6 @@ export default class Scene2 extends Phaser.Scene {
 
         this.pauseMenuBottons();
 
-       // this.checkpoint0();
 
         if (this.player.body.x < this.game.config.width / 2) {
             this.cameras.main.followOffset.x = -this.game.config.width / 2 + this.player.body.x;
@@ -484,7 +488,7 @@ export default class Scene2 extends Phaser.Scene {
 
 
         if (this.playerHearts <= 0) {
-            this.scene.start("gameover");
+            this.scene.start("gameover2");
         } else {
             this.player.body.x = this.chiave.x + 10;
             this.player.body.y = this.chiave.y - 150;
@@ -492,18 +496,34 @@ export default class Scene2 extends Phaser.Scene {
 
     }
 
-   /* checkpoint0() {
-        let x_diff0 = Math.abs(this.player.x - this.piedistallo.x);
-        let y_diff0 = Math.abs(this.player.y - this.piedistallo.y);
-        if (x_diff0 < 75 && y_diff0 < 100) {
-            this.tweens.add({
-                targets: this.piedistalloCheck,
-                alpha: 1,
-                ease: 'Linear',
-                duration: 250
-            });
+    followPlayer() {
+        let followedPlayer = this.player;
+        let enemyTempio = this.enemyTempio;
+        let enemyX = this.enemyTempio.body.x + this.enemyTempio.displayWidth / 2;
+        let enemyY = this.enemyTempio.body.y + this.enemyTempio.displayHeight / 2;
+        let playerY = this.player.body.y + this.player.displayHeight / 2;
+        let playerX = this.player.body.x + this.player.displayWidth / 2;
+        if (followedPlayer.body.x >= 3200 && followedPlayer.body.x <= 5500 && followedPlayer.body.y > -600 && followedPlayer.body.y < 300) {
+            if (playerX > enemyX) {
+                enemyTempio.body.setVelocityX(180);
+                enemyTempio.flipX = true;
+            }
+            if (playerX < enemyX) {
+                enemyTempio.body.setVelocityX(-180);
+                enemyTempio.flipX = false;
+            }
+            if (playerY > enemyY) {
+                enemyTempio.body.setVelocityY(180);
+            }
+            if (playerY < enemyY) {
+                enemyTempio.body.setVelocityY(-180);
+            }
+        } else {
+            enemyTempio.animateEnemy();
+           // enemyTempio.returnToInitialY();
         }
-    }**/
+
+    }
 
     checkSceneEnd() {
         if (this.player.x >= (this.worldWidth - this.player.body.width)) {
