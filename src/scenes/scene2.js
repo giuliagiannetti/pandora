@@ -270,8 +270,8 @@ export default class Scene2 extends Phaser.Scene {
         let carretto = this.add.rectangle(1000, 500, 300, 50, 0x00000, 0);
         let carretto1 = this.add.rectangle(3430, -490, 300, 50, 0x00000, 0);
         //carretto ribaltato
-        let carretto2 = this.add.rectangle(2290, -10, 50, 300, 0x00000, 0);
-        let carretto2Bis = this.add.rectangle(2275, 235, 10, 190, 0x00000, 0);
+        let carretto2 = this.add.rectangle(2300, -10, 50, 300, 0x00000, 0);
+        let carretto2Bis = this.add.rectangle(2285, 235, 20, 190, 0x00000, 0);
 
         this.casse = [cassa1, cassa2, cassa3, cassa4, cassa5, cassa6, cassa7, cassa7Bis, carretto, carretto1, carretto2, carretto2Bis ];
         this.cassaGroup = this.physics.add.staticGroup(this.casse);
@@ -285,7 +285,7 @@ export default class Scene2 extends Phaser.Scene {
         this.cart1.setOrigin(0, 1).setScale(0.5);
 
         //carretto ribaltato
-        this.cart2 = this.add.image(2200, -170, "cart");
+        this.cart2 = this.add.image(2210, -170, "cart");
         this.cart2.setOrigin(0, 1).setAngle(90).setScale(0.5);
 
 
