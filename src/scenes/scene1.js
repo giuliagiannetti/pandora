@@ -146,6 +146,7 @@ export default class Scene1 extends Phaser.Scene {
 
         // Player
         const thePlayer = new Player(this, 680, 400, this.worldWidth - 100, -400);
+        //const thePlayer = new Player(this, 3800, 400, this.worldWidth - 100, -400);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
         this.playerHearts = this.game.gameState.lives;
