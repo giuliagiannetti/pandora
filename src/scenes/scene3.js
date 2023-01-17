@@ -1,5 +1,7 @@
 import Player from "../components/player.js"
 import movingPlatform from "../components/movingPlatform.js"
+import Hope from "../components/hope.js";
+import Enemy from "../components/enemy.js";
 
 export default class Scene1 extends Phaser.Scene {
 
@@ -16,6 +18,7 @@ export default class Scene1 extends Phaser.Scene {
         console.log("scene3 - Executing init()");
         this.floorHeight = this.game.config.height - 100;
         this.worldWidth = 3200;
+        this.collectedChiavi = false;
     }
 
     preload() {
@@ -34,7 +37,11 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image("fuoco", "assets/images/environment_elements/fuoco.png");
         this.load.image("statua", "assets/images/environment_elements/statua.png");
 
-        this.load.image("mask", "assets/images/environment_elements/mask1.png")
+        this.load.image("mask", "assets/images/environment_elements/mask1.png");
+
+        this.load.image("cancello", "assets/images/environment_elements/cancello/cancello.png")
+        this.load.image("portale", "assets/images/environment_elements/cancello/portale.png")
+        this.load.image("speranza", "assets/images/environment_elements/cancello/speranza.png")
 
     }
 
@@ -67,15 +74,33 @@ export default class Scene1 extends Phaser.Scene {
         this.fuoco = this.add.image(230, this.floorHeight, "fuoco");
         this.fuoco.setOrigin(0,1).setScale(0.3);
         this.physics.add.existing(this.fuoco, true);
+
+
+        this.portale = this.add.image (3000 -80, -55, "portale").setOrigin(0,1).setScale(0.162, 0.2);
+        this.portale1 = this.add.image (3140 -80, -55, "portale").setOrigin(0,1).setScale(0.162, 0.2);
+        this.portale1.flipX = true;
+
+        this.createCancello();
+
+
+        this.chiave = this.add.image(570, -470, "chiave").setScale(0.2);
+
+        this.piedistallo = this.add.image(500, -300, "piedistallo");
+        this.piedistallo.setOrigin(0, 1).setScale(0.19);
+        this.piedistalloCheck = this.add.image(500, -300, "piedistalloCheck");
+        this.piedistalloCheck.setOrigin(0, 1).setScale(0.19).setAlpha(0);
+
        
         // Player
-        const thePlayer = new Player(this, 100, this.floorHeight, this.worldWidth, -400);
+        const thePlayer = new Player(this, 2800, -150, this.worldWidth, -400);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
+        this.playerHearts = this.game.gameState.lives;
+
 
 
         // Nemico
-
+        this.createEnemy();
 
         // Inserisci delle piattaforme statiche
         this.createStaticPlatforms();
@@ -97,15 +122,110 @@ export default class Scene1 extends Phaser.Scene {
             add: true,
         });
 
+        const TheHopeGlow = new Hope(this, 3050 -50, -55);
+        this.hopeGlow = this.physics.add.existing(TheHopeGlow);
+        this.hopeGlow.setAlpha(0.75).setBlendMode(Phaser.BlendModes.ADD);
+        this.hopeGlow.body.allowGravity = false;
+        
+
+        this.tweens.add({
+            targets: this.hopeGlow,
+            alpha: 0,
+            duration: 1500,
+            ease: 'Sine.easeInOut',
+            loop: -1,
+            yoyo: true
+        });
+
+        this.chiaveContorno = this.add.image(570, -470, "chiaveContorno").setScale(0.21).setAlpha(0.75).setBlendMode(Phaser.BlendModes.ADD);
+
+        this.tweens.add({
+            targets: this.chiaveContorno,
+            alpha: 0,
+            duration: 1500,
+            ease: 'Sine.easeInOut',
+            loop: -1,
+            yoyo: true
+        });
 
         // Camera
         this.cameras.main.startFollow(this.player);
         this.cameras.main.setFollowOffset(0, 300);
 
+        //HUD
+        this.createHUD();
+
+    }
+
+    createEnemy() {
+        const theEnemy = new Enemy(this, 580, -50);
+        this.enemy = this.physics.add.existing(theEnemy);
+        this.physics.add.collider(this.enemy, this.floor);
+        this.enemy.body.allowGravity = false;
+
+        this.overlapEnemy = this.physics.add.overlap(this.player, this.enemy, this.hitEnemy, null, this);
+
+        const theEnemy1 = new Enemy(this, 1450, this.floorHeight)
+        this.enemy1 = this.physics.add.existing(theEnemy1);
+        this.physics.add.collider(this.enemy1, this.floor);
+        this.enemy1.body.allowGravity = false;
+
+        this.overlapEnemyPlayer = this.physics.add.overlap(this.player, this.enemy1, this.hitEnemyPlayer, null, this);
+    }
+
+    createHUD() {
+        this.skillShow = this.add.circle(600, 30, 40, 0x2f1710);
+        this.skillShow.setOrigin(0, 0);
+        this.skillShow.setScrollFactor(0, 0);
+
+
+        this.chiaveIcon1 = this.add.image(230, 30, "chiaveicona").setScale(0.7).setAlpha(0.3);
+        this.chiaveIcon1.setOrigin(0, 0);
+        this.chiaveIcon1.setScrollFactor(0, 0);
+
+
+        this.lifeSpan = this.add.rectangle(30, 30, 180, 70, 0x2f1710).setOrigin(0, 0).setScrollFactor(0, 0);
+
+
+        this.hearts = [];
+        for (let i = 0; i < 3; i++) {
+            let life = this.add.image(40 + 25.25 + 55 * i, 40 + 25.25, "life");
+            life.setScale(0.5);
+            life.setOrigin(0.5, 0.5);
+            life.setScrollFactor(0, 0);
+            this.hearts.push(life);
+        }
+
+
+        this.pauseButton = this.add.image(1240, 30, "vaso");
+        this.pauseButton.setOrigin(1, 0).setScale(0.25);
+        this.pauseButton.setScrollFactor(0, 0);
+        this.pauseButton.setInteractive();
 
     }
 
 
+    createCancello(){
+        const TheHope = new Hope(this, 3050 -50, -55);
+        this.hope = this.physics.add.existing(TheHope);
+        this.hope.body.allowGravity = false;
+
+
+        this.cancello = this.add.image(3000 -80, -55, "cancello").setScale(0.4).setOrigin(0,1);
+        this.physics.add.existing(this.cancello, false);
+        this.cancello.body.allowGravity = false;
+        this.cancello.body.setImmovable(true);
+        this.cancello.body.setVelocityY(0);
+
+        this.cancello1 = this.add.image(3232 -30, -55, "cancello").setScale(0.4).setOrigin(1,1);
+        this.cancello1.flipX = true;
+        this.physics.add.existing(this.cancello1, false);
+        this.cancello1.body.allowGravity = false;
+        this.cancello1.body.setImmovable(true);
+        this.cancello1.body.setVelocityY(0);
+
+
+    }
     
     createStaticPlatforms() {
         this.platforms = this.physics.add.staticGroup()
@@ -118,7 +238,24 @@ export default class Scene1 extends Phaser.Scene {
         this.platforms.create(1900, 260, 'scalino4').setOrigin(0,1).setScale(0.9).refreshBody();
         this.platforms.create(1000, -170, 'scalino3').refreshBody();
         this.platforms.create(570, -310, 'scalino3').refreshBody();
+
+        //ferma porta
+        this.fermaPorta = this.add.rectangle(2890 -50, -55, 10, 10, 0x000000, 0);
+        this.fermaPorta.setOrigin(0, 1);
+        this.physics.add.existing(this.fermaPorta, true);
+        this.physics.add.collider(this.fermaPorta, this.cancello, ()=> {
+            this.cancello.setPosition(2902 -50, -55);
+            this.cancello.body.stop();
+         });
         
+        this.fermaPorta1 = this.add.rectangle(3330 -60, -55, 10, 10, 0x000000, 0);
+        this.fermaPorta1.setOrigin(0, 1);
+        this.physics.add.existing(this.fermaPorta1, true);
+        this.physics.add.collider(this.fermaPorta1, this.cancello1, ()=> {
+            this.cancello1.setPosition(3268, -55);
+            this.cancello1.body.stop();
+          });
+         
 
         //statua
         let statuaGradino = this.add.rectangle(2501, this.floorHeight - 135, 400,270, 0x000000, 0);
@@ -173,6 +310,15 @@ export default class Scene1 extends Phaser.Scene {
 
         this.collectFuoco();
 
+        this.hope.animateHope();
+        this.hopeGlow.animateHope();
+
+        this.enemy.animateEnemy();
+        this.enemy1.animateEnemy();
+
+        this.collectChiavi(this.player, this.chiave);
+
+
          // Camera
          if (this.player.body.x < this.game.config.width/2 ) {
             this.cameras.main.followOffset.x = -700 + this.player.body.x;
@@ -181,6 +327,8 @@ export default class Scene1 extends Phaser.Scene {
         if (this.player.body.x > 2650 ) {
             this.cameras.main.followOffset.x = -2710 + this.player.body.x;
         } 
+
+        this.moveCancello();
     }
 
     collectFuoco() {
@@ -201,7 +349,6 @@ export default class Scene1 extends Phaser.Scene {
         }
     }
 
-
     animateBackground() {
         const startLineCamera = 400;
         const shiftCameraMax = 70;
@@ -211,6 +358,68 @@ export default class Scene1 extends Phaser.Scene {
         }
     }
 
+    collectChiavi() {
+        let x_diff = Math.abs(this.player.x - this.chiave.x);
+        let y_diff = Math.abs(this.player.y - this.chiave.y); 
+        //let portaFermaY = this.portaGroup.y;
+        let icon = this.chiaveIcon1;
+        if (x_diff < 110 && y_diff < 110) {
+            this.chiave.destroy();
+            this.chiaveContorno.destroy();
+            //this.portaGroup.children.iterate(function (porta) { porta.movePorta(); });
+            icon.setAlpha(1);
+            this.tweens.add({
+                targets: this.piedistalloCheck,
+                alpha: 1,
+                ease: 'Linear',
+                duration: 250
+            });
+            this.collectedChiavi = true;
+        }
+    }
+
+    hitEnemy() {
+        this.playerHearts -= 1;
+        this.currentHeart = this.hearts[this.playerHearts];
+        var heartFade = this.tweens.add({
+            targets: this.currentHeart,
+            alpha: 0,
+            scaleX: 0,
+            scaleY: 0,
+            ease: 'Linear',
+            duration: 200
+        });
+
+
+        if (this.playerHearts <= 0) {
+            this.scene.start("gameover2");
+        } else {
+            this.player.body.x = this.chiave.x;
+            this.player.body.y = this.chiave.y;
+            this.scene.resume();
+        }
+
+    }
+
+    moveCancello() {
+        let x_diff = Math.abs(this.player.x - this.hope.x);
+        let y_diff = Math.abs(this.player.y - this.hope.y); 
+        if (x_diff < 110 && y_diff < 110) {   
+            if(this.collectedChiavi){
+                let anta = this.cancello;
+                let anta1 = this.cancello1;
+                let antaX = this.cancello.body.x;
+                let anta1X = this.cancello1.body.x;
+                if (anta.body.x >= antaX) {
+                    anta.body.setVelocityX(-50);
+                }
+
+                if (anta1.body.x >= anta1X) {
+                    anta1.body.setVelocityX(50);
+                }
+            }
+        }
+    }
 
     checkSceneEnd() {
         if (this.key0.isDown) {
