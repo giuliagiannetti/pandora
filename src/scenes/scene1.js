@@ -571,12 +571,11 @@ export default class Scene1 extends Phaser.Scene {
 
     portaMove() {
         let portaUp = this.porta;
-        if (portaUp.body.y <= portaUp.y) {
+        let portaY = this.porta.body.y;
+        if (portaUp.body.y <= portaY) {
             portaUp.body.setVelocityY(300);
         }
-        if (portaUp.body.y >= (this.porta.y + 255)) {
-            portaUp.body.setVelocityY(0);
-        }
+        //if (portaUp.body.y >= (portaY + 255)) { portaUp.body.setVelocityY(0);}
     }
 
     collectChiavi() {
@@ -619,7 +618,7 @@ export default class Scene1 extends Phaser.Scene {
         if ( this.key0.isDown)
             //this.player.x >= this.worldWidth - 300)
             {
-            this.scene.start("scene2");
+            this.scene.start("scene3");
         }
     }
 }
