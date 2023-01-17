@@ -580,7 +580,7 @@ export default class Scene2 extends Phaser.Scene {
             }
             if (playerX < enemyX) {
                 enemyTempio.body.setVelocityX(-260);
-                enemyTempio.flipX = true;
+                enemyTempio.flipX = false;
             }
             if (playerY >= enemyY) {
                 enemyTempio.body.setVelocityY(200);

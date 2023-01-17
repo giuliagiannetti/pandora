@@ -145,7 +145,7 @@ export default class Scene1 extends Phaser.Scene {
 
 
         // Player
-        const thePlayer = new Player(this, 680, 400, this.worldWidth - 100, -400);
+        const thePlayer = new Player(this, 5800, -700, this.worldWidth - 100, -400);
         //const thePlayer = new Player(this, 3800, 400, this.worldWidth - 100, -400);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
@@ -301,7 +301,9 @@ export default class Scene1 extends Phaser.Scene {
         this.platforms.create(5150, -650, 'tettoPlat').setScale(0.95).setOrigin(0, 1).refreshBody(); //piattaforma tetto
         this.platTetto = this.platforms.create(5840, -650, 'tettoPlat').setScale(0.95).setOrigin(0, 1).refreshBody();
         this.platTetto.flipX = true;//piattaforma tetto
-        this.platforms.create(6250, -510, 'scalino4').setOrigin(0, 1).refreshBody(); //piattaforma tetto
+        this.platforms.create(6250, -600, 'scalino4').setOrigin(0, 1).refreshBody(); //piattaforma tetto
+
+        
         
         this.parete = this.platforms.create(6100, 210, 'colonnaCasa').setOrigin(0, 1).setScale(0.35).refreshBody();//parete
         this.parete = this.platforms.create(5980, -200, 'colonnaCasa').setOrigin(0, 1).setScale(0.35).refreshBody();//parete
@@ -312,8 +314,9 @@ export default class Scene1 extends Phaser.Scene {
         this.platforms.create(6400, -350, 'scalino3').setOrigin(0, 1).refreshBody(); //piattaforma tetto
         this.platforms.create(6700, -70, 'pavimento1').setOrigin(0,1).refreshBody();
         this.platforms.create(7700, -70, 'pavimento3').setOrigin(0,1).refreshBody();
-        this.platforms.create(7750, -140, 'colonnaSpezzata').setOrigin(0,1).setScale(0.235).refreshBody();
-        this.platforms.create(7600, -140, 'colonnaCasa').setOrigin(0,1).setScale(0.35).refreshBody();
+        this.platforms.create(6800, -200, 'scalino4').setOrigin(0,1).refreshBody();
+        this.platforms.create(7750, -138, 'colonnaSpezzata').setOrigin(0,1).setScale(0.235).refreshBody();
+        this.platforms.create(7600, -138, 'colonnaCasa').setOrigin(0,1).setScale(0.35).refreshBody();
         this.platforms.create(6600, -15, 'scalino3').setOrigin(0,1).setScale(1.1).refreshBody();//pavimento
         this.platforms.create(6290, 115, 'scalino4').setOrigin(0, 1).setScale(0.9).refreshBody(); //piattaforma tetto
         this.platforms.create(7000, 350, 'scalino1').setOrigin(0,1).refreshBody();
@@ -340,8 +343,10 @@ export default class Scene1 extends Phaser.Scene {
 
         this.movingPlatforms = [];
 
-        this.movingPlatforms.push(new movingPlatform(this, 3000, 220, "trave"));
+        this.movingPlatforms.push(new movingPlatform(this, 3000, 220));
         this.movingPlatforms.push(new movingPlatform(this, 5800, -290));
+        this.movingPlatforms.push(new movingPlatform(this, 7000, -510));
+
 
         this.movingPlatformGroup = this.physics.add.group(this.movingPlatforms);
         this.movingPlatformGroup.children.iterate(function (platform) {
@@ -613,7 +618,7 @@ export default class Scene1 extends Phaser.Scene {
         if ( this.key0.isDown)
             //this.player.x >= this.worldWidth - 300)
             {
-            this.scene.start("scene3");
+            this.scene.start("scene2");
         }
     }
 }
