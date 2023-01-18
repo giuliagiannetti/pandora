@@ -156,6 +156,7 @@ export default class Scene1 extends Phaser.Scene {
         // Camera
         this.cameras.main.startFollow(this.player);
         this.cameras.main.setFollowOffset(0, 300);
+        this.cameras.main.setLerp(0.1, 0.1);
 
         //HUD
         this.createHUD();
