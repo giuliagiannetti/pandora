@@ -6,8 +6,9 @@ import Scene2 from "./scenes/scene2.js";
 import Scene3 from "./scenes/scene3.js";
 import storie from "./scenes/storie.js";
 import PauseMenu from "./menu/pause_menu.js";
-import GameOver1 from "./menu/gameover1.js";
-import GameOver2 from "./menu/gameover2.js";
+import GameOver1 from "./finali/gameover1.js";
+import GameOver2 from "./finali/gameover2.js";
+import GameOver3 from "./finali/gameover3.js";
 
 
 const config = {
@@ -15,7 +16,7 @@ const config = {
     width: 1280,
     height: 720,
     backgroundColor: 0x000000, 
-    scene: [ WelcomeScene, Scene1, Scene2, Scene3, StoryScene, CreditsScene, storie, PauseMenu, GameOver1, GameOver2 ],
+    scene: [ WelcomeScene, Scene1, Scene2, Scene3, StoryScene, CreditsScene, storie, PauseMenu, GameOver1, GameOver2, GameOver3],
     pixelArt: false,
     parent: "game_area", 
     physics: {
@@ -24,7 +25,7 @@ const config = {
             gravity: {
                  y: 500,  
                  },
-            debug: false
+            debug: true
         }
     }
 };

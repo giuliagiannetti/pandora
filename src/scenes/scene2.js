@@ -17,6 +17,7 @@ export default class Scene2 extends Phaser.Scene {
         console.log("scene2 - Executing init()");
         this.floorHeight = this.game.config.height - 100;
         this.worldWidth = 5200;
+        this.collectedChiavi = false;
     }
 
     preload() {
@@ -133,7 +134,7 @@ export default class Scene2 extends Phaser.Scene {
 
 
         // Player
-        const thePlayer = new Player(this, 100, this.floorHeight, this.worldWidth, -400);
+        const thePlayer = new Player(this, 2000, this.floorHeight, this.worldWidth, -400);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
         this.playerHearts = this.game.gameState.lives;
@@ -264,8 +265,8 @@ export default class Scene2 extends Phaser.Scene {
         let cassa5 = this.add.rectangle(2800, -90, 130, 30, 0x00000, 0);
         let cassa6 = this.add.rectangle(2890, 120, 130, 30, 0x00000, 0);
         //cassa ribaltata
-        let cassa7 = this.add.rectangle(2390, 345, 60, 60, 0x00000, 0);
-        let cassa7Bis = this.add.rectangle(2440, 440, 50, 115, 0x00000, 0);
+        let cassa7 = this.add.rectangle(2390, 350, 60, 60, 0x00000, 0);
+        let cassa7Bis = this.add.rectangle(2440, 450, 50, 115, 0x00000, 0);
 
         let carretto = this.add.rectangle(1000, 500, 300, 50, 0x00000, 0);
         let carretto1 = this.add.rectangle(3430, -490, 300, 50, 0x00000, 0);
@@ -273,7 +274,7 @@ export default class Scene2 extends Phaser.Scene {
         let carretto2 = this.add.rectangle(2300, -10, 50, 300, 0x00000, 0);
         let carretto2Bis = this.add.rectangle(2285, 235, 20, 190, 0x00000, 0);
 
-        this.casse = [cassa1, cassa2, cassa3, cassa4, cassa5, cassa6, cassa7, cassa7Bis, carretto, carretto1, carretto2, carretto2Bis ];
+        this.casse = [cassa1, cassa2, cassa3, cassa4, cassa5, cassa6, cassa7, cassa7Bis, carretto, carretto1, /*carretto2, carretto2Bis*/ ];
         this.cassaGroup = this.physics.add.staticGroup(this.casse);
 
         //cart
@@ -285,10 +286,11 @@ export default class Scene2 extends Phaser.Scene {
         this.cart1.setOrigin(0, 1).setScale(0.5);
 
         //carretto ribaltato
-        this.cart2 = this.add.image(2210, -170, "cart");
-        this.cart2.setOrigin(0, 1).setAngle(90).setScale(0.5);
-
-
+        //this.cart2 = this.add.image(2210, -170, "cart");
+        //this.cart2.setOrigin(0, 1).setAngle(90).setScale(0.5);
+        
+        this.platforms.create(2300, -10, 'colonnaSpezzata').setAngle(10).setScale(0.3).setOrigin(0,1).refreshBody();
+        this.platforms.create(2250, 230, 'colonnaAppuntita').setAngle(-10).setScale(0.5).setOrigin(0,1).refreshBody();
         this.platforms.create(1800, -75, 'scalino3').setScale(1).setOrigin(0, 0).refreshBody(); //piattaforma sandali
         this.platforms.create(3200, -730, 'scalino3').setScale(1.2).setOrigin(0, 0).refreshBody(); //piattaforma chiave
 
@@ -451,8 +453,6 @@ export default class Scene2 extends Phaser.Scene {
         this.background2.tilePositionY = this.cameras.main.scrollY * 0.15;
         this.background3.tilePositionX = this.cameras.main.scrollX * 0.30;
         this.background3.tilePositionY = this.cameras.main.scrollY * 0.30;
-        //this.background4.tilePositionX = this.cameras.main.scrollX * 0.50;
-        //this.background4.tilePositionY = this.cameras.main.scrollY * 0.50;
 
         const startLineCamera = 400;
         const shiftCameraMax = 150;
@@ -492,6 +492,7 @@ export default class Scene2 extends Phaser.Scene {
                 ease: 'Linear',
                 duration: 250
             });
+            this.collectedChiavi = true;
         }
     }
 
@@ -513,8 +514,13 @@ export default class Scene2 extends Phaser.Scene {
         if (this.playerHearts <= 0) {
             this.scene.start("gameover2");
         } else {
-            this.player.body.x = this.sandalo.x - 10;
-            this.player.body.y = this.sandalo.y - 100;
+            if (this.collectedChiavi){
+                this.player.body.x = this.chiave.x + 10;
+                this.player.body.y = this.chiave.y - 150;
+            } else {
+                this.player.body.x = this.sandalo.x - 10;
+                this.player.body.y = this.sandalo.y - 100;
+            } 
         }
 
     }
@@ -596,7 +602,7 @@ export default class Scene2 extends Phaser.Scene {
     }
 
     checkSceneEnd() {
-        if (this.player.x >= (this.worldWidth - this.player.body.width)) {
+        if (this.player.x >= (this.worldWidth - this.player.body.width) && this.collectedChiavi) {
             this.scene.start("scene3");
 
         }
