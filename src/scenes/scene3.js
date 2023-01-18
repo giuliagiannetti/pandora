@@ -90,9 +90,14 @@ export default class Scene1 extends Phaser.Scene {
         this.piedistalloCheck = this.add.image(500, -300, "piedistalloCheck");
         this.piedistalloCheck.setOrigin(0, 1).setScale(0.19).setAlpha(0);
 
+        this.piedistallo0 = this.add.image(535, 530, "piedistallo");
+        this.piedistallo0.setOrigin(0, 1).setScale(0.19);
+        this.piedistalloCheck0 = this.add.image(535, 530, "piedistalloCheck");
+        this.piedistalloCheck0.setOrigin(0, 1).setScale(0.19).setAlpha(0);
+
        
         // Player
-        const thePlayer = new Player(this, 2800, -150, this.worldWidth, -400);
+        const thePlayer = new Player(this, 100, this.floorHeight, this.worldWidth, -400);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
         this.playerHearts = this.game.gameState.lives;
@@ -170,8 +175,9 @@ export default class Scene1 extends Phaser.Scene {
         this.physics.add.collider(this.enemy1, this.floor);
         this.enemy1.body.allowGravity = false;
 
-        this.overlapEnemyPlayer = this.physics.add.overlap(this.player, this.enemy1, this.hitEnemyPlayer, null, this);
+        this.overlapEnemyPlayer = this.physics.add.overlap(this.player, this.enemy1, this.hitEnemy1, null, this);
     }
+
 
     createHUD() {
         this.skillShow = this.add.circle(600, 30, 40, 0x2f1710);
@@ -318,6 +324,7 @@ export default class Scene1 extends Phaser.Scene {
 
         this.collectChiavi(this.player, this.chiave);
 
+        this.checkpoint0();
 
          // Camera
          if (this.player.body.x < this.game.config.width/2 ) {
@@ -392,10 +399,33 @@ export default class Scene1 extends Phaser.Scene {
 
 
         if (this.playerHearts <= 0) {
-            this.scene.start("gameover2");
+            this.scene.start("gameover3");
         } else {
-            this.player.body.x = this.chiave.x;
-            this.player.body.y = this.chiave.y;
+            this.player.x = this.chiave.x;
+            this.player.y = this.chiave.y -10;
+            this.scene.resume();
+        }
+
+    }
+
+    hitEnemy1() {
+        this.playerHearts -= 1;
+        this.currentHeart = this.hearts[this.playerHearts];
+        var heartFade = this.tweens.add({
+            targets: this.currentHeart,
+            alpha: 0,
+            scaleX: 0,
+            scaleY: 0,
+            ease: 'Linear',
+            duration: 200
+        });
+
+
+        if (this.playerHearts <= 0) {
+            this.scene.start("gameover3");
+        } else {
+            this.player.x = this.piedistalloCheck0.x;
+            this.player.y = this.piedistalloCheck0.y -100;
             this.scene.resume();
         }
 
@@ -418,6 +448,20 @@ export default class Scene1 extends Phaser.Scene {
                     anta1.body.setVelocityX(50);
                 }
             }
+        }
+    }
+
+    checkpoint0() {
+        let x_diff0 = Math.abs(this.player.x - this.piedistallo0.x);
+        let y_diff0 = Math.abs(this.player.y - this.piedistallo0.y); 
+        //let portaFermaY = this.portaGroup.y;
+        if (x_diff0 < 75 && y_diff0 < 100) {
+            this.tweens.add({
+                targets: this.piedistalloCheck0,
+                alpha: 1,
+                ease: 'Linear',
+                duration: 250
+            });
         }
     }
 

@@ -17,6 +17,7 @@ export default class Scene2 extends Phaser.Scene {
         console.log("scene2 - Executing init()");
         this.floorHeight = this.game.config.height - 100;
         this.worldWidth = 5200;
+        this.collectedChiavi = false;
     }
 
     preload() {
@@ -451,8 +452,6 @@ export default class Scene2 extends Phaser.Scene {
         this.background2.tilePositionY = this.cameras.main.scrollY * 0.15;
         this.background3.tilePositionX = this.cameras.main.scrollX * 0.30;
         this.background3.tilePositionY = this.cameras.main.scrollY * 0.30;
-        //this.background4.tilePositionX = this.cameras.main.scrollX * 0.50;
-        //this.background4.tilePositionY = this.cameras.main.scrollY * 0.50;
 
         const startLineCamera = 400;
         const shiftCameraMax = 150;
@@ -492,6 +491,7 @@ export default class Scene2 extends Phaser.Scene {
                 ease: 'Linear',
                 duration: 250
             });
+            this.collectedChiavi = true;
         }
     }
 
@@ -596,7 +596,7 @@ export default class Scene2 extends Phaser.Scene {
     }
 
     checkSceneEnd() {
-        if (this.player.x >= (this.worldWidth - this.player.body.width)) {
+        if (this.player.x >= (this.worldWidth - this.player.body.width) && this.collectedChiavi) {
             this.scene.start("scene3");
 
         }
