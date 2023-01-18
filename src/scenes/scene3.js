@@ -423,10 +423,16 @@ export default class Scene1 extends Phaser.Scene {
 
         if (this.playerHearts <= 0) {
             this.scene.start("gameover3");
+        } else { if (this.collectedChiavi) {
+            this.player.x = this.chiave.x;
+            this.player.y = this.chiave.y -10;
+            this.scene.resume();
         } else {
             this.player.x = this.piedistalloCheck0.x;
             this.player.y = this.piedistalloCheck0.y -100;
             this.scene.resume();
+        }
+            
         }
 
     }
