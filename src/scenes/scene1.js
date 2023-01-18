@@ -145,7 +145,7 @@ export default class Scene1 extends Phaser.Scene {
 
 
         // Player
-        const thePlayer = new Player(this, 7000, -100, this.worldWidth - 100, -400);
+        const thePlayer = new Player(this, 640, 450, this.worldWidth - 100, -400);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
         this.playerHearts = this.game.gameState.lives;
@@ -623,7 +623,7 @@ export default class Scene1 extends Phaser.Scene {
             //this.player.x >= (this.worldWidth - 300) && this.collectedChiavi
             )
             {
-            this.scene.start("scene3");
+            this.scene.start("scene2");
         }
     }
 }
