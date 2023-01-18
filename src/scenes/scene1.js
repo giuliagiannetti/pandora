@@ -42,10 +42,11 @@ export default class Scene1 extends Phaser.Scene {
 
         //immagini di sfondo
         //this.load.image("sfondo", "assets/images/background/rosso.png");
-        this.load.image("parallax1", "assets/images/background/parallax1.png");
-        this.load.image("parallax2", "assets/images/background/parallax2.png");
-        this.load.image("parallax3", "assets/images/background/parallax3.png");
-        this.load.image("parallax4", "assets/images/background/parallax4.png");
+        this.load.image("sfondo", "assets/images/background/sfondoconsole2.png")
+        this.load.image("parallax1", "assets/images/background/parallaxnuoevo1.png");
+        this.load.image("parallax2", "assets/images/background/parallax2parte2perchèèstronz.png");
+        //this.load.image("parallax3", "assets/images/background/parallax3.png");
+        //this.load.image("parallax4", "assets/images/background/parallax4.png");
 
         //elementi della scena
         this.load.image("platform1", "assets/images/environment_elements/platform1.png"); //platform statico
@@ -100,16 +101,19 @@ export default class Scene1 extends Phaser.Scene {
         this.key0 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ZERO);
 
         //sfondo parallax
-        this.background1 = this.add.tileSprite(0, 0, 1280, 2400, "parallax1");
-        this.background1.setOrigin(0, 0.70);
+        this.background0=this.add.image(0, 0, "sfondo");
+		this.background0.setScrollFactor(0, 0.5);
+        this.background0.setOrigin(0, 0.5)
+        this.background1 = this.add.tileSprite(-3, 0, 2190, 1440, "parallax1");
+        this.background1.setOrigin(0, 0.47);
         this.background1.setScrollFactor(0, 0.4);
-        this.background2 = this.add.tileSprite(0, 0, 1280, 2400, "parallax2");
-        this.background2.setOrigin(0, 0.70);
+        this.background2 = this.add.tileSprite(0, 0, 2190, 1440, "parallax2");
+        this.background2.setOrigin(0, 0.5);
         this.background2.setScrollFactor(0, 0.4);
-        this.background3 = this.add.tileSprite(0, 0, 1280, 2400, "parallax3");
+        /*this.background3 = this.add.tileSprite(0, 0, 1280, 2400, "parallax3");
         this.background3.setOrigin(0, 0.70);
         this.background3.setScrollFactor(0, 0.4);
-        /*this.background4 = this.add.tileSprite(0, 0, 1280, 2400, "parallax4");
+        this.background4 = this.add.tileSprite(0, 0, 1280, 2400, "parallax4");
         this.background4.setOrigin(0, 0.698);
         this.background4.setScrollFactor(0,0.38);*/
 
@@ -145,7 +149,7 @@ export default class Scene1 extends Phaser.Scene {
 
 
         // Player
-        const thePlayer = new Player(this, 5800, -700, this.worldWidth - 100, -400);
+        const thePlayer = new Player(this, 300, -700, this.worldWidth - 100, -400);
         //const thePlayer = new Player(this, 3800, 400, this.worldWidth - 100, -400);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
@@ -553,12 +557,12 @@ export default class Scene1 extends Phaser.Scene {
 
 
     animateBackground() {
-        this.background1.tilePositionX = this.cameras.main.scrollX * 0.05;
+        this.background1.tilePositionX = this.cameras.main.scrollX * 0.15;
         this.background1.tilePositionY = this.cameras.main.scrollY * 0.05;
-        this.background2.tilePositionX = this.cameras.main.scrollX * 0.15;
+        this.background2.tilePositionX = this.cameras.main.scrollX * 0.20;
         this.background2.tilePositionY = this.cameras.main.scrollY * 0.15;
-        this.background3.tilePositionX = this.cameras.main.scrollX * 0.30;
-        this.background3.tilePositionY = this.cameras.main.scrollY * 0.30;
+        //this.background3.tilePositionX = this.cameras.main.scrollX * 0.30;
+        //this.background3.tilePositionY = this.cameras.main.scrollY * 0.30;
         //this.background4.tilePositionX = this.cameras.main.scrollX * 0.50;
         //this.background4.tilePositionY = this.cameras.main.scrollY * 0.50;
 
