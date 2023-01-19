@@ -42,9 +42,9 @@ export default class Scene1 extends Phaser.Scene {
 
         //immagini di sfondo
         //this.load.image("sfondo", "assets/images/background/rosso.png");
-        this.load.image("sfondo", "assets/images/background/sfondoconsole2.png")
-        this.load.image("parallax1", "assets/images/background/parallaxnuoevo1.png");
-        this.load.image("parallax2", "assets/images/background/parallax2parte2perchèèstronz.png");
+        this.load.image("sfondo", "assets/images/background/sfondoconsolelunghissimissimoANCORAPIULUNGO.png")
+        this.load.image("parallax1", "assets/images/background/parallax1conilcazzodirettangologiusto.png");
+        this.load.image("parallax2", "assets/images/background/parallax2conilcazzodirettangologiusto.png");
         //this.load.image("parallax3", "assets/images/background/parallax3.png");
         //this.load.image("parallax4", "assets/images/background/parallax4.png");
 
@@ -98,12 +98,12 @@ export default class Scene1 extends Phaser.Scene {
         //sfondo parallax
         this.background0=this.add.image(0, 0, "sfondo");
 		this.background0.setScrollFactor(0, 0.5);
-        this.background0.setOrigin(0, 0.5)
-        this.background1 = this.add.tileSprite(0, 0, 2190, 1440, "parallax1");
-        this.background1.setOrigin(0, 0.47);
+        this.background0.setOrigin(0, 0.65)
+        this.background1 = this.add.tileSprite(-3, 0, 2190, 2400, "parallax1");
+        this.background1.setOrigin(0, 0.65);
         this.background1.setScrollFactor(0, 0.4);
-        this.background2 = this.add.tileSprite(0, 0, 2190, 1440, "parallax2");
-        this.background2.setOrigin(0, 0.5);
+        this.background2 = this.add.tileSprite(0, 0, 2190, 2400, "parallax2");
+        this.background2.setOrigin(0, 0.65);
         this.background2.setScrollFactor(0, 0.4);
         /*this.background3 = this.add.tileSprite(0, 0, 1280, 2400, "parallax3");
         this.background3.setOrigin(0, 0.70);
