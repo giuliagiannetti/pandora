@@ -169,10 +169,10 @@ export default class Scene1 extends Phaser.Scene {
         this.createCasa();
         
 
-        this.cameras.main.startFollow(this.player);
-        this.cameras.main.setFollowOffset(0, 300);
+        this.cameras.main.startFollow(this.player, true);
+        this.cameras.main.setFollowOffset(-100, 300);
         this.cameras.main.setLerp(0.1, 0.1);
-        this.cameras.main.setDeadzone(300, 0);
+        this.cameras.main.setDeadzone(0, 0);
 
 
         //HUD
@@ -455,8 +455,9 @@ export default class Scene1 extends Phaser.Scene {
         this.checkpoint0();
 
         // Camera
-        if (this.player.body.x < this.game.config.width / 2.5) {
-            this.cameras.main.followOffset.x = -this.game.config.width/1.5 + this.player.body.x;
+        if (this.player.body.x < this.game.config.width / 3) {
+            this.cameras.main.followOffset.x = -this.game.config.width/2 + this.player.body.x + this.player.displayWidth;
+            this.cameras.main.deadzone.x = 300;
         }
         if (this.player.body.x > (this.worldWidth - this.game.config.width / 2)) {
             this.cameras.main.followOffset.x = -(this.worldWidth - this.game.config.width / 2) + this.player.body.x ;
