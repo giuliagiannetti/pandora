@@ -13,13 +13,13 @@ export default class Storia1 extends Phaser.Scene {
         //assets
   
         //sfondo
-        this.load.image("storia1", "assets/images/story/testo_olimpogiusto.png");
+        this.load.image("storia1", "assets/images/story/testo1.png");
         this.load.image("scena1", "assets/images/story/scena1.jpg");
-        this.load.image("storia2", "assets/images/story/testo_maligiusto.png");
+        this.load.image("storia2", "assets/images/story/testo2.png");
         this.load.image("scena2", "assets/images/story/scena2.jpg");
-        this.load.image("storia3", "assets/images/story/testo_polisgiusto.png");
+        this.load.image("storia3", "assets/images/story/testo3.png");
         this.load.image("scena3", "assets/images/story/scena3.jpg");
-        this.load.image("pregioco", "assets/images/story/testo_preplatformgiusto.png");
+        this.load.image("pregioco", "assets/images/story/testo4.png");
 
         //bottoni
         this.load.image("avantinero", "assets/images/story/avantinero.png");
@@ -43,7 +43,7 @@ create() {
     this.ambiente3.setAlpha(0);
 
     this.testo3 = this.add.image(this.game.config.width / 2, this.game.config.height / 2, "storia3");
-    this.testo3.setOrigin(0.5, 0.5).setScale(1);
+    this.testo3.setOrigin(0.5, 0.5);
     this.testo3.setAlpha(0);
 
 
@@ -52,7 +52,7 @@ create() {
     this.ambiente2.setAlpha(0);
 
     this.testo2 = this.add.image(this.game.config.width / 2, this.game.config.height / 2, "storia2");
-    this.testo2.setOrigin(0.5, 0.5).setScale(0.36);
+    this.testo2.setOrigin(0.5, 0.5);
     this.testo2.setAlpha(0);
 
     
@@ -61,7 +61,7 @@ create() {
     this.ambiente1.setAlpha(0);
 
     this.testo1 = this.add.image(this.game.config.width / 2, this.game.config.height / 2, "storia1");
-    this.testo1.setOrigin(0.5, 0.5).setScale(0.36);
+    this.testo1.setOrigin(0.5, 0.5);
     this.testo1.setAlpha(1);
 
     

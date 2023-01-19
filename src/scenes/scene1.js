@@ -49,10 +49,6 @@ export default class Scene1 extends Phaser.Scene {
         //this.load.image("parallax4", "assets/images/background/parallax4.png");
 
         //elementi della scena
-        this.load.image("platform1", "assets/images/environment_elements/platform1.png"); //platform statico
-        this.load.image("pavement", "assets/images/environment_elements/pavement.png"); //pavimento
-        this.load.image("verticale", "assets/images/environment_elements/verticale.png"); //colonna verticale
-
         this.load.image("colonna", "assets/images/environment_elements/colonna.png");
         this.load.image("porta", "assets/images/environment_elements/casa/parete.png"); //porta
         this.load.image("blocco", "assets/images/environment_elements/blocco.png");//blocco architrave
@@ -75,7 +71,6 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image("movingPlatform", "assets/images/environment_elements/trave.png"); //platform in movimento
 
         this.load.image("banco", "assets/images/environment_elements/banco.png"); //bancarella
-        this.load.image("rimbalzante", "assets/images/environment_elements/rimbalzo.png");//piattaforma rimbalzante
 
         this.load.image("chiave", "assets/images/environment_elements/chiave3d.png"); //chiave
         this.load.image("chiaveContorno", "assets/images/environment_elements/chiave3dcontorno.png");
@@ -104,7 +99,7 @@ export default class Scene1 extends Phaser.Scene {
         this.background0=this.add.image(0, 0, "sfondo");
 		this.background0.setScrollFactor(0, 0.5);
         this.background0.setOrigin(0, 0.5)
-        this.background1 = this.add.tileSprite(-3, 0, 2190, 1440, "parallax1");
+        this.background1 = this.add.tileSprite(0, 0, 2190, 1440, "parallax1");
         this.background1.setOrigin(0, 0.47);
         this.background1.setScrollFactor(0, 0.4);
         this.background2 = this.add.tileSprite(0, 0, 2190, 1440, "parallax2");
@@ -118,8 +113,8 @@ export default class Scene1 extends Phaser.Scene {
         this.background4.setScrollFactor(0,0.38);*/
 
 
-        this.floor = this.add.rectangle(0, this.game.config.height,
-            this.worldWidth + 100, this.game.config.height - this.floorHeight,
+        this.floor = this.add.rectangle(-700, this.game.config.height,
+            this.worldWidth + 700, this.game.config.height - this.floorHeight,
             0x260907, 1);
         this.floor.setOrigin(0, 1);
         this.physics.add.existing(this.floor, true);
@@ -149,11 +144,10 @@ export default class Scene1 extends Phaser.Scene {
 
 
         // Player
-        const thePlayer = new Player(this, 640, 450, this.worldWidth - 100, -400);
+        const thePlayer = new Player(this, 200, 450, this.worldWidth - 100, -400);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
         this.playerHearts = this.game.gameState.lives;
-
 
 
         //enemy
@@ -175,9 +169,10 @@ export default class Scene1 extends Phaser.Scene {
         this.createCasa();
         
 
-        this.cameras.main.startFollow(this.player, true);
+        this.cameras.main.startFollow(this.player);
         this.cameras.main.setFollowOffset(0, 300);
         this.cameras.main.setLerp(0.1, 0.1);
+        this.cameras.main.setDeadzone(300, 0);
 
 
         //HUD
@@ -460,8 +455,8 @@ export default class Scene1 extends Phaser.Scene {
         this.checkpoint0();
 
         // Camera
-        if (this.player.body.x < this.game.config.width / 2) {
-            this.cameras.main.followOffset.x = -this.game.config.width/2 + this.player.body.x;
+        if (this.player.body.x < this.game.config.width / 2.5) {
+            this.cameras.main.followOffset.x = -this.game.config.width/1.5 + this.player.body.x;
         }
         if (this.player.body.x > (this.worldWidth - this.game.config.width / 2)) {
             this.cameras.main.followOffset.x = -(this.worldWidth - this.game.config.width / 2) + this.player.body.x ;
@@ -627,7 +622,7 @@ export default class Scene1 extends Phaser.Scene {
             //this.player.x >= (this.worldWidth - 300) && this.collectedChiavi
             )
             {
-            this.scene.start("scene2");
+            this.scene.start("scene3");
         }
     }
 }

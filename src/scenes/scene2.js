@@ -23,12 +23,6 @@ export default class Scene2 extends Phaser.Scene {
     preload() {
         console.log("scene2 - Executing preload()");
 
-        this.load.image("polis1", "assets/images/background/sfondo_2.png"); //sfondo: uno in primo piano, con platform, costruzioni principali
-
-        this.load.image("platform1", "assets/images/environment_elements/platform1.png"); //platform statico
-        this.load.image("pavement", "assets/images/environment_elements/pavement.png"); //pavimento
-        this.load.image("rimbalzante", "assets/images/environment_elements/rimbalzo.png");//piattaforma rimbalzante
-        this.load.image("movingPlatform", "assets/images/environment_elements/movingPlatform.png"); //platform in movimento
         this.load.image("cassa", "assets/images/environment_elements/cassa.png");
         this.load.image("cart", "assets/images/environment_elements/cart.png");
         this.load.image("scalino3", "assets/images/environment_elements/casa/scalino3.png");
@@ -49,6 +43,10 @@ export default class Scene2 extends Phaser.Scene {
         this.load.image("mela1", "assets/images/environment_elements/mela1.png");
         this.load.image("mela2", "assets/images/environment_elements/mela2.png");
 
+        this.load.image("sfondo", "assets/images/background/sfondoconsole2.png")
+        this.load.image("parallax1", "assets/images/background/parallaxnuoevo1.png");
+        this.load.image("parallax2", "assets/images/background/parallax2parte2perchèèstronz.png");
+
     }
 
     create() {
@@ -59,7 +57,7 @@ export default class Scene2 extends Phaser.Scene {
 
 
         //sfondo parallax
-        this.background1 = this.add.tileSprite(0, 0, 1280, 2400, "parallax1");
+        /*this.background1 = this.add.tileSprite(0, 0, 1280, 2400, "parallax1");
         this.background1.setOrigin(0, 0.70);
         this.background1.setScrollFactor(0, 0.4);
         this.background2 = this.add.tileSprite(0, 0, 1280, 2400, "parallax2");
@@ -69,16 +67,26 @@ export default class Scene2 extends Phaser.Scene {
         this.background3.setOrigin(0, 0.70);
         this.background3.setScrollFactor(0, 0.4);
         this.background4 = this.add.tileSprite(0, 0, 1280, 2400, "parallax4");
-        /*this.background4.setOrigin(0, 0.698);
+        this.background4.setOrigin(0, 0.698);
         this.background4.setScrollFactor(0, 0.38);*/
 
         /*this.background = this.add.image(0, 0, "polis1");
         this.background.setOrigin(0, 0.55);*/
 
+        this.background0=this.add.image(0, 0, "sfondo");
+		this.background0.setScrollFactor(0, 0.5);
+        this.background0.setOrigin(0, 0.5)
+        this.background1 = this.add.tileSprite(-3, 0, 2190, 1440, "parallax1");
+        this.background1.setOrigin(0, 0.47);
+        this.background1.setScrollFactor(0, 0.4);
+        this.background2 = this.add.tileSprite(0, 0, 2190, 1440, "parallax2");
+        this.background2.setOrigin(0, 0.5);
+        this.background2.setScrollFactor(0, 0.4);
 
-        this.floor = this.add.rectangle(0, this.game.config.height,
-            this.worldWidth + 100, this.game.config.height - this.floorHeight,
-            0x260907, 100);
+
+        this.floor = this.add.rectangle(-700, this.game.config.height,
+            this.worldWidth + 700, this.game.config.height - this.floorHeight,
+            0x260907, 1);
         this.floor.setOrigin(0, 1);
         this.physics.add.existing(this.floor, true);
 
@@ -134,16 +142,17 @@ export default class Scene2 extends Phaser.Scene {
 
 
         // Player
-        const thePlayer = new Player(this, 3200, -750, this.worldWidth - 100, -400);
+        const thePlayer = new Player(this, 0, this.floorHeight, this.worldWidth, -400);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
         this.playerHearts = this.game.gameState.lives;
-        this.player.jumpSpeed = -600;
+        //this.player.jumpSpeed = -600;
 
         // Camera
-        this.cameras.main.startFollow(this.player);
+        this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
         this.cameras.main.setFollowOffset(0, 300);
-        this.cameras.main.setLerp(0.1, 0.1);
+        this.cameras.main.setDeadzone(400, 0);
+        //this.cameras.main.setLerp(0.1, 0.1);
 
 
         // Piattaforme
@@ -431,7 +440,7 @@ export default class Scene2 extends Phaser.Scene {
         this.pauseMenuBottons();
 
 
-        if (this.player.body.x < this.game.config.width / 2) {
+        if (this.player.body.x < this.game.config.width / 2.5) {
             this.cameras.main.followOffset.x = -this.game.config.width / 2 + this.player.body.x;
         }
 
@@ -449,12 +458,16 @@ export default class Scene2 extends Phaser.Scene {
     }
 
     animateBackground() {
-        this.background1.tilePositionX = this.cameras.main.scrollX * 0.05;
+        /*this.background1.tilePositionX = this.cameras.main.scrollX * 0.05;
         this.background1.tilePositionY = this.cameras.main.scrollY * 0.05;
         this.background2.tilePositionX = this.cameras.main.scrollX * 0.15;
         this.background2.tilePositionY = this.cameras.main.scrollY * 0.15;
         this.background3.tilePositionX = this.cameras.main.scrollX * 0.30;
-        this.background3.tilePositionY = this.cameras.main.scrollY * 0.30;
+        this.background3.tilePositionY = this.cameras.main.scrollY * 0.30;*/
+        this.background1.tilePositionX = this.cameras.main.scrollX * 0.15;
+        this.background1.tilePositionY = this.cameras.main.scrollY * 0.05;
+        this.background2.tilePositionX = this.cameras.main.scrollX * 0.20;
+        this.background2.tilePositionY = this.cameras.main.scrollY * 0.15;
 
         const startLineCamera = 400;
         const shiftCameraMax = 150;

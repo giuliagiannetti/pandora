@@ -23,10 +23,7 @@ export default class Scene1 extends Phaser.Scene {
 
     preload() {
         console.log("scene3 - Executing preload()");
-
-        this.load.image("polis2", "assets/images/background/sfondo_3.png");
-
-        this.load.image("platform1", "assets/images/environment_elements/platform1.png"); //platform statico
+        
         this.load.image("traveTempio", "assets/images/environment_elements/traveTempio.png"); //pavimento
         this.load.image("movingPlatform", "assets/images/environment_elements/platform1.png"); //platform in movimento
         this.load.image("colonnaTempio", "assets/images/environment_elements/colonnaolimpo.png");
@@ -53,10 +50,12 @@ export default class Scene1 extends Phaser.Scene {
         
         this.background0 = this.add.image(0,720, "parallax01");
         this.background0.setOrigin(0,1);
+        this.background0 = this.add.image(0,720, "parallax01");
+        this.background0.setOrigin(1,1);
         
         
-        this.floor = this.add.rectangle(0, this.game.config.height,
-            this.worldWidth + 150, this.game.config.height - this.floorHeight,
+        this.floor = this.add.rectangle(-700, this.game.config.height,
+            this.worldWidth + 700, this.game.config.height - this.floorHeight,
             0x260907, 1);
         this.floor.setOrigin(0, 1);
         this.physics.add.existing(this.floor, true);
@@ -97,11 +96,10 @@ export default class Scene1 extends Phaser.Scene {
 
        
         // Player
-        const thePlayer = new Player(this, 100, this.floorHeight, this.worldWidth, -400);
+        const thePlayer = new Player(this, 0, this.floorHeight, this.worldWidth, -400);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
         this.playerHearts = this.game.gameState.lives;
-
 
 
         // Nemico
@@ -112,11 +110,14 @@ export default class Scene1 extends Phaser.Scene {
         this.createMovingPlatforms();
 
 
-        this.background = this.add.image(0, 720, "parallax0");
+        this.background = this.add.image(-100, 720, "parallax0");
         this.background.setOrigin(0, 1);
+        this.background1 = this.add.image(-100, 720, "parallax0");
+        this.background1.setOrigin(1, 1);
 
 
         this.background.setPipeline('Light2D').setAlpha(0.7);
+        this.background1.setPipeline('Light2D').setAlpha(0.7);
         this.playerLight = this.lights.addLight(270, 510, 850).setIntensity(2.8);
         this.lights.enable();
         this.lights.setAmbientColor(0x000000);
@@ -126,6 +127,7 @@ export default class Scene1 extends Phaser.Scene {
             key: 'mask',
             add: true,
         });
+
 
         const TheHopeGlow = new Hope(this, 3050 -50, -55);
         this.hopeGlow = this.physics.add.existing(TheHopeGlow);
@@ -157,6 +159,7 @@ export default class Scene1 extends Phaser.Scene {
         this.cameras.main.startFollow(this.player);
         this.cameras.main.setFollowOffset(0, 300);
         this.cameras.main.setLerp(0.1, 0.1);
+        this.cameras.main.setDeadzone(200, 0);
 
         //HUD
         this.createHUD();
@@ -237,7 +240,8 @@ export default class Scene1 extends Phaser.Scene {
     createStaticPlatforms() {
         this.platforms = this.physics.add.staticGroup()
 
-        this.platforms.create(60, 20, 'traveTempio').setOrigin(0,1).refreshBody();//pavimento
+        this.platforms.create(0, 20, 'traveTempio').setOrigin(0,1).refreshBody();//pavimento
+        this.platforms.create(0, 20, 'traveTempio').setOrigin(1,1).refreshBody();//pavimento
         this.platforms.create(2000, 20, 'traveTempio').setOrigin(0,1).refreshBody();//pavimento
         this.platforms.create(600, 520, 'scalino3').refreshBody();
         this.platforms.create(1400, 260, 'scalino3').refreshBody();
@@ -328,7 +332,7 @@ export default class Scene1 extends Phaser.Scene {
         this.checkpoint0();
 
          // Camera
-         if (this.player.body.x < this.game.config.width/2 ) {
+        if (this.player.body.x < this.game.config.width/2 ) {
             this.cameras.main.followOffset.x = -700 + this.player.body.x;
         } 
      
