@@ -176,8 +176,8 @@ export default class Scene1 extends Phaser.Scene {
         
 
         this.cameras.main.startFollow(this.player, true);
-        this.cameras.main.setLerp(0.15, 0.15);
         this.cameras.main.setFollowOffset(0, 300);
+        this.cameras.main.setLerp(0.1, 0.1);
 
 
         //HUD
@@ -320,8 +320,8 @@ export default class Scene1 extends Phaser.Scene {
         this.platforms.create(6600, -15, 'scalino3').setOrigin(0,1).setScale(1.1).refreshBody();//pavimento
         this.platforms.create(6290, 115, 'scalino4').setOrigin(0, 1).setScale(0.9).refreshBody(); //piattaforma tetto
         this.platforms.create(7000, 370, 'scalino1').setOrigin(0,1).refreshBody();
-        this.platforms.create(6600, 550, 'scalino4').setOrigin(0,1).setScale(0.8).refreshBody();
-        this.platforms.create(6700, 490, 'scalino4').setOrigin(0,1).setScale(0.8).refreshBody();
+        this.platforms.create(6600, 510, 'scalino4').setOrigin(0,1).setScale(0.8).refreshBody();
+        this.platforms.create(6700, 550, 'scalino4').setOrigin(0,1).setScale(0.8).refreshBody();
         this.platforms.create(7800, 510, 'scalino3').setOrigin(0,1).setScale(0.9).refreshBody();
 
 
