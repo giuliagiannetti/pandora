@@ -83,8 +83,8 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image("life", "assets/images/hud/life.png");
         this.load.image("vaso", "assets/images/hud/vasopausa.png");
         this.load.image("menuPausa", "assets/images/hud/menuPausa.jpg");
-        this.load.image("home", "assets/images/hud/home.png");
-        this.load.image("play", "assets/images/hud/play.png");
+        this.load.image("home", "assets/images/buttons/home.png");
+        this.load.image("play", "assets/images/buttons/play.png");
 
 
     }
@@ -114,7 +114,7 @@ export default class Scene1 extends Phaser.Scene {
 
 
         this.floor = this.add.rectangle(-700, this.game.config.height,
-            this.worldWidth + 700, this.game.config.height - this.floorHeight,
+            this.worldWidth + 750, this.game.config.height - this.floorHeight,
             0x260907, 1);
         this.floor.setOrigin(0, 1);
         this.physics.add.existing(this.floor, true);
@@ -455,9 +455,9 @@ export default class Scene1 extends Phaser.Scene {
         this.checkpoint0();
 
         // Camera
-        if (this.player.body.x < this.game.config.width / 3) {
+        if (this.player.body.x < this.game.config.width / 2.5) {
             this.cameras.main.followOffset.x = -this.game.config.width/2 + this.player.body.x + this.player.displayWidth;
-            this.cameras.main.deadzone.x = 300;
+            this.cameras.main.deadzone.x = 400;
         }
         if (this.player.body.x > (this.worldWidth - this.game.config.width / 2)) {
             this.cameras.main.followOffset.x = -(this.worldWidth - this.game.config.width / 2) + this.player.body.x ;
@@ -538,7 +538,7 @@ export default class Scene1 extends Phaser.Scene {
             this.scene.start("gameover1");
         } else {
             this.player.body.x = this.chiave.x;
-            this.player.body.y = this.chiave.y;
+            this.player.body.y = this.chiave.y -10;
             this.scene.resume();
         }
 

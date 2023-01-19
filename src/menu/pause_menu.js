@@ -14,6 +14,10 @@ export default class PauseMenu extends Phaser.Scene {
 
     preload(){
         console.log("pause_menu - Executing preload()");
+
+        this.load.image("menuPausa", "assets/images/hud/menuPausa.jpg");
+        this.load.image("home", "assets/images/buttons/home.png");
+        this.load.image("play", "assets/images/buttons/play.png");
     }
 
     create(){

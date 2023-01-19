@@ -151,7 +151,7 @@ export default class Scene2 extends Phaser.Scene {
         // Camera
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
         this.cameras.main.setFollowOffset(0, 300);
-        this.cameras.main.setDeadzone(400, 0);
+        this.cameras.main.setDeadzone(0, 0);
         //this.cameras.main.setLerp(0.1, 0.1);
 
 
@@ -442,6 +442,7 @@ export default class Scene2 extends Phaser.Scene {
 
         if (this.player.body.x < this.game.config.width / 2.5) {
             this.cameras.main.followOffset.x = -this.game.config.width / 2 + this.player.body.x;
+            this.cameras.main.deadzone.x = 300;
         }
 
         if (this.player.body.x > (this.worldWidth - this.game.config.width / 2)) {

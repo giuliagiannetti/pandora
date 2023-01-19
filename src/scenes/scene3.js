@@ -118,7 +118,7 @@ export default class Scene1 extends Phaser.Scene {
 
         this.background.setPipeline('Light2D').setAlpha(0.7);
         this.background1.setPipeline('Light2D').setAlpha(0.7);
-        this.playerLight = this.lights.addLight(270, 510, 850).setIntensity(2.8);
+        this.playerLight = this.lights.addLight(270, 510, 850).setIntensity(2.5);
         this.lights.enable();
         this.lights.setAmbientColor(0x000000);
         this.make.sprite({
@@ -159,7 +159,8 @@ export default class Scene1 extends Phaser.Scene {
         this.cameras.main.startFollow(this.player);
         this.cameras.main.setFollowOffset(0, 300);
         this.cameras.main.setLerp(0.1, 0.1);
-        this.cameras.main.setDeadzone(200, 0);
+        this.cameras.main.setDeadzone(0, 0);
+        this.cameras.main.fadeIn(3000);
 
         //HUD
         this.createHUD();
@@ -331,9 +332,12 @@ export default class Scene1 extends Phaser.Scene {
 
         this.checkpoint0();
 
+        this.pauseMenuBottons();
+
          // Camera
         if (this.player.body.x < this.game.config.width/2 ) {
-            this.cameras.main.followOffset.x = -700 + this.player.body.x;
+            this.cameras.main.followOffset.x = -600 + this.player.body.x;
+            this.cameras.main.deadzone.x = 100;
         } 
      
         if (this.player.body.x > 2650 ) {
@@ -479,6 +483,15 @@ export default class Scene1 extends Phaser.Scene {
                 duration: 250
             });
         }
+    }
+
+    pauseMenuBottons() {
+
+        this.pauseButton.on("pointerdown", () => {
+            this.scene.pause();
+            this.scene.launch("pause_menu", { sceneName: "scene3" });
+        });
+
     }
 
     checkSceneEnd() {
