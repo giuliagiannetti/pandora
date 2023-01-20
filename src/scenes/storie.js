@@ -22,8 +22,8 @@ export default class Storia1 extends Phaser.Scene {
         this.load.image("pregioco", "assets/images/story/testo4.png");
 
         //bottoni
-        this.load.image("avantinero", "assets/images/story/avantinero.png");
-        this.load.image("indietronero", "assets/images/story/indietronero.png");
+        this.load.image("avanti", "assets/images/buttons/avanti.png");
+        this.load.image("indietro", "assets/images/buttons/indietro.png");
         
 }
 create() {
@@ -66,8 +66,8 @@ create() {
 
     
      //bottoni
-     this.bottoneIndietroNero = this.add.image(200, 650, "indietronero");
-     this.bottoneAvantiNero = this.add.image(this.game.config.width - 200, 650, "avantinero");
+     this.bottoneIndietroNero = this.add.image(200, 610, "indietro").setScale(0.7);
+     this.bottoneAvantiNero = this.add.image(this.game.config.width - 200, 610, "avanti").setScale(0.7);
   
      this.bottoneIndietroNero.setInteractive();
      this.bottoneAvantiNero.setInteractive();

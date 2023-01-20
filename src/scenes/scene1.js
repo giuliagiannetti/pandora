@@ -82,9 +82,13 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image("chiaveicona", "assets/images/hud/chiaveicona.png"); //chiave icona
         this.load.image("life", "assets/images/hud/life.png");
         this.load.image("vaso", "assets/images/hud/vasopausa.png");
-        this.load.image("menuPausa", "assets/images/hud/menuPausa.jpg");
+        this.load.image("menuPausa", "assets/images/background/sfondo_menu.jpg");
         this.load.image("home", "assets/images/buttons/home.png");
         this.load.image("play", "assets/images/buttons/play.png");
+
+
+        //scritte tutorial
+        this.load.image("tutorial1", "assets/images/tutorial/tutorial_1.png");
 
 
     }
@@ -119,7 +123,12 @@ export default class Scene1 extends Phaser.Scene {
         this.floor.setOrigin(0, 1);
         this.physics.add.existing(this.floor, true);
 
-        // Chiavi
+
+        //scritte per tutorial
+        this.createTutorial();
+
+
+        // Chiavi e checkpoint
         this.chiave = this.add.image(5000, -530, "chiave").setScale(0.2);
         this.chiaveContorno = this.add.image(5000, -530, "chiaveContorno").setScale(0.21).setAlpha(0.75).setBlendMode(Phaser.BlendModes.ADD);
 
@@ -169,6 +178,7 @@ export default class Scene1 extends Phaser.Scene {
         this.createCasa();
         
 
+        //camera
         this.cameras.main.startFollow(this.player, true);
         this.cameras.main.setFollowOffset(-100, 300);
         this.cameras.main.setLerp(0.1, 0.1);
@@ -177,6 +187,12 @@ export default class Scene1 extends Phaser.Scene {
 
         //HUD
         this.createHUD();
+    }
+
+    createTutorial(){
+        this.tutorial1 = this.add.image(330, this.game.config.height/2 -80, "tutorial1")
+        this.tutorial1.setOrigin(0, 0.5);
+
     }
 
     createEnemy() {
@@ -454,6 +470,8 @@ export default class Scene1 extends Phaser.Scene {
 
         this.checkpoint0();
 
+        this.fadeOutTutorial();
+
         // Camera
         if (this.player.body.x < this.game.config.width / 2.5) {
             this.cameras.main.followOffset.x = -this.game.config.width/2 + this.player.body.x + this.player.displayWidth;
@@ -464,7 +482,25 @@ export default class Scene1 extends Phaser.Scene {
         }
     }
 
+    fadeOutTutorial(){
+        if (this.player.x > this.tutorial1.x + 400) {
+            this.tweens.add({
+                targets: this.tutorial1,
+                alpha: 0,
+                ease: 'Linear',
+                duration: 300
+            });
+        }
 
+        if (this.player.x <= this.tutorial1.x + 400) {
+            this.tweens.add({
+                targets: this.tutorial1,
+                alpha: 1,
+                ease: 'Linear',
+                duration: 300
+            });
+        }
+    }
 
     followPlayer() {
         let followedPlayer = this.player;

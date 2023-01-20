@@ -14,6 +14,7 @@ export default class CreditsScene extends Phaser.Scene {
       console.log("scene_credits - Executing preload ()");
 
       //assets
+      this.load.image("indietro", "assets/images/buttons/indietro.png");
 
       //sfondo
       this.load.image("crediti", "assets/images/credits/crediti1.jpg");
@@ -25,9 +26,17 @@ export default class CreditsScene extends Phaser.Scene {
 
       this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
-      //posizione degli elementi 
       this.background = this.add.image(this.game.config.width / 2, this.game.config.height / 2, "crediti");
       this.background.setOrigin(0.5, 0.5);
+
+      this.indietroHome = this.add.image(200, 610, "indietro");
+      this.indietroHome.setScale(0.7);
+      this.indietroHome.setInteractive();
+
+      this.indietroHome.on("pointerdown", ()=> {
+         this.scene.start("scene0_welcome");
+         this.scene.stop();
+     })
 
    };
 
