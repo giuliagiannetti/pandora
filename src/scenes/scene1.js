@@ -89,6 +89,7 @@ export default class Scene1 extends Phaser.Scene {
 
         //scritte tutorial
         this.load.image("tutorial1", "assets/images/tutorial/tutorial_1.png");
+        this.load.image("tutorial2", "assets/images/tutorial/tutorial_2.png");
 
 
     }
@@ -153,7 +154,7 @@ export default class Scene1 extends Phaser.Scene {
 
 
         // Player
-        const thePlayer = new Player(this, 200, 450, this.worldWidth - 100, -400);
+        const thePlayer = new Player(this, 4800, -700, this.worldWidth - 100, -400);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
         this.playerHearts = this.game.gameState.lives;
@@ -170,6 +171,7 @@ export default class Scene1 extends Phaser.Scene {
         this.porta.body.setImmovable(true);
         this.porta.body.setVelocityY(0);
         this.physics.add.collider(this.porta, this.floor);
+        this.physics.add.collider(this.porta, this.player);
 
         this.createMovingPlatforms();
         this.createJumpingPlatforms();
@@ -190,9 +192,11 @@ export default class Scene1 extends Phaser.Scene {
     }
 
     createTutorial(){
-        this.tutorial1 = this.add.image(330, this.game.config.height/2 -80, "tutorial1")
+        this.tutorial1 = this.add.image(330, this.game.config.height/2 -80, "tutorial1");
         this.tutorial1.setOrigin(0, 0.5);
 
+        this.tutorial2 = this.add.image(5000 - 130, -530 -35, "tutorial2");
+        this.tutorial2.setOrigin(0, 0.5).setAlpha(0);
     }
 
     createEnemy() {
@@ -500,6 +504,27 @@ export default class Scene1 extends Phaser.Scene {
                 duration: 300
             });
         }
+
+        if (this.player.x > this.tutorial2.x + 100) {
+            this.tweens.add({
+                targets: this.tutorial2,
+                alpha: 0,
+                ease: 'Linear',
+                duration: 300
+            });
+        }
+
+        if (this.player.x <= this.tutorial2.x + 100 && this.collectedChiavi) {
+            this.tweens.add({
+                targets: this.tutorial2,
+                alpha: 1,
+                ease: 'Linear',
+                duration: 300
+            });
+        }
+
+
+
     }
 
     followPlayer() {
@@ -623,7 +648,7 @@ export default class Scene1 extends Phaser.Scene {
         let y_diff = Math.abs(this.player.y - this.chiave.y); 
         //let portaFermaY = this.portaGroup.y;
         let icon = this.chiaveIcon1;
-        if (x_diff < 75 && y_diff < 100) {
+        if (x_diff < 70 && y_diff < 100) {
             this.chiave.destroy();
             this.chiaveContorno.destroy();
             icon.setAlpha(1);
@@ -643,7 +668,7 @@ export default class Scene1 extends Phaser.Scene {
         let x_diff0 = Math.abs(this.player.x - this.piedistallo0.x);
         let y_diff0 = Math.abs(this.player.y - this.piedistallo0.y); 
         //let portaFermaY = this.portaGroup.y;
-        if (x_diff0 < 75 && y_diff0 < 100) {
+        if (x_diff0 < 70 && y_diff0 < 100) {
             this.tweens.add({
                 targets: this.piedistalloCheck0,
                 alpha: 1,
@@ -659,7 +684,7 @@ export default class Scene1 extends Phaser.Scene {
             //this.player.x >= (this.worldWidth - 300) && this.collectedChiavi
             )
             {
-            this.scene.start("scene3");
+            this.scene.start("scene2");
         }
     }
 }

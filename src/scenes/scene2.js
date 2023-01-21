@@ -47,6 +47,8 @@ export default class Scene2 extends Phaser.Scene {
         this.load.image("parallax1", "assets/images/background/parallaxnuoevo1.png");
         this.load.image("parallax2", "assets/images/background/parallax2parte2perchèèstronz.png");
 
+        this.load.image("tutorial3", "assets/images/tutorial/tutorial_3.png");
+
     }
 
     create() {
@@ -57,30 +59,14 @@ export default class Scene2 extends Phaser.Scene {
 
 
         //sfondo parallax
-        /*this.background1 = this.add.tileSprite(0, 0, 1280, 2400, "parallax1");
-        this.background1.setOrigin(0, 0.70);
-        this.background1.setScrollFactor(0, 0.4);
-        this.background2 = this.add.tileSprite(0, 0, 1280, 2400, "parallax2");
-        this.background2.setOrigin(0, 0.70);
-        this.background2.setScrollFactor(0, 0.4);
-        this.background3 = this.add.tileSprite(0, 0, 1280, 2400, "parallax3");
-        this.background3.setOrigin(0, 0.70);
-        this.background3.setScrollFactor(0, 0.4);
-        this.background4 = this.add.tileSprite(0, 0, 1280, 2400, "parallax4");
-        this.background4.setOrigin(0, 0.698);
-        this.background4.setScrollFactor(0, 0.38);*/
-
-        /*this.background = this.add.image(0, 0, "polis1");
-        this.background.setOrigin(0, 0.55);*/
-
         this.background0=this.add.image(0, 0, "sfondo");
 		this.background0.setScrollFactor(0, 0.5);
-        this.background0.setOrigin(0, 0.5)
-        this.background1 = this.add.tileSprite(-3, 0, 2190, 1440, "parallax1");
-        this.background1.setOrigin(0, 0.47);
+        this.background0.setOrigin(0, 0.65)
+        this.background1 = this.add.tileSprite(-3, 0, 2190, 2400, "parallax1");
+        this.background1.setOrigin(0, 0.65);
         this.background1.setScrollFactor(0, 0.4);
-        this.background2 = this.add.tileSprite(0, 0, 2190, 1440, "parallax2");
-        this.background2.setOrigin(0, 0.5);
+        this.background2 = this.add.tileSprite(0, 0, 2190, 2400, "parallax2");
+        this.background2.setOrigin(0, 0.65);
         this.background2.setScrollFactor(0, 0.4);
 
 
@@ -89,6 +75,11 @@ export default class Scene2 extends Phaser.Scene {
             0x260907, 1);
         this.floor.setOrigin(0, 1);
         this.physics.add.existing(this.floor, true);
+
+
+        //scritte per tutorial
+        this.createTutorial();
+
 
         //sandali di Hermes
         this.sandalo = this.add.image(1900, -200, "sandalo");
@@ -142,11 +133,12 @@ export default class Scene2 extends Phaser.Scene {
 
 
         // Player
-        const thePlayer = new Player(this, 0, this.floorHeight, this.worldWidth, -400);
+        const thePlayer = new Player(this, 100, this.floorHeight, this.worldWidth, -400);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
         this.playerHearts = this.game.gameState.lives;
         //this.player.jumpSpeed = -600;
+
 
         // Camera
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
@@ -195,8 +187,8 @@ export default class Scene2 extends Phaser.Scene {
             let mela7 = this.add.image(3200 - 100 * i, 10 - 90 * i, "mela");
             mela7.setOrigin(0, 1).setScale(0.1);
             this.mele.push(mela7);
-
         }
+
 
         //enemy
         this.createEnemy();
@@ -237,6 +229,12 @@ export default class Scene2 extends Phaser.Scene {
 
 
     }
+
+    createTutorial(){
+        this.tutorial3 = this.add.image(100, this.game.config.height/2 -100, "tutorial3");
+        this.tutorial3.setOrigin(0, 0.5);
+    }
+
 
     createEnemy() {
         const theEnemy = new Enemy(this, 2550, -340);
@@ -439,6 +437,8 @@ export default class Scene2 extends Phaser.Scene {
 
         this.pauseMenuBottons();
 
+        this.fadeOutTutorial();
+
 
         if (this.player.body.x < this.game.config.width / 2.5) {
             this.cameras.main.followOffset.x = -this.game.config.width / 2 + this.player.body.x;
@@ -447,6 +447,27 @@ export default class Scene2 extends Phaser.Scene {
 
         if (this.player.body.x > (this.worldWidth - this.game.config.width / 2)) {
             this.cameras.main.followOffset.x = -(this.worldWidth - this.game.config.width / 2) + this.player.body.x;
+        }
+    }
+
+
+    fadeOutTutorial(){
+        if (this.player.x > this.tutorial3.x + 400) {
+            this.tweens.add({
+                targets: this.tutorial3,
+                alpha: 0,
+                ease: 'Linear',
+                duration: 300
+            });
+        }
+
+        if (this.player.x <= this.tutorial3.x + 400) {
+            this.tweens.add({
+                targets: this.tutorial3,
+                alpha: 1,
+                ease: 'Linear',
+                duration: 300
+            });
         }
     }
 
@@ -498,7 +519,7 @@ export default class Scene2 extends Phaser.Scene {
         let x_diff = Math.abs(this.player.x - this.chiave.x);
         let y_diff = Math.abs(this.player.y - this.chiave.y); 4
         let icon = this.chiaveIcon1;
-        if (x_diff < 75 && y_diff < 100) {
+        if (x_diff < 80 && y_diff < 100) {
             this.chiave.destroy();
             this.chiaveContorno.destroy();
             icon.setAlpha(1);
