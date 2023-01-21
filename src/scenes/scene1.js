@@ -154,7 +154,7 @@ export default class Scene1 extends Phaser.Scene {
 
 
         // Player
-        const thePlayer = new Player(this, 4800, -700, this.worldWidth - 100, -400);
+        const thePlayer = new Player(this, 200, 450, this.worldWidth - 100, -400);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
         this.playerHearts = this.game.gameState.lives;
@@ -361,6 +361,7 @@ export default class Scene1 extends Phaser.Scene {
         });
     }
 
+
     createMovingPlatforms() {
 
         this.movingPlatforms = [];
@@ -536,11 +537,11 @@ export default class Scene1 extends Phaser.Scene {
         let playerX = this.player.body.x + this.player.displayWidth / 2;
         if (followedPlayer.body.x >= 5100 && followedPlayer.body.x <= 6100 && followedPlayer.body.y > -600 && followedPlayer.body.y < 220) {
             if (playerX > enemyX) {
-                playerEnemy.body.setVelocityX(15);
+                playerEnemy.body.setVelocityX(17);
                 playerEnemy.flipX = true;
             }
             if (playerX < enemyX) {
-                playerEnemy.body.setVelocityX(-15);
+                playerEnemy.body.setVelocityX(-17);
                 playerEnemy.flipX = false;
             }
             if (playerY > enemyY) {
@@ -680,8 +681,9 @@ export default class Scene1 extends Phaser.Scene {
 
 
     checkSceneEnd() {
-        if ( this.key0.isDown
-            //this.player.x >= (this.worldWidth - 300) && this.collectedChiavi
+        if ( 
+            //this.key0.isDown
+            this.player.x >= (this.worldWidth - 300) && this.collectedChiavi
             )
             {
             this.scene.start("scene2");
