@@ -63,133 +63,94 @@ export default class WelcomeScene extends Phaser.Scene {
       this.bottone_crediti = this.add.image(300,442,'bottoneCrediti');
       this.bottone_gioca_hover = this.add.image(300,242,'bottoneGioca_hover');
       this.bottone_storia_hover = this.add.image(300,342,'bottoneStoria_hover');
-      this.bottone_crediti_hover = this.add.image(300,442,'bottoneCrediti_hover');
+      this.bottone_crediti_hover = this.add.image(300,441,'bottoneCrediti_hover');
+
 
       //origini, interattività, trasparenza
-      this.bottone_gioca.setOrigin(0, 0);
-      this.bottone_gioca.setInteractive();
-      this.bottone_gioca.setAlpha(1);
-
-      this.bottone_storia.setOrigin(0, 0);
-      this.bottone_storia.setInteractive();
-      this.bottone_storia.setAlpha(1);
-
-      this.bottone_crediti.setOrigin(0, 0);
-      this.bottone_crediti.setInteractive();
-      this.bottone_crediti.setAlpha(1);
-
 
       this.bottone_gioca_hover.setOrigin(0, 0);
-      this.bottone_gioca_hover.setInteractive();
-      this.bottone_gioca_hover.setAlpha(0);
+      this.bottone_gioca_hover.setVisible(false);
 
       this.bottone_storia_hover.setOrigin(0, 0);
       this.bottone_storia_hover.setInteractive();
-      this.bottone_storia_hover.setAlpha(0);
+      this.bottone_storia_hover.setVisible(false);
 
       this.bottone_crediti_hover.setOrigin(0, 0);
       this.bottone_crediti_hover.setInteractive();
-      this.bottone_crediti_hover.setAlpha(0);
+      this.bottone_crediti_hover.setVisible(false);
+
+      this.bottone_gioca.setOrigin(0, 0);
+      this.bottone_gioca.setVisible(true);
+
+      this.bottone_storia.setOrigin(0, 0);
+      this.bottone_storia.setInteractive();
+      this.bottone_storia.setVisible(true);
+
+      this.bottone_crediti.setOrigin(0, 0);
+      this.bottone_crediti.setInteractive();
+      this.bottone_crediti.setVisible(true);
+
+
+      this.crediti = this.add.rectangle(300,442, 191, 81, 0x000000, 0);
+      this.crediti.setOrigin(0,0);
+      this.crediti.setInteractive();
+
+      this.storia = this.add.rectangle(300,342, 191, 81, 0x000000, 0);
+      this.storia.setOrigin(0,0);
+      this.storia.setInteractive();
+
+      this.gioca = this.add.rectangle(300,242, 191, 81, 0x000000, 0);
+      this.gioca.setOrigin(0,0);
+      this.gioca.setInteractive();
+
+      
 
 //bottoni interattivi con trasparenza
-this.bottone_gioca.on('pointerover',() => {
-   this-bottone_gioca.setAlpha(0);
-   this.bottone_gioca_hover.setAlpha(1);
-});
+   this.gioca.on('pointerover',() => {
+      this.bottone_gioca_hover.setVisible(true);
+      this.bottone_gioca.setVisible(false);
+   });
 
-this.bottone_gioca.on('pointerout',() => {
-   this.bottone_gioca.setAlpha(1);
-   this.bottone_gioca_hover.setAlpha(0);
-});
+   this.gioca.on('pointerout',() => {
+      this.bottone_gioca_hover.setVisible(false);
+      this.bottone_gioca.setVisible(true);
+   });
 
-this.bottone_storia.on('pointerover',function(pointer){
-   this.bottone_storia.setAlpha(0);
-   this.bottone_storia_hover.setAlpha(1);
-});
+   this.storia.on('pointerover',() => {
+      this.bottone_storia_hover.setVisible(true);
+      this.bottone_storia.setVisible(false);
+   });
 
-this.bottone_storia.on('pointerout',function(pointer){
-   this.bottone_storia.setAlpha(1);
-   this.bottone_storia_hover.setAlpha(0);
-});
+   this.storia.on('pointerout',() => {
+      this.bottone_storia_hover.setVisible(false);
+      this.bottone_storia.setVisible(true);
+   });
 
-this.bottone_crediti.on('pointerover',function(pointer){
-   this.bottone_crediti.setAlpha(0);
-   this.bottone_crediti_hover.setAlpha(1);
-});
+   this.crediti.on('pointerover',() => {
+      this.bottone_crediti_hover.setVisible(true);
+      this.bottone_crediti.setVisible(false);
+   });
 
-this.bottone_crediti.on('pointerout',function(pointer){
-   this.bottone_crediti.setAlpha(1);
-   this.bottone_crediti_hover.setAlpha(0);
-});
+   this.crediti.on('pointerout',() => {
+      this.bottone_crediti_hover.setVisible(false);
+      this.bottone_crediti.setVisible(true);
+   });
 
+    //bottone cliccabile 
+    this.gioca.on("pointerdown", () => {
+      this.scene.start("scene1");
+   });
 
-      //bottoni interattivi con spritesheet (fallito)
-/*bottone_gioca.on('pointerover',() => {
-    bottone_gioca.setFrame(1);
-});
+   //bottone cliccabile 
+   this.storia.on("pointerdown", () => {
+      this.scene.start("storie");
+   });
 
-bottone_gioca.on('pointerout',() => {
-    bottone_gioca.setFrame(0);
-});
+   //bottone cliccabile 
+   this.crediti.on("pointerdown", () => {
+      this.scene.start("scene_credits");
+   });
 
-bottone_storia.on('pointerover',function(pointer){
-   bottone_storia.setFrame(1);
-})
-
-bottone_storia.on('pointerout',function(pointer){
-   bottone_storia.setFrame(0);
-})
-
-bottone_crediti.on('pointerover',function(pointer){
-   bottone_crediti.setFrame(1);
-})
-
-bottone_crediti.on('pointerout',function(pointer){
-   bottone_crediti.setFrame(0);
-})*/
-      
-      //gl scorsi bottoni
-      /*this.playbutton = this.add.image(300, 242, "bottoneGioca");
-      this.bottone_storia = this.add.image(300, 392, "bottoneStoria");
-      this.bottone_crediti = this.add.image(300, 542, "bottoneCrediti");
-
-      this.playbutton.setOrigin(0.5, 0.5);
-      this.playbutton.setInteractive();
-
-      this.bottone_storia.setOrigin(0.5, 0.5);
-      this.bottone_storia.setInteractive();
-
-      this.bottone_crediti.setOrigin(0.5, 0.5);
-      this.bottone_crediti.setInteractive();
-
-      //bottone cliccabile 
-      this.playbutton.on("pointerdown", () => {
-         this.scene.start("scene1");
-      });
-
-      //bottone cliccabile 
-      this.bottone_storia.on("pointerdown", () => {
-         this.scene.start("storie");
-      });
-
-      //bottone cliccabile 
-      this.bottone_crediti.on("pointerdown", () => {
-         this.scene.start("scene_credits");
-      });*/
-
-      //luce che abbiamo deciso di togliere credo
-      /*this.background.setPipeline('Light2D').setAlpha(0.5);
-      var light = this.lights.addLight(300, 300, 1300).setScrollFactor(0.0).setIntensity(3);
-
-      this.lights.enable();
-      this.lights.setAmbientColor(0xFFFFFF);
-
-      this.input.on('pointermove', function (pointer) {
-
-         light.x = pointer.x;
-         light.y = pointer.y;
-
-      });*/
    };
 
 
