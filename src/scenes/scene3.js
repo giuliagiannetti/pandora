@@ -19,6 +19,7 @@ export default class Scene1 extends Phaser.Scene {
         this.floorHeight = this.game.config.height - 100;
         this.worldWidth = 3200;
         this.collectedChiavi = false;
+        this.movedCancello = false;
     }
 
     preload() {
@@ -258,6 +259,7 @@ export default class Scene1 extends Phaser.Scene {
         this.physics.add.collider(this.fermaPorta, this.cancello, ()=> {
             this.cancello.setPosition(2902 -50, -55);
             this.cancello.body.stop();
+            this.movedCancello = true;
          });
         
         this.fermaPorta1 = this.add.rectangle(3330 -60, -55, 10, 10, 0x000000, 0);
@@ -266,6 +268,7 @@ export default class Scene1 extends Phaser.Scene {
         this.physics.add.collider(this.fermaPorta1, this.cancello1, ()=> {
             this.cancello1.setPosition(3268, -55);
             this.cancello1.body.stop();
+            this.movedCancello = true;
           });
          
 
@@ -495,8 +498,9 @@ export default class Scene1 extends Phaser.Scene {
     }
 
     checkSceneEnd() {
-        if (this.key0.isDown) {
-            this.scene.start("good");
+        if (this.collectedChiavi && this.movedCancello) {
+            this.scene.start("good_finale");
+            this.scene.stop();
         }
     }
 

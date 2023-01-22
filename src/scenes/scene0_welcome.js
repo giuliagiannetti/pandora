@@ -72,7 +72,7 @@ export default class WelcomeScene extends Phaser.Scene {
       this.bottone_crediti = this.add.image(127,565,'bottoneCrediti');
       this.bottone_gioca_hover = this.add.image(127,319,'bottoneGioca_hover');
       this.bottone_storia_hover = this.add.image(127,442,'bottoneStoria_hover');
-      this.bottone_crediti_hover = this.add.image(127,565,'bottoneCrediti_hover');
+      this.bottone_crediti_hover = this.add.image(127,564,'bottoneCrediti_hover');
 
 
       //origini, interattività, trasparenza

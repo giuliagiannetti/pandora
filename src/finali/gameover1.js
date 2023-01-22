@@ -12,20 +12,23 @@ preload(){
     console.log("gameover - Executing preload()");
 
     this.load.image("gameover", "assets/images/story/gameover.jpg");
-    this.load.image("home","assets/images/buttons/home.png");
-    this.load.image("restart","assets/images/buttons/restart.png");
+    //this.load.image("home","assets/images/buttons/home.png");
+    //this.load.image("restart","assets/images/buttons/restart.png");
+    this.load.image("home","assets/images/buttons/home_text.png");
+    this.load.image("restart","assets/images/buttons/restart_text.png");
+    this.load.image("testoBad", "assets/images/story/testo_bad.png")
 }
 
 create(){
     this.background = this.add.image(0, 0, "gameover");
     this.background.setOrigin(0,0);
     
-    this.home = this.add.image(2*this.game.config.width/3 - 120, 530, "home");
-    this.home.setOrigin(0.5,0).setScale(0.18);
+    this.home = this.add.image(2*this.game.config.width/3 - 120, 610, "home");
+    this.home.setOrigin(0.5,0).setScale(0.59);
     this.home.setInteractive();
 
-    this.restartButton = this.add.image(this.game.config.width/3 + 120, 530, "restart");
-    this.restartButton.setOrigin(0.5,0).setScale(0.18);
+    this.restartButton = this.add.image(this.game.config.width/3 + 120, 610, "restart");
+    this.restartButton.setOrigin(0.5,0).setScale(0.59);
     this.restartButton.setInteractive();
 
     this.home.on("pointerdown", ()=> {
@@ -38,12 +41,8 @@ create(){
         this.scene.stop();
     })
 
-    const styleConfig = {
-        color: '#FFFFFF',
-        font: '36px monospace'
-    };
+    this.testo = this.add.image(this.game.config.width/2, 550, "testoBad").setScale(0.9);
+    
 
-    this.gameoverText = this.add.text(this.game.config.width/2, 450, "Il male ti ha catturato", styleConfig);
-    this.gameoverText.setOrigin(0.5, 0);
 }
 }

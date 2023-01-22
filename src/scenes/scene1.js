@@ -83,8 +83,9 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image("life", "assets/images/hud/life.png");
         this.load.image("vaso", "assets/images/hud/vasopausa.png");
         this.load.image("menuPausa", "assets/images/background/sfondo_menu.jpg");
-        this.load.image("home", "assets/images/buttons/home.png");
-        this.load.image("play", "assets/images/buttons/play.png");
+        this.load.image("home", "assets/images/buttons/home_text.png");
+        this.load.image("play", "assets/images/buttons/play_text.png");
+        this.load.image("menuText", "assets/images/buttons/menu.png");
 
 
         //scritte tutorial
