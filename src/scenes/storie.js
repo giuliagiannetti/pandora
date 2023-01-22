@@ -24,6 +24,8 @@ export default class Storia1 extends Phaser.Scene {
         //bottoni
         this.load.image("avanti", "assets/images/buttons/avanti.png");
         this.load.image("indietro", "assets/images/buttons/indietro.png");
+        this.load.image("avanti_hover", "assets/images/buttons/avanti_hover.png");
+        this.load.image("indietro_hover", "assets/images/buttons/indietro_hover.png");
         
 }
 create() {
@@ -68,12 +70,50 @@ create() {
      //bottoni
      this.bottoneIndietroNero = this.add.image(200, 610, "indietro").setScale(0.7);
      this.bottoneAvantiNero = this.add.image(this.game.config.width - 200, 610, "avanti").setScale(0.7);
+     this.bottoneIndietroBianco = this.add.image(200, 610, "indietro_hover").setScale(0.7);
+     this.bottoneAvantiBianco = this.add.image(this.game.config.width - 200, 610, "avanti_hover").setScale(0.7);
   
      this.bottoneIndietroNero.setInteractive();
      this.bottoneAvantiNero.setInteractive();
+     this.bottoneAvantiBianco.setVisible(false);
+     this.bottoneIndietroBianco.setVisible(false);
+     
   
+  //hover
+  this.avanti = this.add.rectangle(this.game.config.width - 200, 610, 270*0.7, 84*0.7, 0x000000, 0);
+      this.avanti.setOrigin(0.5 ,0.5);
+      this.avanti.setInteractive();
+
+      this.indietro = this.add.rectangle(200, 610, 270*0.7, 84*0.7, 0x000000, 0);
+      this.indietro.setOrigin(0.5, 0.5);
+      this.indietro.setInteractive();
+
+      
+
+//effetto di hover con trasparenza
+   this.avanti.on('pointerover',() => {
+      this.bottoneAvantiBianco.setVisible(true);
+      this.bottoneAvantiNero.setVisible(false);
+   });
+
+   this.avanti.on('pointerout',() => {
+      this.bottoneAvantiBianco.setVisible(false);
+      this.bottoneAvantiNero.setVisible(true);
+   });
+
+   this.indietro.on('pointerover',() => {
+      this.bottoneIndietroBianco.setVisible(true);
+      this.bottoneIndietroNero.setVisible(false);
+   });
+
+   this.indietro.on('pointerout',() => {
+      this.bottoneIndietroBianco.setVisible(false);
+      this.bottoneIndietroNero.setVisible(true);
+   });
+
   
-       this.bottoneAvantiNero.on("pointerdown", () => { //risolto il problema: tutte le funzioni di if che fanno andare avanti sono dentro la funzione onpointerdown
+     //cliccabile
+       this.avanti.on("pointerdown", () => { //risolto il problema: tutte le funzioni di if che fanno andare avanti sono dentro la funzione onpointerdown
           console.log('bottone avanti premuto')
   
           if (this.testo1.alpha == 1) {
@@ -106,7 +146,7 @@ create() {
           } 
        }); 
        
-       this.bottoneIndietroNero.on("pointerdown", () => { //stessa cosa del bottone avanti
+       this.indietro.on("pointerdown", () => { //stessa cosa del bottone avanti
           console.log('bottone indietro premuto')
   
           if (this.testo1.alpha == 1) {
