@@ -343,11 +343,13 @@ export default class Scene1 extends Phaser.Scene {
             this.cameras.main.deadzone.x = 100;
         } 
      
-        if (this.player.body.x > 2650 ) {
-            this.cameras.main.followOffset.x = -2710 + this.player.body.x;
+        if (this.player.body.x > (this.worldWidth - this.game.config.width / 2) ) {
+            this.cameras.main.followOffset.x = -(this.worldWidth - this.game.config.width / 2) + this.player.body.x;
         } 
 
         this.moveCancello();
+
+        this.checkSceneEnd();
     }
 
     collectFuoco() {
@@ -369,8 +371,8 @@ export default class Scene1 extends Phaser.Scene {
     }
 
     animateBackground() {
-        const startLineCamera = 400;
-        const shiftCameraMax = 70;
+        const startLineCamera = 500;
+        const shiftCameraMax = 100;
         if (this.player.body.y + this.player.height / 2 < startLineCamera) {
             this.cameras.main.followOffset.y = Math.max(300 - shiftCameraMax, 300 - (startLineCamera - (this.player.body.y + this.player.height / 2)));
             console.log(this.cameras.main.followOffset.y);
@@ -417,8 +419,8 @@ export default class Scene1 extends Phaser.Scene {
             this.player.y = this.chiave.y -10;
             this.scene.resume();
         } else {
-            this.player.x = this.piedistalloCheck0.x;
-            this.player.y = this.piedistalloCheck0.y -100;
+            this.player.body.x = this.piedistalloCheck0.x;
+            this.player.body.y = this.piedistalloCheck0.y -300;
             this.scene.resume();
         }
             
@@ -445,8 +447,8 @@ export default class Scene1 extends Phaser.Scene {
             this.player.y = this.chiave.y -10;
             this.scene.resume();
         } else {
-            this.player.x = this.piedistalloCheck0.x;
-            this.player.y = this.piedistalloCheck0.y -100;
+            this.player.body.x = this.piedistalloCheck0.x;
+            this.player.body.y = this.piedistalloCheck0.y -200;
             this.scene.resume();
         }
             
@@ -499,8 +501,11 @@ export default class Scene1 extends Phaser.Scene {
 
     checkSceneEnd() {
         if (this.collectedChiavi && this.movedCancello) {
-            this.scene.start("good_finale");
-            this.scene.stop();
+            this.cameras.main.fadeOut(6000, 255, 255, 255, ()=> {
+                this.scene.start("good_finale");
+                this.scene.stop();
+            });
+            
         }
     }
 

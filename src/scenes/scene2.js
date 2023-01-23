@@ -436,7 +436,7 @@ export default class Scene2 extends Phaser.Scene {
         }
 
         if (this.player.body.x > (this.worldWidth - this.game.config.width / 2)) {
-            this.cameras.main.followOffset.x = -(this.worldWidth - this.game.config.width / 2) + this.player.body.x;
+            this.cameras.main.followOffset.x = -(this.worldWidth - this.game.config.width / 1.5) + this.player.body.x;
         }
     }
 

@@ -41,13 +41,10 @@ export default class Scene1 extends Phaser.Scene {
 
 
         //immagini di sfondo
-        //this.load.image("sfondo", "assets/images/background/rosso.png");
         this.load.image("sfondo", "assets/images/background/sfondo_con_sole.png")
         this.load.image("parallax1", "assets/images/background/parallax1.png");
         this.load.image("parallax2", "assets/images/background/parallax2.png");
-        //this.load.image("parallax3", "assets/images/background/parallax3.png");
-        //this.load.image("parallax4", "assets/images/background/parallax4.png");
-
+    
         //elementi della scena
         this.load.image("colonna", "assets/images/environment_elements/colonna.png");
         this.load.image("porta", "assets/images/environment_elements/casa/parete.png"); //porta
@@ -91,13 +88,10 @@ export default class Scene1 extends Phaser.Scene {
         //scritte tutorial
         this.load.image("tutorial1", "assets/images/tutorial/tutorial_1.png");
         this.load.image("tutorial2", "assets/images/tutorial/tutorial_2.png");
-
-
     }
 
     create() {
         console.log("scene1 - Executing create()");
-
 
         this.key0 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ZERO);
 
@@ -111,12 +105,6 @@ export default class Scene1 extends Phaser.Scene {
         this.background2 = this.add.tileSprite(0, 0, 2190, 2400, "parallax2");
         this.background2.setOrigin(0, 0.65);
         this.background2.setScrollFactor(0, 0.4);
-        /*this.background3 = this.add.tileSprite(0, 0, 1280, 2400, "parallax3");
-        this.background3.setOrigin(0, 0.70);
-        this.background3.setScrollFactor(0, 0.4);
-        this.background4 = this.add.tileSprite(0, 0, 1280, 2400, "parallax4");
-        this.background4.setOrigin(0, 0.698);
-        this.background4.setScrollFactor(0,0.38);*/
 
 
         this.floor = this.add.rectangle(-700, this.game.config.height,
@@ -176,7 +164,6 @@ export default class Scene1 extends Phaser.Scene {
 
         this.createMovingPlatforms();
         this.createJumpingPlatforms();
-        //this.createPorta();
         this.createColonnato();
         this.createCasa();
         
@@ -403,25 +390,6 @@ export default class Scene1 extends Phaser.Scene {
 
 
     }
-
-
-    /*createPorta() {
-
-        this.porta = [];
-
-        this.porta.push(new Porta(this, 5280, -750));
-
-        this.portaGroup = this.physics.add.group(this.porta);
-        this.portaGroup.children.iterate(function (porta) {
-            porta.body.allowGravity = false;
-            porta.body.setImmovable(true);
-        });
-
-        this.physics.add.collider(this.portaGroup, this.player, () => {
-            this.player.isJumping = false;
-        });
-
-    }*/
 
 
     createHUD() {
@@ -669,7 +637,6 @@ export default class Scene1 extends Phaser.Scene {
     checkpoint0() {
         let x_diff0 = Math.abs(this.player.x - this.piedistallo0.x);
         let y_diff0 = Math.abs(this.player.y - this.piedistallo0.y); 
-        //let portaFermaY = this.portaGroup.y;
         if (x_diff0 < 70 && y_diff0 < 100) {
             this.tweens.add({
                 targets: this.piedistalloCheck0,
@@ -687,7 +654,7 @@ export default class Scene1 extends Phaser.Scene {
             this.player.x >= (this.worldWidth - 300) && this.collectedChiavi
             )
             {
-            this.scene.start("scene2");
+            this.scene.start("scene3");
         }
     }
 }

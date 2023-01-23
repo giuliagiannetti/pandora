@@ -13,7 +13,7 @@ preload(){
 
     this.load.image("vittoria", "assets/images/story/finale.jpg");
     //this.load.image("home","assets/images/buttons/home.png");
-    this.load.image("home", "assets/images/buttons/text_home_blank.png");
+    this.load.image("homeBlank", "assets/images/buttons/text_home_blank.png");
     this.load.image("homeHover", "assets/images/buttons/text_home_hover.png");
     this.load.image("restart","assets/images/buttons/restart.png");
     this.load.image("testoGood", "assets/images/story/testo_good.png")
@@ -23,7 +23,7 @@ create(){
     this.background = this.add.image(0, 0, "vittoria");
     this.background.setOrigin(0,0);
     
-    this.home = this.add.image(this.game.config.width/2, 600, "home");
+    this.home = this.add.image(this.game.config.width/2, 600, "homeBlank");
     this.home.setOrigin(0.5,0).setScale(0.6);
 
     this.home_hover = this.add.image(this.game.config.width/2, 600, "homeHover");
@@ -50,5 +50,9 @@ create(){
      });
 
     this.testo = this.add.image(this.game.config.width/2, 100, "testoGood").setScale(0.9);
+
+    this.cameras.main.fadeIn(3000, 255, 255, 255);
     }
+
+    
 }
