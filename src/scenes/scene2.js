@@ -29,6 +29,7 @@ export default class Scene2 extends Phaser.Scene {
 
         this.load.image("sandalo", "assets/images/weapons/sandali.png"); //sandali di hermes
 
+        this.load.image("sandaloicona", "assets/images/hud/sandaloicona.png");
         this.load.image("chiave", "assets/images/environment_elements/chiave3d.png"); //chiave
         this.load.image("chiaveContorno", "assets/images/environment_elements/chiave3dcontorno.png");
         this.load.image("piedistallo", "assets/images/environment_elements/piedistallo.png");
@@ -204,6 +205,13 @@ export default class Scene2 extends Phaser.Scene {
         this.skillShow.setOrigin(0, 0);
         this.skillShow.setScrollFactor(0, 0);
 
+        this.sandaloicon1 = this.add.image(608, 45, "sandaloicona").setScale(0.55);
+        this.sandaloicon1.setOrigin(0, 0);
+        this.sandaloicon1.setScrollFactor(0, 0);
+
+        this.sandaloicon2 = this.add.image(605, 35, "sandalo").setScale(0.1).setAlpha(0);
+        this.sandaloicon2.setOrigin(0, 0);
+        this.sandaloicon2.setScrollFactor(0, 0);
 
         this.chiaveIcon1 = this.add.image(230, 30, "chiaveicona").setScale(0.7).setAlpha(0.3);
         this.chiaveIcon1.setOrigin(0, 0);
@@ -488,9 +496,16 @@ export default class Scene2 extends Phaser.Scene {
         let y_diff = Math.abs(this.player.y - this.sandalo.y);
         if (x_diff < 70 && y_diff < 100) {
             this.sandalo.destroy();
+            this.sandaloicon1.destroy();
             this.player.jumpSpeed = -600;
             this.tweens.add({
                 targets: this.piedistalloCheck,
+                alpha: 1,
+                ease: 'Linear',
+                duration: 250
+            });
+            this.tweens.add({
+                targets: this.sandaloicon2,
                 alpha: 1,
                 ease: 'Linear',
                 duration: 250

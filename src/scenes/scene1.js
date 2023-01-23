@@ -76,6 +76,8 @@ export default class Scene1 extends Phaser.Scene {
 
 
         //elementi hud
+        
+        this.load.image("sandaloicona", "assets/images/hud/sandaloicona.png");
         this.load.image("chiaveicona", "assets/images/hud/chiaveicona.png"); //chiave icona
         this.load.image("life", "assets/images/hud/life.png");
         this.load.image("vaso", "assets/images/hud/vasopausa.png");
@@ -397,6 +399,10 @@ export default class Scene1 extends Phaser.Scene {
         this.skillShow.setOrigin(0, 0);
         this.skillShow.setScrollFactor(0, 0);
 
+        this.sandaloicon1 = this.add.image(608, 45, "sandaloicona").setScale(0.55);
+        this.sandaloicon1.setOrigin(0, 0);
+        this.sandaloicon1.setScrollFactor(0, 0);
+
 
         this.chiaveIcon1 = this.add.image(230, 30, "chiaveicona").setScale(0.7).setAlpha(0.3);
         this.chiaveIcon1.setOrigin(0, 0);
@@ -650,11 +656,11 @@ export default class Scene1 extends Phaser.Scene {
 
     checkSceneEnd() {
         if ( 
-            //this.key0.isDown
-            this.player.x >= (this.worldWidth - 300) && this.collectedChiavi
+            this.key0.isDown
+            //this.player.x >= (this.worldWidth - 300) && this.collectedChiavi
             )
             {
-            this.scene.start("scene3");
+            this.scene.start("scene2");
         }
     }
 }
