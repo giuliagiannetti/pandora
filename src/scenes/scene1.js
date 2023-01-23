@@ -42,9 +42,9 @@ export default class Scene1 extends Phaser.Scene {
 
         //immagini di sfondo
         //this.load.image("sfondo", "assets/images/background/rosso.png");
-        this.load.image("sfondo", "assets/images/background/sfondoconsolelunghissimissimoANCORAPIULUNGO.png")
-        this.load.image("parallax1", "assets/images/background/parallax1conilcazzodirettangologiusto.png");
-        this.load.image("parallax2", "assets/images/background/parallax2conilcazzodirettangologiusto.png");
+        this.load.image("sfondo", "assets/images/background/sfondo_con_sole.png")
+        this.load.image("parallax1", "assets/images/background/parallax1.png");
+        this.load.image("parallax2", "assets/images/background/parallax2.png");
         //this.load.image("parallax3", "assets/images/background/parallax3.png");
         //this.load.image("parallax4", "assets/images/background/parallax4.png");
 
@@ -683,8 +683,8 @@ export default class Scene1 extends Phaser.Scene {
 
     checkSceneEnd() {
         if ( 
-            //this.key0.isDown
-            this.player.x >= (this.worldWidth - 300) && this.collectedChiavi
+            this.key0.isDown
+            //this.player.x >= (this.worldWidth - 300) && this.collectedChiavi
             )
             {
             this.scene.start("scene2");

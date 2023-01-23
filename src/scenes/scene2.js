@@ -43,9 +43,9 @@ export default class Scene2 extends Phaser.Scene {
         this.load.image("mela1", "assets/images/environment_elements/mela1.png");
         this.load.image("mela2", "assets/images/environment_elements/mela2.png");
 
-        this.load.image("sfondo", "assets/images/background/sfondoconsole2.png")
-        this.load.image("parallax1", "assets/images/background/parallaxnuoevo1.png");
-        this.load.image("parallax2", "assets/images/background/parallax2parte2perchèèstronz.png");
+        this.load.image("sfondo", "assets/images/background/sfondo_con_sole.png")
+        this.load.image("parallax1", "assets/images/background/parallax1.png");
+        this.load.image("parallax2", "assets/images/background/parallax2.png");
 
         this.load.image("tutorial3", "assets/images/tutorial/tutorial_3.png");
 
@@ -339,16 +339,6 @@ export default class Scene2 extends Phaser.Scene {
         this.scaleGroup = this.physics.add.staticGroup(this.scale);
 
 
-        /*this.platforms.create(3900, 582, 'scalino').setScale(0.7).refreshBody();//scalino
-        this.platforms.create(4020, 520, 'scalino').setScale(0.7).refreshBody();//scalino
-        this.platforms.create(4120, 458, 'scalino').setScale(0.7).refreshBody();//scalino
-        this.platforms.create(4260, 396, 'scalino').setScale(0.7).refreshBody();//scalino
-        this.platforms.create(4380, 334, 'scalino').setScale(0.7).refreshBody();//scalino*/
-
-
-        //this.platforms.create(5200, 265, 'pavement').setScale(0.5).refreshBody();//pavimento
-
-
         this.physics.add.collider(this.scaleGroup, this.player, () => {
             this.player.isJumping = false;
         });
@@ -480,12 +470,6 @@ export default class Scene2 extends Phaser.Scene {
     }
 
     animateBackground() {
-        /*this.background1.tilePositionX = this.cameras.main.scrollX * 0.05;
-        this.background1.tilePositionY = this.cameras.main.scrollY * 0.05;
-        this.background2.tilePositionX = this.cameras.main.scrollX * 0.15;
-        this.background2.tilePositionY = this.cameras.main.scrollY * 0.15;
-        this.background3.tilePositionX = this.cameras.main.scrollX * 0.30;
-        this.background3.tilePositionY = this.cameras.main.scrollY * 0.30;*/
         this.background1.tilePositionX = this.cameras.main.scrollX * 0.15;
         this.background1.tilePositionY = this.cameras.main.scrollY * 0.05;
         this.background2.tilePositionX = this.cameras.main.scrollX * 0.20;

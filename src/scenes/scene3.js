@@ -29,7 +29,7 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image("movingPlatform", "assets/images/environment_elements/platform1.png"); //platform in movimento
         this.load.image("colonnaTempio", "assets/images/environment_elements/colonnaolimpo.png");
 
-        this.load.image("parallax0", "assets/images/background/parallax0.png");
+        this.load.image("parallax0", "assets/images/background/sfondo_luce.png");
         this.load.image("parallax01", "assets/images/background/parallax01.png");
 
         this.load.image("fuoco", "assets/images/environment_elements/fuoco.png");
@@ -119,7 +119,7 @@ export default class Scene1 extends Phaser.Scene {
 
         this.background.setPipeline('Light2D').setAlpha(0.7);
         this.background1.setPipeline('Light2D').setAlpha(0.7);
-        this.playerLight = this.lights.addLight(270, 510, 750).setIntensity(2.5);
+        this.playerLight = this.lights.addLight(270, 510, 400).setIntensity(2);
         this.lights.enable();
         this.lights.setAmbientColor(0x000000);
         this.make.sprite({
