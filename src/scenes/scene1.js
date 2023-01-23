@@ -30,7 +30,7 @@ export default class Scene1 extends Phaser.Scene {
             frameWidth: 200,
             frameHeight: 340,
         };
-        this.load.spritesheet("playerrun", "assets/images/characters/spritesheetmedio.png", player_spritesheet_config);
+        this.load.spritesheet("playerrun", "assets/images/characters/pandora3.png", player_spritesheet_config);
 
         //nemico
         const monster_spritesheet_config = {
