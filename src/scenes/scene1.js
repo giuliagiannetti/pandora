@@ -80,11 +80,13 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image("sandaloicona", "assets/images/hud/sandaloicona.png");
         this.load.image("chiaveicona", "assets/images/hud/chiaveicona.png"); //chiave icona
         this.load.image("life", "assets/images/hud/life.png");
-        this.load.image("vaso", "assets/images/hud/vasopausa.png");
+        this.load.image("vaso", "assets/images/hud/vaso_render.png");
+        this.load.image("vasoBorder", "assets/images/hud/vaso_render_border.png");
         this.load.image("menuPausa", "assets/images/background/sfondo_menu.jpg");
         this.load.image("home", "assets/images/buttons/home_text.png");
         this.load.image("play", "assets/images/buttons/play_text.png");
         this.load.image("menuText", "assets/images/buttons/menu.png");
+        this.load.image("qstmrk", "assets/images/hud/pre_scena2.png");
 
 
         //scritte tutorial
@@ -395,35 +397,43 @@ export default class Scene1 extends Phaser.Scene {
 
 
     createHUD() {
-        this.skillShow = this.add.circle(600, 30, 40, 0x2f1710);
-        this.skillShow.setOrigin(0, 0);
+        this.skillShow = this.add.circle(this.game.config.width/2, 65, 40, 0x2f1710);
+        this.skillShow.setOrigin(0.5, 0.5);
         this.skillShow.setScrollFactor(0, 0);
 
-        this.sandaloicon1 = this.add.image(608, 45, "sandaloicona").setScale(0.55);
-        this.sandaloicon1.setOrigin(0, 0);
+        this.sandaloicon1 = this.add.image(this.game.config.width/2-1, 65, "sandaloicona").setScale(0.55);
+        this.sandaloicon1.setOrigin(0.5, 0.5);
         this.sandaloicon1.setScrollFactor(0, 0);
 
+        this.questionmark = this.add.image(this.game.config.width/2, 65, "qstmrk").setScale();
+        this.questionmark.setOrigin(0.5, 0.5);
+        this.questionmark.setScrollFactor(0, 0);
 
-        this.chiaveIcon1 = this.add.image(230, 30, "chiaveicona").setScale(0.7).setAlpha(0.3);
-        this.chiaveIcon1.setOrigin(0, 0);
+
+        this.chiaveIcon1 = this.add.image(290, 66, "chiaveicona").setScale(0.45).setAlpha(0.3);
+        this.chiaveIcon1.setOrigin(0.5, 0.5);
         this.chiaveIcon1.setScrollFactor(0, 0);
 
 
-        this.lifeSpan = this.add.rectangle(30, 30, 180, 70, 0x2f1710).setOrigin(0, 0).setScrollFactor(0, 0);
+        this.lifeSpan = this.add.rectangle(140, 65, 180, 70, 0x2f1710).setOrigin(0.5, 0.5).setScrollFactor(0, 0);
 
 
         this.hearts = [];
         for (let i = 0; i < 3; i++) {
-            let life = this.add.image(40 + 25.25 + 55 * i, 40 + 25.25, "life"); //i +25.25 sono per riposizionare la vita al centro della barra dato che ho settato il pivot in mezzo
+            let life = this.add.image(60 + 25.25 + 55 * i, 40 + 25.25, "life"); 
             life.setScale(0.5);
-            life.setOrigin(0.5, 0.5); //settato il pivot in mezzo per l'animazione
+            life.setOrigin(0.5, 0.5);
             life.setScrollFactor(0, 0);
             this.hearts.push(life);
         }
 
+        
+        this.pauseButtonBorder = this.add.image(this.game.config.width-80, 65, "vasoBorder");
+        this.pauseButtonBorder.setOrigin(0.5, 0.5).setScale(0.13);
+        this.pauseButtonBorder.setScrollFactor(0, 0);
 
-        this.pauseButton = this.add.image(1240, 30, "vaso");
-        this.pauseButton.setOrigin(1, 0).setScale(0.25);
+        this.pauseButton = this.add.image(this.game.config.width-80, 65, "vaso");
+        this.pauseButton.setOrigin(0.5, 0.5).setScale(0.13);
         this.pauseButton.setScrollFactor(0, 0);
         this.pauseButton.setInteractive();
 

@@ -186,35 +186,42 @@ export default class Scene1 extends Phaser.Scene {
 
 
     createHUD() {
-        this.skillShow = this.add.circle(600, 30, 40, 0x2f1710);
-        this.skillShow.setOrigin(0, 0);
+        this.skillShow = this.add.circle(this.game.config.width/2, 65, 40, 0x2f1710);
+        this.skillShow.setOrigin(0.5, 0.5);
         this.skillShow.setScrollFactor(0, 0);
 
+        this.sandaloicon1 = this.add.image(this.game.config.width/2-1, 65, "sandaloicona").setScale(0.55);
+        this.sandaloicon1.setOrigin(0.5, 0.5);
+        this.sandaloicon1.setScrollFactor(0, 0);
 
-        this.chiaveIcon1 = this.add.image(230, 30, "chiaveicona").setScale(0.7).setAlpha(0.3);
-        this.chiaveIcon1.setOrigin(0, 0);
+        this.chiaveIcon1 = this.add.image(290, 65, "chiaveicona").setScale(0.45).setAlpha(0.3);
+        this.chiaveIcon1.setOrigin(0.5, 0.5);
         this.chiaveIcon1.setScrollFactor(0, 0);
 
-
-        this.lifeSpan = this.add.rectangle(30, 30, 180, 70, 0x2f1710).setOrigin(0, 0).setScrollFactor(0, 0);
+        this.lifeSpan = this.add.rectangle(140, 65, 180, 70, 0x2f1710).setOrigin(0.5, 0.5).setScrollFactor(0, 0);
 
 
         this.hearts = [];
         for (let i = 0; i < 3; i++) {
-            let life = this.add.image(40 + 25.25 + 55 * i, 40 + 25.25, "life");
+            let life = this.add.image(60 + 25.25 + 55 * i, 40 + 25.25, "life");
             life.setScale(0.5);
             life.setOrigin(0.5, 0.5);
             life.setScrollFactor(0, 0);
             this.hearts.push(life);
         }
 
+        
+        this.pauseButtonBorder = this.add.image(this.game.config.width-80, 65, "vasoBorder");
+        this.pauseButtonBorder.setOrigin(0.5, 0.5).setScale(0.13);
+        this.pauseButtonBorder.setScrollFactor(0, 0);
 
-        this.pauseButton = this.add.image(1240, 30, "vaso");
-        this.pauseButton.setOrigin(1, 0).setScale(0.25);
+        this.pauseButton = this.add.image(this.game.config.width-80, 65, "vaso");
+        this.pauseButton.setOrigin(0.5, 0.5).setScale(0.13);
         this.pauseButton.setScrollFactor(0, 0);
         this.pauseButton.setInteractive();
 
     }
+
 
 
     createCancello(){
