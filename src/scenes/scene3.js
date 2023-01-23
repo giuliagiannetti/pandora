@@ -277,8 +277,11 @@ export default class Scene1 extends Phaser.Scene {
         statuaGradino.setOrigin(0,1);
         let statuaPav = this.add.rectangle(2400, this.floorHeight, 500,135, 0x000000, 0);
         statuaPav.setOrigin(0,1);
+        let statuaPav1 = this.add.rectangle(2450, this.floorHeight - (135+270), 500,180, 0x000000, 0);
+        statuaPav1.setOrigin(0,1);
+
         
-        this.statuaBase = [statuaGradino, statuaPav];
+        this.statuaBase = [statuaGradino, statuaPav, statuaPav1];
         this.statuabaseGroup = this.physics.add.staticGroup(this.statuaBase);
         this.physics.add.collider(this.statuabaseGroup, this.player, () => {
             this.player.isJumping = false;
