@@ -20,6 +20,7 @@ export default class Scene1 extends Phaser.Scene {
         this.worldWidth = 3200;
         this.collectedChiavi = false;
         this.movedCancello = false;
+        this.collectedFuoco = false;
     }
 
     preload() {
@@ -370,7 +371,27 @@ export default class Scene1 extends Phaser.Scene {
     }
 
     collectFuoco() {
-        if (this.player.y < this.fuoco.y) {
+        if (this.player.x >= this.fuoco.x){
+            this.collectedFuoco = true;
+        }
+
+        if (this.collectedFuoco){
+            this.playerLight.x = this.player.body.x + this.player.body.width/2;
+            this.playerLight.y = this.player.body.y + this.player.body.height/2; 
+
+            this.playerLight.x = this.player.body.x + this.player.body.width/2;
+            this.playerLight.y = this.player.body.y + this.player.body.height/2;  
+
+            this.torciaIcon.destroy(); 
+            this.tweens.add({
+                targets: this.torciaIcon2,
+                alpha: 1,
+                ease: 'Linear',
+                duration: 250
+            });
+
+        }
+       /* if (this.player.y < this.fuoco.y) {
             this.playerLight.x = this.player.body.x + this.player.body.width/2;
             this.playerLight.y = this.player.body.y + this.player.body.height/2; 
 
@@ -391,7 +412,7 @@ export default class Scene1 extends Phaser.Scene {
             this.playerLight.x = 270
             this.playerLight.y = 510;  
   
-        }
+        }*/
     }
 
     animateBackground() {

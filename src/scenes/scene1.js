@@ -626,13 +626,11 @@ export default class Scene1 extends Phaser.Scene {
         if (portaUp.body.y <= portaY) {
             portaUp.body.setVelocityY(300);
         }
-        //if (portaUp.body.y >= (portaY + 255)) { portaUp.body.setVelocityY(0);}
     }
 
     collectChiavi() {
         let x_diff = Math.abs(this.player.x - this.chiave.x);
         let y_diff = Math.abs(this.player.y - this.chiave.y); 
-        //let portaFermaY = this.portaGroup.y;
         let icon = this.chiaveIcon1;
         if (x_diff < 70 && y_diff < 100) {
             this.chiave.destroy();
@@ -666,11 +664,11 @@ export default class Scene1 extends Phaser.Scene {
 
     checkSceneEnd() {
         if ( 
-            //this.key0.isDown
+           //this.key0.isDown
             this.player.x >= (this.worldWidth - 300) && this.collectedChiavi
             )
             {
-            this.scene.start("scene3");
+            this.scene.start("scene2");
         }
     }
 }
