@@ -17,7 +17,7 @@ export default class WelcomeScene extends Phaser.Scene {
       //assets
 
       //sfondo
-      this.load.image("background_base", "assets/images/background/schermata_iniziale_render.jpg");
+      this.load.image("background_base", "assets/images/background/schermata_iniziale_render2.jpg");
       //titolo
       this.load.image("titolo", "assets/images/text/titolo.png");
       //testo crediti
