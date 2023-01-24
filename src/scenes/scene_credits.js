@@ -14,10 +14,10 @@ export default class CreditsScene extends Phaser.Scene {
       console.log("scene_credits - Executing preload ()");
 
       //assets
-      this.load.image("indietro", "assets/images/buttons/indietro.png");
+      this.load.image("home", "assets/images/buttons/home_text.png");
 
       //sfondo
-      this.load.image("crediti", "assets/images/credits/crediti1.jpg");
+      this.load.image("crediti", "assets/images/credits/crediti.png");
    };
 
 
@@ -29,8 +29,8 @@ export default class CreditsScene extends Phaser.Scene {
       this.background = this.add.image(this.game.config.width / 2, this.game.config.height / 2, "crediti");
       this.background.setOrigin(0.5, 0.5);
 
-      this.indietroHome = this.add.image(200, 610, "indietro");
-      this.indietroHome.setScale(0.7);
+      this.indietroHome = this.add.image(210, 650, "home");
+      this.indietroHome.setScale(0.6);
       this.indietroHome.setInteractive();
 
       this.indietroHome.on("pointerdown", ()=> {
