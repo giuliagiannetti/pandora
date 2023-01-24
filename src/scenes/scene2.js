@@ -134,7 +134,7 @@ export default class Scene2 extends Phaser.Scene {
 
 
         // Player
-        const thePlayer = new Player(this, 100, this.floorHeight, this.worldWidth, -400);
+        const thePlayer = new Player(this, 4000, 0, this.worldWidth, -400);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
         this.playerHearts = this.game.gameState.lives;
@@ -446,8 +446,8 @@ export default class Scene2 extends Phaser.Scene {
             this.cameras.main.deadzone.x = 300;
         }
 
-        if (this.player.body.x > (this.worldWidth - this.game.config.width / 2)) {
-            this.cameras.main.followOffset.x = -(this.worldWidth - this.game.config.width / 1.5) + this.player.body.x;
+        if (this.player.body.x > (this.worldWidth - this.game.config.width / 1.5 + 300)) {
+            this.cameras.main.followOffset.x = -(this.worldWidth - this.game.config.width / 1.5 + 300) + this.player.body.x;
         }
     }
 

@@ -84,7 +84,7 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image("vasoBorder", "assets/images/hud/vaso_render_border.png");
         this.load.image("menuPausa", "assets/images/background/sfondo_menu.jpg");
         this.load.image("home", "assets/images/buttons/home_text.png");
-        this.load.image("play", "assets/images/buttons/play_text.png");
+        this.load.image("play", "assets/images/buttons/play_text_1.png");
         this.load.image("menuText", "assets/images/buttons/menu.png");
         this.load.image("qstmrk", "assets/images/hud/pre_scena2.png");
 
@@ -666,8 +666,8 @@ export default class Scene1 extends Phaser.Scene {
 
     checkSceneEnd() {
         if ( 
-            this.key0.isDown
-            //this.player.x >= (this.worldWidth - 300) && this.collectedChiavi
+            //this.key0.isDown
+            this.player.x >= (this.worldWidth - 300) && this.collectedChiavi
             )
             {
             this.scene.start("scene3");

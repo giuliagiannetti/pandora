@@ -15,7 +15,7 @@ preload(){
     //this.load.image("home","assets/images/buttons/home.png");
     //this.load.image("restart","assets/images/buttons/restart.png");
     this.load.image("home","assets/images/buttons/home_text.png");
-    this.load.image("restart","assets/images/buttons/restart_text.png");
+    this.load.image("restart","assets/images/buttons/restart_text_1.png");
     this.load.image("testoBad", "assets/images/story/testo_bad.png")
 }
 
