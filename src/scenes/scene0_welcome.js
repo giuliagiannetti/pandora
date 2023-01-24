@@ -21,7 +21,7 @@ export default class WelcomeScene extends Phaser.Scene {
       //titolo
       this.load.image("titolo", "assets/images/text/titolo.png");
       //testo crediti
-      this.load.image("testo_crediti", "assets/images/text/testoCrediti@4x.png");
+      this.load.image("testo_crediti", "assets/images/text/testoCrediti.png");
 
       //bottoni con sprite (falliti)
       /*this.load.spritesheet( 'bottoneGioca' , 'assets/images/buttons/spriteGioca.png' ,{frameWidth:191,frameHeight:82});
@@ -56,9 +56,9 @@ export default class WelcomeScene extends Phaser.Scene {
       this.titolo = this.add.image(80, 55, "titolo");
       this.titolo.setOrigin(0, 0);
       this.titolo.setScale(1.03);
-      this.testoCrediti = this.add.image(983, 451, "testo_crediti");
+      this.testoCrediti = this.add.image(1010, 490, "testo_crediti");
       this.testoCrediti.setOrigin(0, 0);
-      this.testoCrediti.setScale(0.25); //ho dovuto fare un file quattro volte più grande e poi scalarlo se no veniva pixelato
+      this.testoCrediti.setScale(0.25); 
       
 
       //immagine del bottone

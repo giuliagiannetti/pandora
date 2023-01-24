@@ -29,6 +29,7 @@ export default class Scene2 extends Phaser.Scene {
 
         this.load.image("sandalo", "assets/images/weapons/sandali.png"); //sandali di hermes
 
+        this.load.image("sandaloIcona", "assets/images/hud/sandaloIcona.png");
         this.load.image("chiave", "assets/images/environment_elements/chiave3d.png"); //chiave
         this.load.image("chiaveContorno", "assets/images/environment_elements/chiave3dcontorno.png");
         this.load.image("piedistallo", "assets/images/environment_elements/piedistallo.png");
@@ -133,7 +134,7 @@ export default class Scene2 extends Phaser.Scene {
 
 
         // Player
-        const thePlayer = new Player(this, 100, this.floorHeight, this.worldWidth, -400);
+        const thePlayer = new Player(this, 4000, 0, this.worldWidth, -400);
         this.player = this.physics.add.existing(thePlayer);
         this.physics.add.collider(this.player, this.floor);
         this.playerHearts = this.game.gameState.lives;
@@ -200,33 +201,43 @@ export default class Scene2 extends Phaser.Scene {
     }
 
     createHUD() {
-        this.skillShow = this.add.circle(600, 30, 40, 0x2f1710);
-        this.skillShow.setOrigin(0, 0);
+        this.skillShow = this.add.circle(this.game.config.width/2, 65, 40, 0x2f1710);
+        this.skillShow.setOrigin(0.5, 0.5);
         this.skillShow.setScrollFactor(0, 0);
 
+        this.sandaloIcon1 = this.add.image(this.game.config.width/2-1, 65, "sandaloIcona").setScale(0.55);
+        this.sandaloIcon1.setOrigin(0.5, 0.5);
+        this.sandaloIcon1.setScrollFactor(0, 0);
 
-        this.chiaveIcon1 = this.add.image(230, 30, "chiaveicona").setScale(0.7).setAlpha(0.3);
-        this.chiaveIcon1.setOrigin(0, 0);
+        this.sandaloIcon2 = this.add.image(this.game.config.width/2-1, 65, "sandalo").setScale(0.1).setAlpha(0);
+        this.sandaloIcon2.setOrigin(0.5, 0.5);
+        this.sandaloIcon2.setScrollFactor(0, 0);
+
+        this.chiaveIcon1 = this.add.image(290, 66, "chiaveicona").setScale(0.45).setAlpha(0.3);
+        this.chiaveIcon1.setOrigin(0.5, 0.5);
         this.chiaveIcon1.setScrollFactor(0, 0);
 
-
-        this.lifeSpan = this.add.rectangle(30, 30, 180, 70, 0x2f1710).setOrigin(0, 0).setScrollFactor(0, 0);
+        this.lifeSpan = this.add.rectangle(140, 65, 180, 70, 0x2f1710).setOrigin(0.5, 0.5).setScrollFactor(0, 0);
 
 
         this.hearts = [];
         for (let i = 0; i < 3; i++) {
-            let life = this.add.image(40 + 55 * i, 40, "life");
+            let life = this.add.image(60 + 25.25 + 55 * i, 40 + 25.25, "life"); 
             life.setScale(0.5);
-            life.setOrigin(0, 0);
+            life.setOrigin(0.5, 0.5);
             life.setScrollFactor(0, 0);
             this.hearts.push(life);
         }
 
-        this.pauseButton = this.add.image(1240, 30, "vaso");
-        this.pauseButton.setOrigin(1, 0).setScale(0.25);
+        
+        this.pauseButtonBorder = this.add.image(this.game.config.width-80, 65, "vasoBorder");
+        this.pauseButtonBorder.setOrigin(0.5, 0.5).setScale(0.13);
+        this.pauseButtonBorder.setScrollFactor(0, 0);
+
+        this.pauseButton = this.add.image(this.game.config.width-80, 65, "vaso");
+        this.pauseButton.setOrigin(0.5, 0.5).setScale(0.13);
         this.pauseButton.setScrollFactor(0, 0);
         this.pauseButton.setInteractive();
-
 
     }
 
@@ -435,8 +446,8 @@ export default class Scene2 extends Phaser.Scene {
             this.cameras.main.deadzone.x = 300;
         }
 
-        if (this.player.body.x > (this.worldWidth - this.game.config.width / 2)) {
-            this.cameras.main.followOffset.x = -(this.worldWidth - this.game.config.width / 1.5) + this.player.body.x;
+        if (this.player.body.x > (this.worldWidth - this.game.config.width / 1.5 + 300)) {
+            this.cameras.main.followOffset.x = -(this.worldWidth - this.game.config.width / 1.5 + 300) + this.player.body.x;
         }
     }
 
@@ -488,9 +499,16 @@ export default class Scene2 extends Phaser.Scene {
         let y_diff = Math.abs(this.player.y - this.sandalo.y);
         if (x_diff < 70 && y_diff < 100) {
             this.sandalo.destroy();
+            this.sandaloIcon1.destroy();
             this.player.jumpSpeed = -600;
             this.tweens.add({
                 targets: this.piedistalloCheck,
+                alpha: 1,
+                ease: 'Linear',
+                duration: 250
+            });
+            this.tweens.add({
+                targets: this.sandaloIcon2,
                 alpha: 1,
                 ease: 'Linear',
                 duration: 250

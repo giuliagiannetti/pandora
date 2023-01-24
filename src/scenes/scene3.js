@@ -20,6 +20,7 @@ export default class Scene1 extends Phaser.Scene {
         this.worldWidth = 3200;
         this.collectedChiavi = false;
         this.movedCancello = false;
+        this.collectedFuoco = false;
     }
 
     preload() {
@@ -40,6 +41,9 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image("cancello", "assets/images/environment_elements/cancello/cancello.png")
         this.load.image("portale", "assets/images/environment_elements/cancello/portale.png")
         this.load.image("speranza", "assets/images/environment_elements/cancello/speranza.png")
+
+        this.load.image("torciaicona", "assets/images/hud/torciaicona.png");
+        this.load.image("torcia", "assets/images/hud/torcia.png");
 
     }
 
@@ -186,35 +190,46 @@ export default class Scene1 extends Phaser.Scene {
 
 
     createHUD() {
-        this.skillShow = this.add.circle(600, 30, 40, 0x2f1710);
-        this.skillShow.setOrigin(0, 0);
+        this.skillShow = this.add.circle(this.game.config.width/2, 65, 40, 0x2f1710);
+        this.skillShow.setOrigin(0.5, 0.5);
         this.skillShow.setScrollFactor(0, 0);
 
+        this.torciaIcon2 = this.add.image(this.game.config.width/2, 65, "torcia").setScale(0.1).setAlpha(0);
+        this.torciaIcon2.setOrigin(0.5, 0.5);
+        this.torciaIcon2.setScrollFactor(0, 0);
 
-        this.chiaveIcon1 = this.add.image(230, 30, "chiaveicona").setScale(0.7).setAlpha(0.3);
-        this.chiaveIcon1.setOrigin(0, 0);
+        this.torciaIcon = this.add.image(this.game.config.width/2, 67, "torciaicona").setScale(0.55);
+        this.torciaIcon.setOrigin(0.5, 0.5);
+        this.torciaIcon.setScrollFactor(0, 0);
+
+        this.chiaveIcon1 = this.add.image(290, 65, "chiaveicona").setScale(0.45).setAlpha(0.3);
+        this.chiaveIcon1.setOrigin(0.5, 0.5);
         this.chiaveIcon1.setScrollFactor(0, 0);
 
-
-        this.lifeSpan = this.add.rectangle(30, 30, 180, 70, 0x2f1710).setOrigin(0, 0).setScrollFactor(0, 0);
+        this.lifeSpan = this.add.rectangle(140, 65, 180, 70, 0x2f1710).setOrigin(0.5, 0.5).setScrollFactor(0, 0);
 
 
         this.hearts = [];
         for (let i = 0; i < 3; i++) {
-            let life = this.add.image(40 + 25.25 + 55 * i, 40 + 25.25, "life");
+            let life = this.add.image(60 + 25.25 + 55 * i, 40 + 25.25, "life");
             life.setScale(0.5);
             life.setOrigin(0.5, 0.5);
             life.setScrollFactor(0, 0);
             this.hearts.push(life);
         }
 
+        
+        this.pauseButtonBorder = this.add.image(this.game.config.width-80, 65, "vasoBorder");
+        this.pauseButtonBorder.setOrigin(0.5, 0.5).setScale(0.13);
+        this.pauseButtonBorder.setScrollFactor(0, 0);
 
-        this.pauseButton = this.add.image(1240, 30, "vaso");
-        this.pauseButton.setOrigin(1, 0).setScale(0.25);
+        this.pauseButton = this.add.image(this.game.config.width-80, 65, "vaso");
+        this.pauseButton.setOrigin(0.5, 0.5).setScale(0.13);
         this.pauseButton.setScrollFactor(0, 0);
         this.pauseButton.setInteractive();
 
     }
+
 
 
     createCancello(){
@@ -277,8 +292,11 @@ export default class Scene1 extends Phaser.Scene {
         statuaGradino.setOrigin(0,1);
         let statuaPav = this.add.rectangle(2400, this.floorHeight, 500,135, 0x000000, 0);
         statuaPav.setOrigin(0,1);
+        let statuaPav1 = this.add.rectangle(2450, this.floorHeight - (135+270), 500,180, 0x000000, 0);
+        statuaPav1.setOrigin(0,1);
+
         
-        this.statuaBase = [statuaGradino, statuaPav];
+        this.statuaBase = [statuaGradino, statuaPav, statuaPav1];
         this.statuabaseGroup = this.physics.add.staticGroup(this.statuaBase);
         this.physics.add.collider(this.statuabaseGroup, this.player, () => {
             this.player.isJumping = false;
@@ -353,21 +371,48 @@ export default class Scene1 extends Phaser.Scene {
     }
 
     collectFuoco() {
-        if (this.player.y < this.fuoco.y) {
+        if (this.player.x >= this.fuoco.x){
+            this.collectedFuoco = true;
+        }
+
+        if (this.collectedFuoco){
             this.playerLight.x = this.player.body.x + this.player.body.width/2;
             this.playerLight.y = this.player.body.y + this.player.body.height/2; 
-            
+
+            this.playerLight.x = this.player.body.x + this.player.body.width/2;
+            this.playerLight.y = this.player.body.y + this.player.body.height/2;  
+
+            this.torciaIcon.destroy(); 
+            this.tweens.add({
+                targets: this.torciaIcon2,
+                alpha: 1,
+                ease: 'Linear',
+                duration: 250
+            });
+
+        }
+       /* if (this.player.y < this.fuoco.y) {
+            this.playerLight.x = this.player.body.x + this.player.body.width/2;
+            this.playerLight.y = this.player.body.y + this.player.body.height/2; 
+
         }
         if (this.player.x > this.fuoco.x) {
             this.playerLight.x = this.player.body.x + this.player.body.width/2;
             this.playerLight.y = this.player.body.y + this.player.body.height/2;  
- 
+            this.torciaIcon.destroy(); 
+            this.tweens.add({
+                targets: this.torciaIcon2,
+                alpha: 1,
+                ease: 'Linear',
+                duration: 250
+            });
         }
         
         if (this.player.x <= this.fuoco.x && this.player.y <= this.fuoco.y && this.player.y >= 400 ){
             this.playerLight.x = 270
-            this.playerLight.y = 510;    
-        }
+            this.playerLight.y = 510;  
+  
+        }*/
     }
 
     animateBackground() {
