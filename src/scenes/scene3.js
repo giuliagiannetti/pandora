@@ -41,6 +41,9 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image("portale", "assets/images/environment_elements/cancello/portale.png")
         this.load.image("speranza", "assets/images/environment_elements/cancello/speranza.png")
 
+        this.load.image("torciaicona", "assets/images/hud/torciaicona.png");
+        this.load.image("torcia", "assets/images/hud/torcia.png");
+
     }
 
     create() {
@@ -190,9 +193,13 @@ export default class Scene1 extends Phaser.Scene {
         this.skillShow.setOrigin(0.5, 0.5);
         this.skillShow.setScrollFactor(0, 0);
 
-        this.sandaloicon1 = this.add.image(this.game.config.width/2-1, 65, "sandaloicona").setScale(0.55);
-        this.sandaloicon1.setOrigin(0.5, 0.5);
-        this.sandaloicon1.setScrollFactor(0, 0);
+        this.torciaIcon2 = this.add.image(this.game.config.width/2, 65, "torcia").setScale(0.1).setAlpha(0);
+        this.torciaIcon2.setOrigin(0.5, 0.5);
+        this.torciaIcon2.setScrollFactor(0, 0);
+
+        this.torciaIcon = this.add.image(this.game.config.width/2, 67, "torciaicona").setScale(0.55);
+        this.torciaIcon.setOrigin(0.5, 0.5);
+        this.torciaIcon.setScrollFactor(0, 0);
 
         this.chiaveIcon1 = this.add.image(290, 65, "chiaveicona").setScale(0.45).setAlpha(0.3);
         this.chiaveIcon1.setOrigin(0.5, 0.5);
@@ -366,17 +373,24 @@ export default class Scene1 extends Phaser.Scene {
         if (this.player.y < this.fuoco.y) {
             this.playerLight.x = this.player.body.x + this.player.body.width/2;
             this.playerLight.y = this.player.body.y + this.player.body.height/2; 
-            
+
         }
         if (this.player.x > this.fuoco.x) {
             this.playerLight.x = this.player.body.x + this.player.body.width/2;
             this.playerLight.y = this.player.body.y + this.player.body.height/2;  
- 
+            this.torciaIcon.destroy(); 
+            this.tweens.add({
+                targets: this.torciaIcon2,
+                alpha: 1,
+                ease: 'Linear',
+                duration: 250
+            });
         }
         
         if (this.player.x <= this.fuoco.x && this.player.y <= this.fuoco.y && this.player.y >= 400 ){
             this.playerLight.x = 270
-            this.playerLight.y = 510;    
+            this.playerLight.y = 510;  
+  
         }
     }
 

@@ -401,9 +401,9 @@ export default class Scene1 extends Phaser.Scene {
         this.skillShow.setOrigin(0.5, 0.5);
         this.skillShow.setScrollFactor(0, 0);
 
-        this.sandaloicon1 = this.add.image(this.game.config.width/2-1, 65, "sandaloicona").setScale(0.55);
-        this.sandaloicon1.setOrigin(0.5, 0.5);
-        this.sandaloicon1.setScrollFactor(0, 0);
+        this.sandaloIcon1 = this.add.image(this.game.config.width/2-1, 65, "sandaloicona").setScale(0.55);
+        this.sandaloIcon1.setOrigin(0.5, 0.5);
+        this.sandaloIcon1.setScrollFactor(0, 0);
 
         this.questionmark = this.add.image(this.game.config.width/2, 65, "qstmrk").setScale();
         this.questionmark.setOrigin(0.5, 0.5);
@@ -670,7 +670,7 @@ export default class Scene1 extends Phaser.Scene {
             //this.player.x >= (this.worldWidth - 300) && this.collectedChiavi
             )
             {
-            this.scene.start("scene2");
+            this.scene.start("scene3");
         }
     }
 }
