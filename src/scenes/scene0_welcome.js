@@ -14,34 +14,24 @@ export default class WelcomeScene extends Phaser.Scene {
    preload() {
       console.log("scene0_welcome - Executing preload ()");
 
-      //assets
-
       //sfondo
-      this.load.image("background_base", "assets/images/background/schermata_iniziale_render2.jpg");
+      this.load.image("background_base", "assets/images/background/schermata_iniziale_render.jpg");
+
       //titolo
       this.load.image("titolo", "assets/images/text/titolo.png");
+
       //testo crediti
       this.load.image("testo_crediti", "assets/images/text/testoCrediti.png");
-
-      //bottoni con sprite (falliti)
-      /*this.load.spritesheet( 'bottoneGioca' , 'assets/images/buttons/spriteGioca.png' ,{frameWidth:191,frameHeight:82});
-      this.load.spritesheet( 'bottoneStoria' , 'assets/images/buttons/spriteStoria.png' ,{frameWidth:191,frameHeight:82});
-      this.load.spritesheet( 'bottoneCrediti' , 'assets/images/buttons/spriteCrediti.png' ,{frameWidth:191,frameHeight:82});*/
 
       //bottoni con immagini normali
       this.load.image("bottoneGioca", "assets/images/buttons/bottoneGioca.png");
       this.load.image("bottoneStoria", "assets/images/buttons/bottoneStoria.png");
       this.load.image("bottoneCrediti", "assets/images/buttons/bottoneCrediti.png");
-        //bottoni con hover
-        this.load.image("bottoneGioca_hover", "assets/images/buttons/bottoneGioca_hover.png");
-        this.load.image("bottoneStoria_hover", "assets/images/buttons/bottoneStoria_hover.png");
-        this.load.image("bottoneCrediti_hover", "assets/images/buttons/bottoneCrediti_hover.png");
+      //bottoni con hover
+      this.load.image("bottoneGioca_hover", "assets/images/buttons/bottoneGioca_hover.png");
+      this.load.image("bottoneStoria_hover", "assets/images/buttons/bottoneStoria_hover.png");
+      this.load.image("bottoneCrediti_hover", "assets/images/buttons/bottoneCrediti_hover.png");
       
-      //bottoni scorsi
-      /*this.load.image("bottoneGioca", "assets/images/buttons/BottoneGioca.png");
-      this.load.image("bottoneStoria", "assets/images/buttons/BottoneStoria.png");
-      this.load.image("bottoneCrediti", "assets/images/buttons/BottoneCrediti.png");*/
-
    };
 
 
