@@ -29,7 +29,7 @@ export default class CreditsScene extends Phaser.Scene {
       this.background = this.add.image(this.game.config.width / 2, this.game.config.height / 2, "crediti");
       this.background.setOrigin(0.5, 0.5);
 
-      this.indietroHome = this.add.image(210, 650, "home");
+      this.indietroHome = this.add.image(210,680, "home");
       this.indietroHome.setScale(0.6);
       this.indietroHome.setInteractive();
 
