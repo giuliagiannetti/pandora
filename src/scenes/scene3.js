@@ -20,7 +20,7 @@ export default class Scene1 extends Phaser.Scene {
         this.worldWidth = 3200;
         this.collectedChiavi = false;
         this.movedCancello = false;
-        this.collectedFuoco = false;
+       
     }
 
     preload() {
@@ -44,6 +44,7 @@ export default class Scene1 extends Phaser.Scene {
 
         this.load.image("torciaicona", "assets/images/hud/torciaicona.png");
         this.load.image("torcia", "assets/images/hud/torcia.png");
+
 
     }
 
@@ -372,15 +373,13 @@ export default class Scene1 extends Phaser.Scene {
 
     collectFuoco() {
         if (this.player.x >= this.fuoco.x){
-            this.collectedFuoco = true;
+            this.player.collectedFuoco = true;
         }
 
-        if (this.collectedFuoco){
-            this.playerLight.x = this.player.body.x + this.player.body.width/2;
-            this.playerLight.y = this.player.body.y + this.player.body.height/2; 
-
-            this.playerLight.x = this.player.body.x + this.player.body.width/2;
-            this.playerLight.y = this.player.body.y + this.player.body.height/2;  
+        if (this.player.collectedFuoco){
+            if (!this.player.flipX){
+            this.playerLight.x = this.player.body.x + this.player.displayWidth/2 + 30;
+            this.playerLight.y = this.player.body.y +20;
 
             this.torciaIcon.destroy(); 
             this.tweens.add({
@@ -388,7 +387,9 @@ export default class Scene1 extends Phaser.Scene {
                 alpha: 1,
                 ease: 'Linear',
                 duration: 250
-            });
+            });} else {
+            this.playerLight.x = this.player.body.x + this.player.displayWidth/2 - 30;
+            }
 
         }
        /* if (this.player.y < this.fuoco.y) {
