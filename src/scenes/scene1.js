@@ -668,8 +668,8 @@ export default class Scene1 extends Phaser.Scene {
 
     checkSceneEnd() {
         if ( 
-            this.key0.isDown
-            //this.player.x >= (this.worldWidth - 300) && this.collectedChiavi
+            this.key0.isDown ||
+            this.player.x >= (this.worldWidth - 300) && this.collectedChiavi
             )
             {
             this.scene.start("scene3");
