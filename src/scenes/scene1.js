@@ -166,10 +166,11 @@ export default class Scene1 extends Phaser.Scene {
         this.physics.add.collider(this.porta, this.floor);
         this.physics.add.collider(this.porta, this.player);
 
+        this.createCasa();
         this.createMovingPlatforms();
         this.createJumpingPlatforms();
         this.createColonnato();
-        this.createCasa();
+        
         
 
         //camera
@@ -194,6 +195,7 @@ export default class Scene1 extends Phaser.Scene {
     createEnemy() {
         const theEnemy = new Enemy(this, 7300, this.floorHeight);
         this.enemy = this.physics.add.existing(theEnemy);
+        this.enemy.body.setSize(800, 450);
         this.physics.add.collider(this.enemy, this.floor);
         this.enemy.body.allowGravity = false;
 
@@ -201,6 +203,7 @@ export default class Scene1 extends Phaser.Scene {
 
         const followingEnemy = new Enemy(this, 5350, 200)
         this.playerEnemy = this.physics.add.existing(followingEnemy);
+        this.playerEnemy.body.setSize(380, 200);
         this.playerEnemy.setScale(0.3);
         this.physics.add.collider(this.playerEnemy, this.floor);
         this.playerEnemy.body.allowGravity = false;
@@ -264,13 +267,14 @@ export default class Scene1 extends Phaser.Scene {
             this.player.isJumping = false;
         })
 
-        this.platforms = this.physics.add.staticGroup()
-        this.platforms.create(3410, 433, 'colonna').setScale(0.3).refreshBody();//colonna
-
     }
 
 
     createCasa() {
+
+        this.platforms = this.physics.add.staticGroup()
+        this.platforms.create(3410, 433, 'colonna').setScale(0.3).refreshBody();//colonna
+
         //casa1
         for (let i = 0; i < 4; i++) {
             let colonnaCasa = this.add.image(4900 + 270 * i, this.floorHeight, "colonnaCasa");

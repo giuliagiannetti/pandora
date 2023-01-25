@@ -176,6 +176,7 @@ export default class Scene1 extends Phaser.Scene {
     createEnemy() {
         const theEnemy = new Enemy(this, 580, -50);
         this.enemy = this.physics.add.existing(theEnemy);
+        this.enemy.body.setSize(800, 450);
         this.physics.add.collider(this.enemy, this.floor);
         this.enemy.body.allowGravity = false;
 
@@ -183,6 +184,7 @@ export default class Scene1 extends Phaser.Scene {
 
         const theEnemy1 = new Enemy(this, 1450, this.floorHeight)
         this.enemy1 = this.physics.add.existing(theEnemy1);
+        this.enemy1.body.setSize(800, 450);
         this.physics.add.collider(this.enemy1, this.floor);
         this.enemy1.body.allowGravity = false;
 

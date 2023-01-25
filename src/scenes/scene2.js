@@ -250,6 +250,7 @@ export default class Scene2 extends Phaser.Scene {
     createEnemy() {
         const theEnemy = new Enemy(this, 2550, -340);
         this.enemy = this.physics.add.existing(theEnemy);
+        this.enemy.body.setSize(400, 225);
         this.enemy.setScale(0.4);
         this.physics.add.collider(this.enemy, this.floor);
         this.enemy.body.allowGravity = false;
@@ -258,6 +259,7 @@ export default class Scene2 extends Phaser.Scene {
 
         const EnemyTempio = new Enemy(this, 4080, -300);
         this.enemyTempio = this.physics.add.existing(EnemyTempio);
+        this.enemyTempio.body.setSize(800, 450);
         this.physics.add.collider(this.enemyTempio, this.floor);
         this.enemyTempio.body.allowGravity = false;
 
@@ -265,6 +267,7 @@ export default class Scene2 extends Phaser.Scene {
 
         const EnemyTempio2 = new Enemy(this, 3480, 330);
         this.enemyTempio2 = this.physics.add.existing(EnemyTempio2);
+        this.enemyTempio2.body.setSize(400, 225);
         this.enemyTempio2.setScale(0.4);
         this.physics.add.collider(this.enemyTempio2, this.floor);
         this.enemyTempio2.body.allowGravity = false;
@@ -291,7 +294,7 @@ export default class Scene2 extends Phaser.Scene {
         let carretto1 = this.add.rectangle(3430, -490, 300, 50, 0x00000, 0);
         //carretto ribaltato
        // let carretto2 = this.add.rectangle(2300, -10, 50, 300, 0x00000, 0);
-        let carretto2Bis = this.add.rectangle(2285, 235, 20, 190, 0x00000, 0);
+       // let carretto2Bis = this.add.rectangle(2285, 235, 20, 190, 0x00000, 0);
 
         this.casse = [cassa1, cassa2, cassa3, cassa4, cassa5, cassa6, cassa7, cassa7Bis, carretto, carretto1, /*carretto2, carretto2Bis*/ ];
         this.cassaGroup = this.physics.add.staticGroup(this.casse);
