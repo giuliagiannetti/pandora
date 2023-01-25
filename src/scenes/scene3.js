@@ -379,17 +379,18 @@ export default class Scene1 extends Phaser.Scene {
         if (this.player.collectedFuoco){
             if (!this.player.flipX){
             this.playerLight.x = this.player.body.x + this.player.displayWidth/2 + 30;
-            this.playerLight.y = this.player.body.y +20;
-
+            } else {
+            this.playerLight.x = this.player.body.x + this.player.displayWidth/2 - 30;
+            }
+            
             this.torciaIcon.destroy(); 
             this.tweens.add({
                 targets: this.torciaIcon2,
                 alpha: 1,
                 ease: 'Linear',
                 duration: 250
-            });} else {
-            this.playerLight.x = this.player.body.x + this.player.displayWidth/2 - 30;
-            }
+            });
+            this.playerLight.y = this.player.body.y +20;
 
         }
        /* if (this.player.y < this.fuoco.y) {
