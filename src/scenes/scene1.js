@@ -30,7 +30,7 @@ export default class Scene1 extends Phaser.Scene {
             frameWidth: 200,
             frameHeight: 340,
         };
-        this.load.spritesheet("playerrun", "assets/images/characters/pandora3.png", player_spritesheet_config);
+        this.load.spritesheet("playerrun", "assets/images/characters/pandora_prova.png", player_spritesheet_config);
 
         //nemico
         const monster_spritesheet_config = {
@@ -664,11 +664,11 @@ export default class Scene1 extends Phaser.Scene {
 
     checkSceneEnd() {
         if ( 
-           //this.key0.isDown
-            this.player.x >= (this.worldWidth - 300) && this.collectedChiavi
+            this.key0.isDown
+            //this.player.x >= (this.worldWidth - 300) && this.collectedChiavi
             )
             {
-            this.scene.start("scene2");
+            this.scene.start("scene3");
         }
     }
 }
