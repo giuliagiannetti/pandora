@@ -201,9 +201,9 @@ export default class Scene1 extends Phaser.Scene {
 
         this.overlapEnemy = this.physics.add.overlap(this.player, this.enemy, this.hitEnemy, null, this);
 
-        const followingEnemy = new Enemy(this, 5350, 200)
+        const followingEnemy = new Enemy(this, 5350, 80)
         this.playerEnemy = this.physics.add.existing(followingEnemy);
-        this.playerEnemy.body.setSize(380, 200);
+        this.playerEnemy.body.setSize(800, 450);
         this.playerEnemy.setScale(0.3);
         this.physics.add.collider(this.playerEnemy, this.floor);
         this.playerEnemy.body.allowGravity = false;
