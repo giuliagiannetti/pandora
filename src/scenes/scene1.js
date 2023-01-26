@@ -80,8 +80,8 @@ export default class Scene1 extends Phaser.Scene {
         this.load.image("sandaloicona", "assets/images/hud/sandaloicona.png");
         this.load.image("chiaveicona", "assets/images/hud/chiaveicona.png"); //chiave icona
         this.load.image("life", "assets/images/hud/life.png");
-        this.load.image("vaso", "assets/images/hud/vaso_render.png");
-        this.load.image("vasoBorder", "assets/images/hud/vaso_render_border.png");
+        this.load.image("vaso", "assets/images/hud/vaso_pausa2.png");
+        //this.load.image("vasoBorder", "assets/images/hud/vaso_render_border.png");
         this.load.image("menuPausa", "assets/images/background/sfondo_menu.jpg");
         this.load.image("home", "assets/images/buttons/home_text.png");
         this.load.image("play", "assets/images/buttons/play_text_1.png");
@@ -439,7 +439,7 @@ export default class Scene1 extends Phaser.Scene {
         this.pauseButtonBorder.setScrollFactor(0, 0);
 
         this.pauseButton = this.add.image(this.game.config.width-80, 65, "vaso");
-        this.pauseButton.setOrigin(0.5, 0.5).setScale(0.13);
+        this.pauseButton.setOrigin(0.5, 0.5).setScale(0.1);
         this.pauseButton.setScrollFactor(0, 0);
         this.pauseButton.setInteractive();
 
