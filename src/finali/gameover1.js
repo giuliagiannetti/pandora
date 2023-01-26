@@ -3,7 +3,6 @@ export default class GameOver1 extends Phaser.Scene {
     sceneName;
 
 constructor(){
-    // Il costruttore della classe base Phaser.Scene prende come argomento il nome della scena
     super("gameover1");
 }
 

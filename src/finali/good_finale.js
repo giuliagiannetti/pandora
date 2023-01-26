@@ -3,7 +3,6 @@ export default class GoodFinale extends Phaser.Scene {
     sceneName;
 
 constructor(){
-    // Il costruttore della classe base Phaser.Scene prende come argomento il nome della scena
     super("good_finale");
 }
 
