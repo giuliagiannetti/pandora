@@ -1,6 +1,5 @@
 import Player from "../components/player.js"
 import movingPlatform from "../components/movingPlatform.js"
-import Porta from "../components/porta.js";
 import Enemy from "../components/enemy.js";
 
 export default class Scene1 extends Phaser.Scene {
