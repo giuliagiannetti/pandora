@@ -130,7 +130,7 @@ export default class Scene2 extends Phaser.Scene {
 
 
         // Player
-        const thePlayer = new Player(this, 4000, 0, this.worldWidth, -400);
+        const thePlayer = new Player(this,100, this.floorHeight, this.worldWidth, -400);
         this.player = this.physics.add.existing(thePlayer);
         this.player.body.setSize(195, 340);
         this.player.body.setOffset(-10, 30);
@@ -637,9 +637,8 @@ export default class Scene2 extends Phaser.Scene {
     }
 
     checkSceneEnd() {
-        if (this.player.x >= (this.worldWidth - this.player.body.width) && this.collectedChiavi) {
+        if (this.player.x >= (this.worldWidth - 300) && this.collectedChiavi) {
             this.scene.start("scene3");
-
         }
     }
 }
