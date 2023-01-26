@@ -172,7 +172,6 @@ export default class Scene1 extends Phaser.Scene {
         this.createJumpingPlatforms();
         this.createColonnato();
         
-        
 
         //camera
         this.cameras.main.startFollow(this.player, true);
@@ -432,11 +431,6 @@ export default class Scene1 extends Phaser.Scene {
             this.hearts.push(life);
         }
 
-        
-        this.pauseButtonBorder = this.add.image(this.game.config.width-80, 65, "vasoBorder");
-        this.pauseButtonBorder.setOrigin(0.5, 0.5).setScale(0.13);
-        this.pauseButtonBorder.setScrollFactor(0, 0);
-
         this.pauseButton = this.add.image(this.game.config.width-80, 65, "vaso");
         this.pauseButton.setOrigin(0.5, 0.5).setScale(0.1);
         this.pauseButton.setScrollFactor(0, 0);
@@ -664,9 +658,8 @@ export default class Scene1 extends Phaser.Scene {
 
 
     checkSceneEnd() {
-        if ( 
-            this.key0.isDown 
-            ||            this.player.x >= (this.worldWidth - 300) && this.collectedChiavi
+        if ( //this.key0.isDown ||
+             this.player.x >= (this.worldWidth - 300) && this.collectedChiavi
             )
             {
             this.scene.start("scene2");

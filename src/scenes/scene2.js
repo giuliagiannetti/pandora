@@ -29,7 +29,7 @@ export default class Scene2 extends Phaser.Scene {
 
         this.load.image("sandalo", "assets/images/weapons/sandali.png"); //sandali di hermes
 
-        this.load.image("sandaloIcona", "assets/images/hud/sandaloIcona.png");
+        this.load.image("sandaloIcona", "assets/images/hud/sandaloicona.png");
         this.load.image("chiave", "assets/images/environment_elements/chiave3d.png"); //chiave
         this.load.image("chiaveContorno", "assets/images/environment_elements/chiave3dcontorno.png");
         this.load.image("piedistallo", "assets/images/environment_elements/piedistallo.png");
@@ -225,13 +225,8 @@ export default class Scene2 extends Phaser.Scene {
             this.hearts.push(life);
         }
 
-        
-        this.pauseButtonBorder = this.add.image(this.game.config.width-80, 65, "vasoBorder");
-        this.pauseButtonBorder.setOrigin(0.5, 0.5).setScale(0.13);
-        this.pauseButtonBorder.setScrollFactor(0, 0);
-
         this.pauseButton = this.add.image(this.game.config.width-80, 65, "vaso");
-        this.pauseButton.setOrigin(0.5, 0.5).setScale(0.13);
+        this.pauseButton.setOrigin(0.5, 0.5).setScale(0.1);
         this.pauseButton.setScrollFactor(0, 0);
         this.pauseButton.setInteractive();
 
@@ -637,7 +632,8 @@ export default class Scene2 extends Phaser.Scene {
     }
 
     checkSceneEnd() {
-        if (this.player.x >= (this.worldWidth - 280) && this.collectedChiavi) {
+        if (//this.key0.isDown || 
+            this.player.x >= (this.worldWidth - 275) && this.collectedChiavi) {
             this.scene.start("scene3");
         }
     }

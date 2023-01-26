@@ -224,12 +224,8 @@ export default class Scene1 extends Phaser.Scene {
         }
 
         
-        this.pauseButtonBorder = this.add.image(this.game.config.width-80, 65, "vasoBorder");
-        this.pauseButtonBorder.setOrigin(0.5, 0.5).setScale(0.13);
-        this.pauseButtonBorder.setScrollFactor(0, 0);
-
         this.pauseButton = this.add.image(this.game.config.width-80, 65, "vaso");
-        this.pauseButton.setOrigin(0.5, 0.5).setScale(0.13);
+        this.pauseButton.setOrigin(0.5, 0.5).setScale(0.1);
         this.pauseButton.setScrollFactor(0, 0);
         this.pauseButton.setInteractive();
 
@@ -380,9 +376,9 @@ export default class Scene1 extends Phaser.Scene {
 
         if (this.player.collectedFuoco){
             if (!this.player.flipX){
-            this.playerLight.x = this.player.body.x + this.player.displayWidth/2 + 30;
+            this.playerLight.x = this.player.body.x + this.player.displayWidth/2 + 41;
             } else {
-            this.playerLight.x = this.player.body.x + this.player.displayWidth/2 - 30;
+            this.playerLight.x = this.player.body.x + this.player.displayWidth/2 - 41;
             }
             
             this.torciaIcon.destroy(); 
@@ -392,7 +388,7 @@ export default class Scene1 extends Phaser.Scene {
                 ease: 'Linear',
                 duration: 250
             });
-            this.playerLight.y = this.player.body.y +20;
+            this.playerLight.y = this.player.body.y ;
 
         }
        
