@@ -30,7 +30,7 @@ export default class Scene1 extends Phaser.Scene {
             frameWidth: 252,
             frameHeight: 372,
         };
-        this.load.spritesheet("playerrun", "assets/images/characters/pandora_completa2.png", player_spritesheet_config);
+        this.load.spritesheet("playerrun", "assets/images/characters/pandora_completa.png", player_spritesheet_config);
 
         //nemico
         const monster_spritesheet_config = {
@@ -149,8 +149,8 @@ export default class Scene1 extends Phaser.Scene {
         // Player
         const thePlayer = new Player(this, 200, 450, this.worldWidth - 100, -400);
         this.player = this.physics.add.existing(thePlayer);
-        this.player.body.setSize(200, 340);
-        this.player.body.setOffset(-20, 30);
+        this.player.body.setSize(195, 340);
+        this.player.body.setOffset(-10, 30);
         this.physics.add.collider(this.player, this.floor);
         this.playerHearts = this.game.gameState.lives;
 
@@ -666,7 +666,6 @@ export default class Scene1 extends Phaser.Scene {
 
     checkSceneEnd() {
         if ( 
-            //this.key0.isDown ||
             this.player.x >= (this.worldWidth - 300) && this.collectedChiavi
             )
             {

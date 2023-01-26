@@ -132,6 +132,8 @@ export default class Scene2 extends Phaser.Scene {
         // Player
         const thePlayer = new Player(this, 4000, 0, this.worldWidth, -400);
         this.player = this.physics.add.existing(thePlayer);
+        this.player.body.setSize(195, 340);
+        this.player.body.setOffset(-10, 30);
         this.physics.add.collider(this.player, this.floor);
         this.playerHearts = this.game.gameState.lives;
   
