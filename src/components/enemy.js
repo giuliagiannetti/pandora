@@ -6,7 +6,7 @@ export default class Enemy extends Phaser.GameObjects.Sprite {
     maxWidth;
 
 
-    constructor(scene, x, y /*, maxWidth*/) {
+    constructor(scene, x, y) {
         super(scene, x, y, "enemyrun");
         scene.add.existing(this);
         this.initialPosition = x;

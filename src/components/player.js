@@ -30,38 +30,34 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.initAnimations();
     }
     
-    
 
-
-    //frame impostati su 0 non avendo ancora lo spritesheet
     initAnimations() {
-        //animazione della corsa del personaggio tramite spritesheet
        this.anims.create({
             key: "playerMove",
             frames: this.anims.generateFrameNumbers("playerrun", {
                 start: 1, 
                 end: 6,
             }),
-            frameRate: 10, //aggiornimao l'immagine ogni 15 frame per rendere l'animazione non troppo rapida
-            repeat: -1 //ripetiamo all'infinito la stessa animazione
+            frameRate: 10, 
+            repeat: -1 
         });
        
-        //animazione personaggio fermo
+       
         this.anims.create({
             key: "playerStop",
             frames: this.anims.generateFrameNumbers("playerrun", {
-                start: 0, //frame con personagio fermo
+                start: 0,
                 end: 0, 
             }),
             frameRate: 15,
             repeat: -1 
         });
 
-        //salto del personaggio
+        
         this.anims.create({
             key: "playerJump",
             frames: this.anims.generateFrameNumbers("playerrun", {
-                start: 3, //selezionare frame per salto
+                start: 3, 
                 end: 3, 
             }),
             frameRate: 15, 
@@ -83,7 +79,7 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.anims.create({
             key: "playerJump1",
             frames: this.anims.generateFrameNumbers("playerrun", {
-                start: 11, //selezionare frame per salto
+                start: 11,
                 end: 11, 
             }),
             frameRate: 15, 
@@ -93,18 +89,17 @@ export default class Player extends Phaser.GameObjects.Sprite {
         this.anims.create({
             key: "playerStop1",
             frames: this.anims.generateFrameNumbers("playerrun", {
-                start: 7, //frame con personagio fermo
+                start: 7, 
                 end: 7, 
             }),
             frameRate: 15,
             repeat: -1 
         });
 
-        this.anims.play("playerStop"); //facciamo partire l'animazione del personaggio, questa volta fermo
+        this.anims.play("playerStop"); 
     }
 
     manageAnimations() {
-        // Gestiamo separatamente le animazioni
 
         const curr_anim = this.anims.currentAnim.key;  
         if (!this.collectedFuoco){
@@ -137,18 +132,15 @@ export default class Player extends Phaser.GameObjects.Sprite {
     }
 
     manageMovements() {
-        //tasto freccia sinistra premuto + giocatore a destra del limite sinistro del quadro
         if (this.cursorKeys.left.isDown && this.x >= 0) {
-            this.body.setVelocityX(-250); // Velocità per spostamento verso sinistra
+            this.body.setVelocityX(-250); 
             this.flipX = true;
 
-        // tasto freccia destra premuto + giocatore a sinistra del limite sinistro del quadro
         } else if (this.cursorKeys.right.isDown && this.x <= this.maxWidth - this.displayWidth){
-            this.body.setVelocityX(250);  // Velocità per spostamento verso destra
+            this.body.setVelocityX(250);
             this.flipX = false;
 
         } else {
-            // nessun tasto premuto --> giocatore fermo rispetto a x
             this.body.setVelocityX(0); 
         }
 
@@ -171,52 +163,48 @@ export default class Player extends Phaser.GameObjects.Sprite {
             }
         }
 
-        // no keyspace premuto e personaggio con i piedi per terra: no salto oppure è stato già attuato
         if (this.keySpace.isUp && this.y >= this.floorHeight) {
             this.isJumping = false;
         }
 
-        // Gestiamo le animazioni separatamente
         this.manageAnimations();
 
     }
 
     initAnimations1() {
-        //animazione della corsa del personaggio tramite spritesheet
-        this.anims.create({
+            this.anims.create({
             key: "playerMove",
             frames: this.anims.generateFrameNumbers("playerrun1", {
                 start: 1, 
                 end: 6,
             }),
-            frameRate: 10, //aggiornimao l'immagine ogni 15 frame per rendere l'animazione non troppo rapida
-            repeat: -1 //ripetiamo all'infinito la stessa animazione
+            frameRate: 10,
+            repeat: -1 
         });
 
        
-        //animazione personaggio fermo
         this.anims.create({
             key: "playerStop",
             frames: this.anims.generateFrameNumbers("playerrun1", {
-                start: 0, //frame con personagio fermo
+                start: 0, 
                 end: 0, 
             }),
             frameRate: 15,
             repeat: -1 
         });
 
-        //salto del personaggio
+
         this.anims.create({
             key: "playerJump",
             frames: this.anims.generateFrameNumbers("playerrun1", {
-                start: 3, //selezionare frame per salto
+                start: 3,
                 end: 3, 
             }),
             frameRate: 15, 
             repeat: -1
         });
 
-        this.anims.play("playerStop"); //facciamo partire l'animazione del personaggio, questa volta fermo
+        this.anims.play("playerStop");
     }
 
 }

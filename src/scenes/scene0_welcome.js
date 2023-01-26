@@ -49,13 +49,7 @@ export default class WelcomeScene extends Phaser.Scene {
       this.testoCrediti = this.add.image(1010, 490, "testo_crediti");
       this.testoCrediti.setOrigin(0, 0);
       this.testoCrediti.setScale(0.25); 
-      
-
-      //immagine del bottone
-        //con sprite(fallito)
-      /*this.bottone_gioca = this.add.sprite(300,242,'bottoneGioca');
-      this.bottone_storia = this.add.sprite(300,342,'bottoneStoria');
-      this.bottone_crediti = this.add.sprite(300,442,'bottoneCrediti');*/
+   
       
       this.bottone_gioca = this.add.image(127,319,'bottoneGioca');
       this.bottone_storia = this.add.image(127,442,'bottoneStoria');
@@ -66,7 +60,6 @@ export default class WelcomeScene extends Phaser.Scene {
 
 
       //origini, interattività, trasparenza
-
       this.bottone_gioca_hover.setOrigin(0, 0);
       this.bottone_gioca_hover.setVisible(false);
 

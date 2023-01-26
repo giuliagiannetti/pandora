@@ -3,7 +3,6 @@ export default class GameOver3 extends Phaser.Scene {
     sceneName;
 
 constructor(){
-    // Il costruttore della classe base Phaser.Scene prende come argomento il nome della scena
     super("gameover3");
 }
 
@@ -12,8 +11,6 @@ preload(){
     console.log("gameover - Executing preload()");
 
     this.load.image("gameover", "assets/images/story/gameover.jpg");
-    //this.load.image("home","assets/images/buttons/home.png");
-    //this.load.image("restart","assets/images/buttons/restart.png");
     this.load.image("home","assets/images/buttons/home_text.png");
     this.load.image("restart","assets/images/buttons/restart_text.png");
     this.load.image("testoBad", "assets/images/story/testo_bad.png")

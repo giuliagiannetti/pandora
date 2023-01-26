@@ -12,7 +12,6 @@ preload(){
     console.log("good - Executing preload()");
 
     this.load.image("vittoria", "assets/images/story/finale.jpg");
-    //this.load.image("home","assets/images/buttons/home.png");
     this.load.image("homeBlank", "assets/images/buttons/text_home_blank.png");
     this.load.image("homeHover", "assets/images/buttons/text_home_hover.png");
     this.load.image("restart","assets/images/buttons/restart.png");

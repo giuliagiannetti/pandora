@@ -613,10 +613,6 @@ export default class Scene1 extends Phaser.Scene {
         this.background1.tilePositionY = this.cameras.main.scrollY * 0.05;
         this.background2.tilePositionX = this.cameras.main.scrollX * 0.20;
         this.background2.tilePositionY = this.cameras.main.scrollY * 0.15;
-        //this.background3.tilePositionX = this.cameras.main.scrollX * 0.30;
-        //this.background3.tilePositionY = this.cameras.main.scrollY * 0.30;
-        //this.background4.tilePositionX = this.cameras.main.scrollX * 0.50;
-        //this.background4.tilePositionY = this.cameras.main.scrollY * 0.50;
 
         const startLineCamera = 400;
         const shiftCameraMax = 100;

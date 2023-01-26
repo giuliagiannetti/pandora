@@ -31,10 +31,8 @@ export default class Storia1 extends Phaser.Scene {
 create() {
     console.log("storie - Executing create()");
 
-    this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE); //da togliere dopo
-    
-    
-    //nel nome degli asset li chiamiamo testo e scena, nel preload li chiamiamo storia e scena e nel create li chiamiamo testo e ambient
+  
+    //nel nome degli asset li chiamiamo testo e scena, nel preload li chiamiamo storia e scena e nel create li chiamiamo testo e ambiente
     this.pregioco = this.add.image(this.game.config.width / 2, this.game.config.height / 2, "pregioco");
     this.pregioco.setOrigin(0.5, 0.5);
     this.pregioco.setAlpha(0);
@@ -90,7 +88,7 @@ create() {
 
       
 
-//effetto di hover con trasparenza
+   //effetto di hover con trasparenza
    this.avanti.on('pointerover',() => {
       this.bottoneAvantiBianco.setVisible(true);
       this.bottoneAvantiNero.setVisible(false);
