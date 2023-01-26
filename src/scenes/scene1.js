@@ -556,7 +556,7 @@ export default class Scene1 extends Phaser.Scene {
         if (this.playerHearts <= 0) {
             this.scene.start("gameover1");
             this.scene.stop();
-        } else {
+        } else { 
             this.player.body.x = this.piedistallo0.x + 20;
             this.player.body.y = this.piedistallo0.y - 300;
             this.playerEnemy.x = this.playerEnemy.initialPosition;
@@ -582,10 +582,18 @@ export default class Scene1 extends Phaser.Scene {
 
         if (this.playerHearts <= 0) {
             this.scene.start("gameover1");
-        } else {
+        } else { if (this.collectedChiavi){
             this.player.body.x = this.chiave.x;
             this.player.body.y = this.chiave.y -10;
             this.scene.resume();
+        } else {
+            this.player.body.x = this.piedistallo0.x + 20;
+            this.player.body.y = this.piedistallo0.y - 300;
+            this.playerEnemy.x = this.playerEnemy.initialPosition;
+            this.playerEnemy.y = this.playerEnemy.floorHeight;
+            this.scene.resume(this.followPlayer);
+            this.playerEnemy.body.setVelocityY(0);
+        }
         }
 
     }
