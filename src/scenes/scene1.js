@@ -668,7 +668,7 @@ export default class Scene1 extends Phaser.Scene {
             this.player.x >= (this.worldWidth - 300) && this.collectedChiavi
             )
             {
-            this.scene.start("scene3");
+            this.scene.start("scene2");
         }
     }
 }
