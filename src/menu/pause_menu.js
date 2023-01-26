@@ -3,8 +3,7 @@ export default class PauseMenu extends Phaser.Scene {
     sceneName;
 
     constructor(){
-        // Il costruttore della classe base Phaser.Scene prende come argomento il nome della scena
-		super("pause_menu");
+        super("pause_menu");
     }
 
 
@@ -14,10 +13,6 @@ export default class PauseMenu extends Phaser.Scene {
 
     preload(){
         console.log("pause_menu - Executing preload()");
-
-        /*this.load.image("menuPausa", "assets/images/background/sfondo_menu.jpg");
-        this.load.image("home", "assets/images/buttons/home.png");
-        this.load.image("play", "assets/images/buttons/play.png");*/
 
         this.load.image("menuPausa", "assets/images/background/sfondo_menu.jpg");
         this.load.image("home", "assets/images/buttons/home_text.png");

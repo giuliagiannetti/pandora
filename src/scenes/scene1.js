@@ -1,6 +1,5 @@
 import Player from "../components/player.js"
 import movingPlatform from "../components/movingPlatform.js"
-import Porta from "../components/porta.js";
 import Enemy from "../components/enemy.js";
 
 export default class Scene1 extends Phaser.Scene {
@@ -30,7 +29,7 @@ export default class Scene1 extends Phaser.Scene {
             frameWidth: 252,
             frameHeight: 372,
         };
-        this.load.spritesheet("playerrun", "assets/images/characters/pandora_completa2.png", player_spritesheet_config);
+        this.load.spritesheet("playerrun", "assets/images/characters/pandora_completa.png", player_spritesheet_config);
 
         //nemico
         const monster_spritesheet_config = {
@@ -149,8 +148,8 @@ export default class Scene1 extends Phaser.Scene {
         // Player
         const thePlayer = new Player(this, 200, 450, this.worldWidth - 100, -400);
         this.player = this.physics.add.existing(thePlayer);
-        this.player.body.setSize(200, 340);
-        this.player.body.setOffset(-20, 30);
+        this.player.body.setSize(195, 340);
+        this.player.body.setOffset(-10, 30);
         this.physics.add.collider(this.player, this.floor);
         this.playerHearts = this.game.gameState.lives;
 
@@ -613,10 +612,6 @@ export default class Scene1 extends Phaser.Scene {
         this.background1.tilePositionY = this.cameras.main.scrollY * 0.05;
         this.background2.tilePositionX = this.cameras.main.scrollX * 0.20;
         this.background2.tilePositionY = this.cameras.main.scrollY * 0.15;
-        //this.background3.tilePositionX = this.cameras.main.scrollX * 0.30;
-        //this.background3.tilePositionY = this.cameras.main.scrollY * 0.30;
-        //this.background4.tilePositionX = this.cameras.main.scrollX * 0.50;
-        //this.background4.tilePositionY = this.cameras.main.scrollY * 0.50;
 
         const startLineCamera = 400;
         const shiftCameraMax = 100;
@@ -670,11 +665,11 @@ export default class Scene1 extends Phaser.Scene {
 
     checkSceneEnd() {
         if ( 
-            this.key0.isDown ||
-            this.player.x >= (this.worldWidth - 300) && this.collectedChiavi
+            this.key0.isDown 
+            ||            this.player.x >= (this.worldWidth - 300) && this.collectedChiavi
             )
             {
-            this.scene.start("scene3");
+            this.scene.start("scene2");
         }
     }
 }

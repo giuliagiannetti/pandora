@@ -104,14 +104,16 @@ export default class Scene1 extends Phaser.Scene {
         // Player
         const thePlayer = new Player(this, 0, this.floorHeight, this.worldWidth, -400);
         this.player = this.physics.add.existing(thePlayer);
+        this.player.body.setSize(195, 340);
+        this.player.body.setOffset(-10, 30);
         this.physics.add.collider(this.player, this.floor);
         this.playerHearts = this.game.gameState.lives;
 
 
         // Nemico
         this.createEnemy();
-
-        // Inserisci delle piattaforme statiche
+        
+        
         this.createStaticPlatforms();
         this.createMovingPlatforms();
 
@@ -253,8 +255,6 @@ export default class Scene1 extends Phaser.Scene {
         this.cancello1.body.allowGravity = false;
         this.cancello1.body.setImmovable(true);
         this.cancello1.body.setVelocityY(0);
-
-
     }
     
     createStaticPlatforms() {
@@ -395,28 +395,7 @@ export default class Scene1 extends Phaser.Scene {
             this.playerLight.y = this.player.body.y +20;
 
         }
-       /* if (this.player.y < this.fuoco.y) {
-            this.playerLight.x = this.player.body.x + this.player.body.width/2;
-            this.playerLight.y = this.player.body.y + this.player.body.height/2; 
-
-        }
-        if (this.player.x > this.fuoco.x) {
-            this.playerLight.x = this.player.body.x + this.player.body.width/2;
-            this.playerLight.y = this.player.body.y + this.player.body.height/2;  
-            this.torciaIcon.destroy(); 
-            this.tweens.add({
-                targets: this.torciaIcon2,
-                alpha: 1,
-                ease: 'Linear',
-                duration: 250
-            });
-        }
-        
-        if (this.player.x <= this.fuoco.x && this.player.y <= this.fuoco.y && this.player.y >= 400 ){
-            this.playerLight.x = 270
-            this.playerLight.y = 510;  
-  
-        }*/
+       
     }
 
     animateBackground() {
@@ -431,12 +410,11 @@ export default class Scene1 extends Phaser.Scene {
     collectChiavi() {
         let x_diff = Math.abs(this.player.x - this.chiave.x);
         let y_diff = Math.abs(this.player.y - this.chiave.y); 
-        //let portaFermaY = this.portaGroup.y;
         let icon = this.chiaveIcon1;
+
         if (x_diff < 110 && y_diff < 110) {
             this.chiave.destroy();
             this.chiaveContorno.destroy();
-            //this.portaGroup.children.iterate(function (porta) { porta.movePorta(); });
             icon.setAlpha(1);
             this.tweens.add({
                 targets: this.piedistalloCheck,
@@ -528,7 +506,6 @@ export default class Scene1 extends Phaser.Scene {
     checkpoint0() {
         let x_diff0 = Math.abs(this.player.x - this.piedistallo0.x);
         let y_diff0 = Math.abs(this.player.y - this.piedistallo0.y); 
-        //let portaFermaY = this.portaGroup.y;
         if (x_diff0 < 75 && y_diff0 < 100) {
             this.tweens.add({
                 targets: this.piedistalloCheck0,
@@ -540,7 +517,6 @@ export default class Scene1 extends Phaser.Scene {
     }
 
     pauseMenuBottons() {
-
         this.pauseButton.on("pointerdown", () => {
             this.scene.pause();
             this.scene.launch("pause_menu", { sceneName: "scene3" });

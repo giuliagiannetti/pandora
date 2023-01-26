@@ -85,7 +85,6 @@ export default class Scene2 extends Phaser.Scene {
         //sandali di Hermes
         this.sandalo = this.add.image(1900, -200, "sandalo");
         this.sandalo.setScale(0.15);
-        //this.physics.add.overlap(this.player, this.sandalo, this.collectSandalo, null, this);
 
 
         //chiave
@@ -128,30 +127,28 @@ export default class Scene2 extends Phaser.Scene {
         this.cassa6.setScale(0.19);
         this.cassa7 = this.add.image(2420, 400, "cassa");
         this.cassa7.setAngle(240).setScale(0.28);
-        /*this.cassa8 = this.add.image(2410, 120, "cassa");
-        this.cassa8.setAngle(90).setScale(0.19);**/
-
 
 
         // Player
-        const thePlayer = new Player(this, 4000, 0, this.worldWidth, -400);
+        const thePlayer = new Player(this,100, this.floorHeight, this.worldWidth, -400);
         this.player = this.physics.add.existing(thePlayer);
+        this.player.body.setSize(195, 340);
+        this.player.body.setOffset(-10, 30);
         this.physics.add.collider(this.player, this.floor);
         this.playerHearts = this.game.gameState.lives;
-        //this.player.jumpSpeed = -600;
-
+  
 
         // Camera
         this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
         this.cameras.main.setFollowOffset(0, 300);
         this.cameras.main.setDeadzone(0, 0);
-        //this.cameras.main.setLerp(0.1, 0.1);
 
 
         // Piattaforme
         this.createStaticPlatforms();
         this.createMovingPlatforms();
         this.createJumpingPlatforms();
+
 
         //mele
         this.mele = [];
@@ -197,7 +194,6 @@ export default class Scene2 extends Phaser.Scene {
 
         //HUD
         this.createHUD();
-
     }
 
     createHUD() {
@@ -250,7 +246,7 @@ export default class Scene2 extends Phaser.Scene {
     createEnemy() {
         const theEnemy = new Enemy(this, 2550, -340);
         this.enemy = this.physics.add.existing(theEnemy);
-        this.enemy.body.setSize(400, 225);
+        this.enemy.body.setSize(800, 450);
         this.enemy.setScale(0.4);
         this.physics.add.collider(this.enemy, this.floor);
         this.enemy.body.allowGravity = false;
@@ -267,7 +263,7 @@ export default class Scene2 extends Phaser.Scene {
 
         const EnemyTempio2 = new Enemy(this, 3480, 330);
         this.enemyTempio2 = this.physics.add.existing(EnemyTempio2);
-        this.enemyTempio2.body.setSize(400, 225);
+        this.enemyTempio2.body.setSize(800, 450);
         this.enemyTempio2.setScale(0.4);
         this.physics.add.collider(this.enemyTempio2, this.floor);
         this.enemyTempio2.body.allowGravity = false;
@@ -292,9 +288,7 @@ export default class Scene2 extends Phaser.Scene {
 
         let carretto = this.add.rectangle(1000, 500, 300, 50, 0x00000, 0);
         let carretto1 = this.add.rectangle(3430, -490, 300, 50, 0x00000, 0);
-        //carretto ribaltato
-       // let carretto2 = this.add.rectangle(2300, -10, 50, 300, 0x00000, 0);
-       // let carretto2Bis = this.add.rectangle(2285, 235, 20, 190, 0x00000, 0);
+
 
         this.casse = [cassa1, cassa2, cassa3, cassa4, cassa5, cassa6, cassa7, cassa7Bis, carretto, carretto1, /*carretto2, carretto2Bis*/ ];
         this.cassaGroup = this.physics.add.staticGroup(this.casse);
@@ -307,9 +301,6 @@ export default class Scene2 extends Phaser.Scene {
         this.cart1.flipY = true
         this.cart1.setOrigin(0, 1).setScale(0.5);
 
-        //carretto ribaltato
-        //this.cart2 = this.add.image(2210, -170, "cart");
-        //this.cart2.setOrigin(0, 1).setAngle(90).setScale(0.5);
         
         this.platforms.create(2300, -10, 'colonnaSpezzata').setAngle(10).setScale(0.3).setOrigin(0,1).refreshBody();
         this.platforms.create(2250, 230, 'colonnaAppuntita').setAngle(-10).setScale(0.5).setOrigin(0,1).refreshBody();
@@ -339,7 +330,6 @@ export default class Scene2 extends Phaser.Scene {
             scalino1.setOrigin(0, 1).setScale(0.9).setFlipX(true);
             this.scale.push(scalino1);
         }
-
 
 
         let basamento = this.add.image(3650, this.floorHeight, "basamento");
@@ -413,13 +403,10 @@ export default class Scene2 extends Phaser.Scene {
             this.banchi.push(banco);
         }
 
-
-
     }
 
 
     update() {
-        // Azioni che vengono eseguite a ogni frame del gioco
         this.player.manageMovements();
 
         this.enemy.animateEnemy();
@@ -564,7 +551,6 @@ export default class Scene2 extends Phaser.Scene {
                 this.player.body.y = this.sandalo.y - 100;
             } 
         }
-
     }
 
     hitEnemyTempio() {
@@ -622,8 +608,6 @@ export default class Scene2 extends Phaser.Scene {
     }
 
 
-
-
     followPlayer() {
         let followedPlayer = this.player;
         let enemyTempio = this.enemyTempio;
@@ -648,15 +632,13 @@ export default class Scene2 extends Phaser.Scene {
             }
         } else {
             enemyTempio.animateEnemy();
-            // enemyTempio.returnToInitialY();
         }
 
     }
 
     checkSceneEnd() {
-        if (this.player.x >= (this.worldWidth - this.player.body.width) && this.collectedChiavi) {
+        if (this.player.x >= (this.worldWidth - 280) && this.collectedChiavi) {
             this.scene.start("scene3");
-
         }
     }
 }
