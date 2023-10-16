@@ -24,9 +24,9 @@ export default class WelcomeScene extends Phaser.Scene {
       this.load.image("testo_crediti", "assets/images/text/testoCrediti.png");
 
       //bottoni con immagini normali
-      this.load.image("bottoneGioca", "assets/images/buttons/bottoneGioca.png");
-      this.load.image("bottoneStoria", "assets/images/buttons/bottoneStoria.png");
-      this.load.image("bottoneCrediti", "assets/images/buttons/bottoneCrediti.png");
+      this.load.image("bottoneGioca", "assets/images/buttons/BottoneGioca.png");
+      this.load.image("bottoneStoria", "assets/images/buttons/BottoneStoria.png");
+      this.load.image("bottoneCrediti", "assets/images/buttons/BottoneCrediti.png");
       //bottoni con hover
       this.load.image("bottoneGioca_hover", "assets/images/buttons/bottoneGioca_hover.png");
       this.load.image("bottoneStoria_hover", "assets/images/buttons/bottoneStoria_hover.png");
